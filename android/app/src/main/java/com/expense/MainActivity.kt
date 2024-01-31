@@ -1,4 +1,4 @@
-package com.expense
+package com.Expense_Income_Tracker
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
