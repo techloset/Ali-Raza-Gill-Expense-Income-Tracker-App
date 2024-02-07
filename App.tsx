@@ -1,15 +1,11 @@
 import React from 'react';
-import Navigation from './src/navigation/Navigation'
-import { StatusBar, StyleSheet, View, Text } from 'react-native';
+import {StatusBar, StyleSheet, View, Text} from 'react-native';
+import Navigation from './src/navigation/Navigation';
 import SignUp from './src/screens/auth/signUp/SignUp';
-import Home from './src/screens/frontend/home/Home';
-
-
 
 export default function App() {
   return (
     <View style={styles.container}>
-
       {/* <Navigation /> */}
       <SignUp />
     </View>
@@ -17,11 +13,11 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal:10
-  }
-})
+    paddingHorizontal: 10,
+  },
+});

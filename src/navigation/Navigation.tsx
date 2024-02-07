@@ -1,23 +1,28 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-import Home from '../screens/frontend/home/Home';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
 import SignUp from '../screens/auth/signUp/SignUp';
+import Login from '../screens/auth/logIn/Login';
 
-const Stack = createNativeStackNavigator();
+export type AuthRoutes = {
+  Login: undefined;
+  SignUp: undefined;
+};
+
+const Stack = createStackNavigator<AuthRoutes>();
 
 const StackNavigation = () => {
   return (
-    <Stack.Navigator initialRouteName='SignUp'>
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ headerShown: false }}
+        name="Login"
+        component={Login}
+        // options={{ headerShown: false }}
       />
       <Stack.Screen
         name="SignUp"
         component={SignUp}
-        options={{ headerShown: false }}
+        // options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

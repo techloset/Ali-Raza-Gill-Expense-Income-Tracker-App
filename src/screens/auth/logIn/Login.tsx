@@ -1,18 +1,15 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import arrow from '../../../assets/images/SignUpImages/arrowleft.png';
 import InputField from '../../../components/comman/InputField';
 import Button from '../../../components/comman/Button';
 import ButtonGoogle from '../../../components/comman/ButtonGoogle';
+import {AuthRoutes} from '../../../navigation/Navigation';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-const SignUp = () => {
+type ScreenPropT = NativeStackScreenProps<AuthRoutes, 'Login'>;
+
+const Login = ({navigation}: ScreenPropT) => {
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   const [isChecked, setChecked] = useState(false);
@@ -29,46 +26,32 @@ const SignUp = () => {
     setSecureTextEntry(!secureTextEntry);
   };
 
+  const handleNavigateToSignUp = () => {
+    navigation.navigate('SignUp');
+  };
+
   return (
     <>
       <View style={styles.mainHeaderSection}>
-        {/* <View style={styles.headerSectionMain}>
-          <View style={styles.headerArrowContainer1}>
-            <Image source={arrow} style={styles.headerArrow} />
-          </View>
-          <View style={styles.headerTitleContainer2}>
-            <Text style={styles.headerTitle}>SignUp</Text>
-          </View>
-          <View style={styles.headerTitleContainer3}>
-            <Text></Text>
-          </View>
-        </View> */}
-
         <View>
-          <InputField placeholder="Name" />
           <InputField placeholder="Email" keyboardType="email-address" />
           <View>
             <InputField placeholder="Password" secureTextEntry={true} />
           </View>
-
           <View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              {/* <Checkbox value={isChecked} onValueChange={handleCheckBoxToggle} /> */}
-            </View>
-          </View>
-
-          <View style={styles.CheckboxContainer}>
-            <View>
-              <Text style={styles.CheckText}>
-                By signing up, you agree to the{' '}
-                <Text style={styles.termsPrivacy}>
-                  Terms of Service and Privacy Policy
+            <Button name="Login" />
+            <Text>
+              Didn't have an account?{' '}
+              <Text style={styles.termsPrivacy}>
+                <Text
+                  style={styles.termsPrivacy}
+                  onPress={() => {
+                    handleNavigateToSignUp;
+                  }}>
+                  Sign Up
                 </Text>
               </Text>
-            </View>
-          </View>
-          <View>
-            <Button name="Sign Up " />
+            </Text>
           </View>
           <View style={{alignItems: 'center', paddingVertical: 12}}>
             <Text>or</Text>
@@ -76,20 +59,16 @@ const SignUp = () => {
           <View>
             <ButtonGoogle
               icon={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
-              text="Sign Up with Google"
+              text="Login with Google"
             />
           </View>
-          <Text style={styles.account}>
-            Already have an account?{' '}
-            <Text style={styles.accountBtn}>Login</Text>
-          </Text>
         </View>
       </View>
     </>
   );
 };
 
-export default SignUp;
+export default Login;
 
 const styles = StyleSheet.create({
   mainHeaderSection: {
@@ -180,15 +159,5 @@ const styles = StyleSheet.create({
     // textAlign: 'center',
     // justifyContent: 'center',
     // alignItems: 'center',
-  },
-  account: {
-    fontFamily: 'Inter-Regular',
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 19,
-  },
-  accountBtn: {
-    color: '#7F3DFF',
   },
 });
