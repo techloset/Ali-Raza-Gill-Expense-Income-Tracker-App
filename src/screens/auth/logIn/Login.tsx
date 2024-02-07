@@ -1,15 +1,10 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import arrow from '../../../assets/images/SignUpImages/arrowleft.png';
 import InputField from '../../../components/comman/InputField';
 import Button from '../../../components/comman/Button';
 import ButtonGoogle from '../../../components/comman/ButtonGoogle';
-import {AuthRoutes} from '../../../navigation/Navigation';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-type ScreenPropT = NativeStackScreenProps<AuthRoutes, 'Login'>;
-
-const Login = ({navigation}: ScreenPropT) => {
+const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   const [isChecked, setChecked] = useState(false);
@@ -26,45 +21,36 @@ const Login = ({navigation}: ScreenPropT) => {
     setSecureTextEntry(!secureTextEntry);
   };
 
-  const handleNavigateToSignUp = () => {
-    navigation.navigate('SignUp');
-  };
-
   return (
-    <>
+    <KeyboardAvoidingView style={{flex: 1, margin: 150}}>
       <View style={styles.mainHeaderSection}>
         <View>
           <InputField placeholder="Email" keyboardType="email-address" />
           <View>
             <InputField placeholder="Password" secureTextEntry={true} />
           </View>
-          <View>
-            <Button name="Login" />
-            <Text>
-              Didn't have an account?{' '}
-              <Text style={styles.termsPrivacy}>
-                <Text
-                  style={styles.termsPrivacy}
-                  onPress={() => {
-                    handleNavigateToSignUp;
-                  }}>
-                  Sign Up
-                </Text>
-              </Text>
-            </Text>
+          <View style={styles.loginbtn}>
+            <Button name="Log In " />
           </View>
-          <View style={{alignItems: 'center', paddingVertical: 12}}>
-            <Text>or</Text>
+          <View style={styles.forgotContainer}>
+            <Text style={styles.forgotPass}>Forgot Password?</Text>
+          </View>
+          <View style={styles.orContainer}>
+            <Text style={styles.orText}>or</Text>
           </View>
           <View>
             <ButtonGoogle
               icon={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
-              text="Login with Google"
+              text="Sign Up with Google"
             />
           </View>
+          <Text style={styles.account}>
+            Don't have an account yet?{' '}
+            <Text style={styles.accountBtn}>Sign Up</Text>
+          </Text>
         </View>
       </View>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -72,92 +58,38 @@ export default Login;
 
 const styles = StyleSheet.create({
   mainHeaderSection: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 320,
   },
-  headerTitleContainer2: {
-    color: 'black',
-    alignItems: 'center',
-    fontFamily: 'Inter-Bold',
-    fontSize: 18,
-  },
-  headerTitle: {
+  account: {
     fontFamily: 'Inter-Medium',
-    fontSize: 18,
-    color: 'black',
-  },
-
-  headerSectionMain: {
-    width: 345,
-    height: 64,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    justifyContent: 'space-between',
-    // backgroundColor: 'pink',
-    margin: 10,
-    padding: 16,
-  },
-  headerArrowContainer1: {
-    // backgroundColor: 'red',
-    height: 32,
-    width: 32,
-    paddingHorizontal: 4,
-    paddingVertical: 7,
-    marginBottom: -10,
+    textAlign: 'center',
     justifyContent: 'center',
-  },
-  headerArrow: {
-    width: 24,
-    height: 16,
-    flexShrink: 0,
-    // marginLeft: -120
-  },
-  headerTitleContainer3: {
-    height: 32,
-    width: 32,
-    // backgroundColor: 'pink'
-  },
-  // CheckboxTextHeader:{
-  //   // color:'black',
-  // },
-  CheckboxContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
+    marginVertical: 19,
   },
-  CheckText: {
-    color: 'black',
-    fontFamily: 'Inter-Regular',
-    fontSize: 14,
-    marginTop: 5,
-    marginBottom: 20,
-    // textAlign: 'center',
-    // justifyContent: 'center',
-    // alignItems: 'center',
+  loginbtn: {
+    marginTop: 40,
   },
-  checkbox: {
-    width: 20,
-    height: 20,
-    backgroundColor: 'pink',
+  orContainer: {
+    alignItems: 'center',
+    paddingVertical: 12,
   },
-  eyeIconContainer: {
-    padding: 8,
+  orText: {
+    height: 18,
+    width: 15,
+    fontFamily: 'Inter-Bold',
   },
-  eyeIcon: {
-    width: 24,
-    height: 24,
-    tintColor: '#666',
-  },
-  termsPrivacy: {
+  accountBtn: {
     color: '#7F3DFF',
-    fontFamily: 'Inter-Regular',
-    fontSize: 14,
-    // textAlign: 'center',
-    // justifyContent: 'center',
-    // alignItems: 'center',
+  },
+  forgotContainer: {
+    alignItems: 'flex-end',
+    marginTop: 16,
+    marginBottom: 10,
+  },
+  forgotPass: {
+    fontFamily: 'Inter-Bold',
+    color: '#7F3DFF',
+    paddingRight: 8,
   },
 });

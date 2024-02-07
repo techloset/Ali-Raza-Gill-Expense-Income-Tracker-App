@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   btnName: {
     color: 'white',
     fontSize: 18,
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Inter-SemiBold',
     fontWeight: '600',
   },
 });

@@ -19,12 +19,14 @@ const InputField: React.FC<InputFieldProps> = ({
   keyboardType = 'default',
 }) => {
   return (
-    <TextInput
-      placeholder={placeholder}
-      keyboardType={keyboardType}
-      secureTextEntry={secureTextEntry}
-      style={styles.input}
-    />
+    <View style={styles.inputContainer}>
+      <TextInput
+        placeholder={placeholder}
+        keyboardType={keyboardType}
+        secureTextEntry={secureTextEntry}
+        style={styles.input}
+      />
+    </View>
   );
 };
 
@@ -42,7 +44,10 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginBottom: 5,
     color: 'black',
-    fontFamily: 'Inter-Light',
+    fontFamily: 'Inter-Regular',
     marginVertical: 12,
+  },
+  inputContainer: {
+    borderBlockColor: 'black',
   },
 });

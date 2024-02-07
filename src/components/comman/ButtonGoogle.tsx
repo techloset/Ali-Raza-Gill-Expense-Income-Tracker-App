@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: 'black',
-    fontSize: 18,
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Inter-SemiBold',
     fontWeight: '600',
+    fontSize: 18,
   },
 });
 export default ButtonGoogle;

@@ -2,12 +2,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  TextInput,
-  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
-import arrow from '../../../assets/images/SignUpImages/arrowleft.png';
 import InputField from '../../../components/comman/InputField';
 import Button from '../../../components/comman/Button';
 import ButtonGoogle from '../../../components/comman/ButtonGoogle';
@@ -30,20 +28,8 @@ const SignUp = () => {
   };
 
   return (
-    <>
+    <KeyboardAvoidingView style={{flex: 1, marginTop: 100}}>
       <View style={styles.mainHeaderSection}>
-        {/* <View style={styles.headerSectionMain}>
-          <View style={styles.headerArrowContainer1}>
-            <Image source={arrow} style={styles.headerArrow} />
-          </View>
-          <View style={styles.headerTitleContainer2}>
-            <Text style={styles.headerTitle}>SignUp</Text>
-          </View>
-          <View style={styles.headerTitleContainer3}>
-            <Text></Text>
-          </View>
-        </View> */}
-
         <View>
           <InputField placeholder="Name" />
           <InputField placeholder="Email" keyboardType="email-address" />
@@ -70,8 +56,8 @@ const SignUp = () => {
           <View>
             <Button name="Sign Up " />
           </View>
-          <View style={{alignItems: 'center', paddingVertical: 12}}>
-            <Text>or</Text>
+          <View style={styles.orContainer}>
+            <Text style={styles.orText}>or</Text>
           </View>
           <View>
             <ButtonGoogle
@@ -85,7 +71,7 @@ const SignUp = () => {
           </Text>
         </View>
       </View>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -97,53 +83,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  headerTitleContainer2: {
-    color: 'black',
-    alignItems: 'center',
-    fontFamily: 'Inter-Bold',
-    fontSize: 18,
-  },
-  headerTitle: {
-    fontFamily: 'Inter-Medium',
-    fontSize: 18,
-    color: 'black',
-  },
-
-  headerSectionMain: {
-    width: 345,
-    height: 64,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    justifyContent: 'space-between',
-    // backgroundColor: 'pink',
-    margin: 10,
-    padding: 16,
-  },
-  headerArrowContainer1: {
-    // backgroundColor: 'red',
-    height: 32,
-    width: 32,
-    paddingHorizontal: 4,
-    paddingVertical: 7,
-    marginBottom: -10,
-    justifyContent: 'center',
-  },
-  headerArrow: {
-    width: 24,
-    height: 16,
-    flexShrink: 0,
-    // marginLeft: -120
-  },
-  headerTitleContainer3: {
-    height: 32,
-    width: 32,
-    // backgroundColor: 'pink'
-  },
-  // CheckboxTextHeader:{
-  //   // color:'black',
-  // },
   CheckboxContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -152,13 +91,10 @@ const styles = StyleSheet.create({
   },
   CheckText: {
     color: 'black',
-    fontFamily: 'Inter-Regular',
     fontSize: 14,
     marginTop: 5,
     marginBottom: 20,
-    // textAlign: 'center',
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    fontFamily: 'Inter-Medium',
   },
   checkbox: {
     width: 20,
@@ -169,20 +105,26 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   eyeIcon: {
-    width: 24,
-    height: 24,
+    width: 32,
+    height: 32,
     tintColor: '#666',
   },
   termsPrivacy: {
     color: '#7F3DFF',
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Inter-Medium',
     fontSize: 14,
-    // textAlign: 'center',
-    // justifyContent: 'center',
-    // alignItems: 'center',
+  },
+  orContainer: {
+    alignItems: 'center',
+    paddingVertical: 12,
+  },
+  orText: {
+    height: 18,
+    width: 15,
+    fontFamily: 'Inter-Bold',
   },
   account: {
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Inter-Medium',
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
