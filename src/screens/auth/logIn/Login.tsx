@@ -1,10 +1,23 @@
-import {KeyboardAvoidingView, StyleSheet, Text, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  ScrollViewComponent,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import InputField from '../../../components/comman/InputField';
 import Button from '../../../components/comman/Button';
 import ButtonGoogle from '../../../components/comman/ButtonGoogle';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {ScrollView} from 'react-native-gesture-handler';
+import {AuthRoutes} from '../../../navigation/Navigation';
 
-const Login = () => {
+interface LoginProps {
+  navigation: StackNavigationProp<AuthRoutes, 'SignUp'>;
+}
+const Login = (props: any) => {
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   const [isChecked, setChecked] = useState(false);
@@ -22,35 +35,47 @@ const Login = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={{flex: 1, margin: 150}}>
-      <View style={styles.mainHeaderSection}>
-        <View>
-          <InputField placeholder="Email" keyboardType="email-address" />
+    <ScrollView style={{backgroundColor: 'white'}}>
+      <KeyboardAvoidingView style={{alignItems: 'center'}}>
+        <View style={styles.mainHeaderSection}>
           <View>
-            <InputField placeholder="Password" secureTextEntry={true} />
+            <InputField placeholder="Email" keyboardType="email-address" />
+            <View>
+              <InputField placeholder="Password" secureTextEntry={true} />
+            </View>
+            <View style={styles.loginbtn}>
+              <Button name="Log In " />
+            </View>
+            <TouchableOpacity
+              style={styles.forgotContainer}
+              onPress={() => {
+                props.navigation.navigate('forgotPassword');
+              }}>
+              <Text style={styles.forgotPass}>Forgot Password?</Text>
+            </TouchableOpacity>
+            <View style={styles.orContainer}>
+              <Text style={styles.orText}>or</Text>
+            </View>
+            <View>
+              <ButtonGoogle
+                icon={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
+                text="Sign Up with Google"
+              />
+            </View>
+            <Text style={styles.account}>
+              Don't have an account yet?
+              <TouchableOpacity
+                style={styles.accountTouchable}
+                onPress={() => {
+                  props.navigation.navigate('signup');
+                }}>
+                <Text style={styles.accountBtn}>Sign Up</Text>
+              </TouchableOpacity>
+            </Text>
           </View>
-          <View style={styles.loginbtn}>
-            <Button name="Log In " />
-          </View>
-          <View style={styles.forgotContainer}>
-            <Text style={styles.forgotPass}>Forgot Password?</Text>
-          </View>
-          <View style={styles.orContainer}>
-            <Text style={styles.orText}>or</Text>
-          </View>
-          <View>
-            <ButtonGoogle
-              icon={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
-              text="Sign Up with Google"
-            />
-          </View>
-          <Text style={styles.account}>
-            Don't have an account yet?{' '}
-            <Text style={styles.accountBtn}>Sign Up</Text>
-          </Text>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
@@ -58,6 +83,8 @@ export default Login;
 
 const styles = StyleSheet.create({
   mainHeaderSection: {
+    paddingLeft: 0,
+    marginTop: 100,
     width: 320,
   },
   account: {
@@ -67,8 +94,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 19,
   },
+  accountTouchable: {},
   loginbtn: {
     marginTop: 40,
+  },
+  accountBtn: {
+    color: '#7F3DFF',
+    fontFamily: 'Inter-Bold',
   },
   orContainer: {
     alignItems: 'center',
@@ -78,9 +110,6 @@ const styles = StyleSheet.create({
     height: 18,
     width: 15,
     fontFamily: 'Inter-Bold',
-  },
-  accountBtn: {
-    color: '#7F3DFF',
   },
   forgotContainer: {
     alignItems: 'flex-end',

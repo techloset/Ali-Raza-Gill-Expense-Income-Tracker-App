@@ -28,7 +28,8 @@ const SignUp = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={{flex: 1, marginTop: 100}}>
+    <KeyboardAvoidingView
+      style={{flex: 1, marginTop: 100, marginBottom: 'auto'}}>
       <View style={styles.mainHeaderSection}>
         <View>
           <InputField placeholder="Name" />

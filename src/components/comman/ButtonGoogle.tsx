@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontFamily: 'Inter-SemiBold',
     fontWeight: '600',
-    fontSize: 18,
+    fontSize: 17,
   },
 });
 export default ButtonGoogle;
