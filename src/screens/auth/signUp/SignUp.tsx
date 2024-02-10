@@ -4,13 +4,15 @@ import {
   View,
   KeyboardAvoidingView,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
 import InputField from '../../../components/comman/InputField';
 import Button from '../../../components/comman/Button';
 import ButtonGoogle from '../../../components/comman/ButtonGoogle';
+import {ScrollView} from 'react-native-gesture-handler';
 
-const SignUp = () => {
+const SignUp = (props: any) => {
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   const [isChecked, setChecked] = useState(false);
@@ -28,51 +30,58 @@ const SignUp = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{flex: 1, marginTop: 100, marginBottom: 'auto'}}>
-      <View style={styles.mainHeaderSection}>
-        <View>
-          <InputField placeholder="Name" />
-          <InputField placeholder="Email" keyboardType="email-address" />
+    <ScrollView>
+      <KeyboardAvoidingView
+        style={{flex: 1, marginTop: 70, marginBottom: 'auto'}}>
+        <View style={styles.mainHeaderSection}>
           <View>
-            <InputField placeholder="Password" secureTextEntry={true} />
-          </View>
-
-          <View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              {/* <Checkbox value={isChecked} onValueChange={handleCheckBoxToggle} /> */}
-            </View>
-          </View>
-
-          <View style={styles.CheckboxContainer}>
+            <InputField placeholder="Name" />
+            <InputField placeholder="Email" keyboardType="email-address" />
             <View>
-              <Text style={styles.CheckText}>
-                By signing up, you agree to the{' '}
-                <Text style={styles.termsPrivacy}>
-                  Terms of Service and Privacy Policy
+              <InputField placeholder="Password" secureTextEntry={true} />
+            </View>
+
+            <View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                {/* <Checkbox value={isChecked} onValueChange={handleCheckBoxToggle} /> */}
+              </View>
+            </View>
+
+            <View style={styles.CheckboxContainer}>
+              <View>
+                <Text style={styles.CheckText}>
+                  By signing up, you agree to the{' '}
+                  <Text style={styles.termsPrivacy}>
+                    Terms of Service and Privacy Policy
+                  </Text>
                 </Text>
-              </Text>
+              </View>
+            </View>
+            <View>
+              <Button name="Sign Up " />
+            </View>
+            <View style={styles.orContainer}>
+              <Text style={styles.orText}>or</Text>
+            </View>
+            <View>
+              <ButtonGoogle
+                icon={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
+                text="Sign Up with Google"
+              />
+            </View>
+            <View style={styles.account}>
+              <Text style={styles.accountText1}>Already have an account? </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  props.navigation.navigate('login');
+                }}>
+                <Text style={styles.accountTouchable}>Login</Text>
+              </TouchableOpacity>
             </View>
           </View>
-          <View>
-            <Button name="Sign Up " />
-          </View>
-          <View style={styles.orContainer}>
-            <Text style={styles.orText}>or</Text>
-          </View>
-          <View>
-            <ButtonGoogle
-              icon={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
-              text="Sign Up with Google"
-            />
-          </View>
-          <Text style={styles.account}>
-            Already have an account?{' '}
-            <Text style={styles.accountBtn}>Login</Text>
-          </Text>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
@@ -125,13 +134,15 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Bold',
   },
   account: {
-    fontFamily: 'Inter-Medium',
-    textAlign: 'center',
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
     marginVertical: 19,
   },
-  accountBtn: {
+  accountText1: {
+    fontFamily: 'Inter-Medium',
+  },
+  accountTouchable: {
     color: '#7F3DFF',
+    fontFamily: 'Inter-Medium',
   },
 });

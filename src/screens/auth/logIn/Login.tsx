@@ -44,7 +44,7 @@ const Login = (props: any) => {
               <InputField placeholder="Password" secureTextEntry={true} />
             </View>
             <View style={styles.loginbtn}>
-              <Button name="Log In " />
+              <Button name="Log In" />
             </View>
             <TouchableOpacity
               style={styles.forgotContainer}
@@ -62,8 +62,10 @@ const Login = (props: any) => {
                 text="Sign Up with Google"
               />
             </View>
-            <Text style={styles.account}>
-              Don't have an account yet?
+            <View style={styles.account}>
+              <Text style={styles.accountText1}>
+                Don't have an account yet?
+              </Text>
               <TouchableOpacity
                 style={styles.accountTouchable}
                 onPress={() => {
@@ -71,7 +73,7 @@ const Login = (props: any) => {
                 }}>
                 <Text style={styles.accountBtn}>Sign Up</Text>
               </TouchableOpacity>
-            </Text>
+            </View>
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -88,11 +90,15 @@ const styles = StyleSheet.create({
     width: 320,
   },
   account: {
+    flexDirection: 'row',
     fontFamily: 'Inter-Medium',
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 19,
+  },
+  accountText1: {
+    fontFamily: 'Inter-Medium',
   },
   accountTouchable: {},
   loginbtn: {
@@ -100,7 +106,8 @@ const styles = StyleSheet.create({
   },
   accountBtn: {
     color: '#7F3DFF',
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Inter-Medium',
+    marginStart: 5,
   },
   orContainer: {
     alignItems: 'center',
