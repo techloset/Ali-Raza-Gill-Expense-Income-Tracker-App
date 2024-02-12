@@ -1,24 +1,44 @@
-import {KeyboardAvoidingView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useState} from 'react';
 import InputField from '../../../components/comman/InputField';
 import Button from '../../../components/comman/Button';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const ForgotPassword = () => {
+const ForgotPassword = (props: any) => {
+  const [forgotEmail, setForgotEmail] = useState('');
+
   return (
-    <KeyboardAvoidingView style={{paddingVertical: 100}}>
-      <View style={styles.forgotMainContainer}>
-        <View style={styles.forgotTextContainer}>
-          <Text style={styles.forgotText}>Don't worry.</Text>
-          <Text style={styles.forgotText}>
-            Enter your email and we'll send you a link to reset your password.
-          </Text>
+    <View style={styles.forgotMainContainer}>
+      <KeyboardAvoidingView>
+        <View style={styles.forgotContainer}>
+          <View style={styles.forgotTextContainer}>
+            <Text style={styles.forgotText}>Don't worry.</Text>
+            <Text style={styles.forgotText}>
+              Enter your email and we'll send you a link to reset your password.
+            </Text>
+          </View>
+          <View style={styles.emailContainer}>
+            <InputField
+              placeholder="Email"
+              keyboardType="email-address"
+              value={forgotEmail}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('addtodo')}>
+            <View style={styles.senddEmailBtn}>
+              <Button name="Send Email" onPress={() => {}} />
+            </View>
+          </TouchableOpacity>
         </View>
-        <View style={styles.emailContainer}>
-          <InputField placeholder="Email" keyboardType="email-address" />
-        </View>
-        <Button name="Send Email" />
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -26,7 +46,12 @@ const styles = StyleSheet.create({
   forgotMainContainer: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingTop: 69,
+  },
+  forgotContainer: {
+    backgroundColor: 'white',
     justifyContent: 'center',
+    marginHorizontal: 16,
   },
   forgotTextContainer: {
     marginBottom: 46,
@@ -37,7 +62,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   emailContainer: {
+    height: 56,
     marginBottom: 32,
   },
+  senddEmailBtn: {},
 });
 export default ForgotPassword;

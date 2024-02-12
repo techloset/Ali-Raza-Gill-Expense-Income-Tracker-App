@@ -18,6 +18,9 @@ interface LoginProps {
   navigation: StackNavigationProp<AuthRoutes, 'SignUp'>;
 }
 const Login = (props: any) => {
+  const [logEmail, setLogEmail] = useState('');
+  const [logPassword, setLogPassword] = useState('');
+
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   const [isChecked, setChecked] = useState(false);
@@ -39,12 +42,20 @@ const Login = (props: any) => {
       <KeyboardAvoidingView style={{alignItems: 'center'}}>
         <View style={styles.mainHeaderSection}>
           <View>
-            <InputField placeholder="Email" keyboardType="email-address" />
+            <InputField
+              placeholder="Email"
+              keyboardType="email-address"
+              value={logEmail}
+            />
             <View>
-              <InputField placeholder="Password" secureTextEntry={true} />
+              <InputField
+                placeholder="Password"
+                secureTextEntry={true}
+                value={logPassword}
+              />
             </View>
             <View style={styles.loginbtn}>
-              <Button name="Log In" />
+              <Button name="Log In" onPress={() => {}} />
             </View>
             <TouchableOpacity
               style={styles.forgotContainer}

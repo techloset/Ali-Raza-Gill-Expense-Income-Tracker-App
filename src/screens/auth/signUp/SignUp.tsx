@@ -5,14 +5,21 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import InputField from '../../../components/comman/InputField';
 import Button from '../../../components/comman/Button';
 import ButtonGoogle from '../../../components/comman/ButtonGoogle';
 import {ScrollView} from 'react-native-gesture-handler';
+import auth from '@react-native-firebase/auth';
+import {LoginProps} from '../../../types/Types';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+const SignUp = ({navigation}: LoginProps) => {
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-const SignUp = (props: any) => {
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   const [isChecked, setChecked] = useState(false);
@@ -20,9 +27,36 @@ const SignUp = (props: any) => {
   const handleCheckBoxToggle = () => {
     setChecked(!isChecked);
   };
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '577251364044-7kqqdtbio0420g24gburmmreheh8cadr.apps.googleusercontent.com',
+    });
+  }, []);
+
+  const handleGoogleSignup = async () => {
+    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+    // Get the users ID token
+    const {idToken} = await GoogleSignin.signIn();
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    return auth().signInWithCredential(googleCredential);
+  };
   const handleSignUp = () => {
-    // Add your sign-up logic here
-    // You can check the value of isChecked to determine if the checkbox is checked or not
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+        console.error(error);
+      });
   };
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const toggleSecureEntry = () => {
@@ -35,10 +69,24 @@ const SignUp = (props: any) => {
         style={{flex: 1, marginTop: 70, marginBottom: 'auto'}}>
         <View style={styles.mainHeaderSection}>
           <View>
-            <InputField placeholder="Name" />
-            <InputField placeholder="Email" keyboardType="email-address" />
+            <InputField
+              placeholder="Name"
+              onChangeText={text => setUserName(text)}
+              value={userName}
+            />
+            <InputField
+              placeholder="Email"
+              keyboardType="email-address"
+              onChangeText={text => setEmail(text)}
+              value={email}
+            />
             <View>
-              <InputField placeholder="Password" secureTextEntry={true} />
+              <InputField
+                placeholder="Password"
+                secureTextEntry={true}
+                onChangeText={text => setPassword(text)}
+                value={password}
+              />
             </View>
 
             <View>
@@ -58,12 +106,29 @@ const SignUp = (props: any) => {
               </View>
             </View>
             <View>
-              <Button name="Sign Up " />
+              <TouchableOpacity onPress={() => handleSignUp()}>
+                <Button name="Sign Up" onPress={() => handleSignUp()} />
+              </TouchableOpacity>
             </View>
             <View style={styles.orContainer}>
               <Text style={styles.orText}>or</Text>
             </View>
             <View>
+              <TouchableOpacity
+                onPress={() =>
+                  handleGoogleSignup()
+                    .then(gmail =>
+                      ToastAndroid.show(
+                        'User Signup Successfully' + '',
+                        ToastAndroid.LONG,
+                      ),
+                    )
+                    .catch(error =>
+                      ToastAndroid.show(error.message, ToastAndroid.LONG),
+                    )
+                }>
+                <Text>Google</Text>
+              </TouchableOpacity>
               <ButtonGoogle
                 icon={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
                 text="Sign Up with Google"
@@ -73,7 +138,7 @@ const SignUp = (props: any) => {
               <Text style={styles.accountText1}>Already have an account? </Text>
               <TouchableOpacity
                 onPress={() => {
-                  props.navigation.navigate('login');
+                  navigation.navigate('login');
                 }}>
                 <Text style={styles.accountTouchable}>Login</Text>
               </TouchableOpacity>

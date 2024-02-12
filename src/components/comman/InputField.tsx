@@ -11,12 +11,16 @@ interface InputFieldProps {
   secureTextEntry?: boolean;
   placeholder: string;
   keyboardType?: KeyboardTypeOptions;
+  onChangeText?: (text: string) => void;
+  value: string;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
   placeholder,
   secureTextEntry = false,
   keyboardType = 'default',
+  onChangeText,
+  value,
 }) => {
   return (
     <View style={styles.inputContainer}>
@@ -25,6 +29,8 @@ const InputField: React.FC<InputFieldProps> = ({
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
         style={styles.input}
+        onChangeText={onChangeText}
+        value={value}
       />
     </View>
   );

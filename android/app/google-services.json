@@ -12,7 +12,20 @@
           "package_name": "com.Expense_Income_Tracker"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "577251364044-rtk8g2gdr3n8b1i8mlnj58fjsv3tac80.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Expense_Income_Tracker",
+            "certificate_hash": "ab60b00a81f930307683753fb6e54daa559a87b5"
+          }
+        },
+        {
+          "client_id": "577251364044-7kqqdtbio0420g24gburmmreheh8cadr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAsbBcXhozdvDkCykBjfSg8D3Ji5SLCBzE"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577251364044-7kqqdtbio0420g24gburmmreheh8cadr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
