@@ -1,42 +1,30 @@
 import {
   KeyboardAvoidingView,
-  ScrollViewComponent,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import InputField from '../../../components/comman/InputField';
-import Button from '../../../components/comman/Button';
-import ButtonGoogle from '../../../components/comman/ButtonGoogle';
-import {StackNavigationProp} from '@react-navigation/stack';
+import React from 'react';
+import InputField from '../../../components/InputField';
+import Button from '../../../components/Button';
 import {ScrollView} from 'react-native-gesture-handler';
-import {AuthRoutes} from '../../../navigation/Navigation';
-
-interface LoginProps {
-  navigation: StackNavigationProp<AuthRoutes, 'SignUp'>;
-}
-const Login = (props: any) => {
-  const [logEmail, setLogEmail] = useState('');
-  const [logPassword, setLogPassword] = useState('');
-
-  const [passwordVisible, setPasswordVisible] = useState(true);
-
-  const [isChecked, setChecked] = useState(false);
-
-  const handleCheckBoxToggle = () => {
-    setChecked(!isChecked);
-  };
-  const handleSignUp = () => {
-    // Add your sign-up logic here
-    // You can check the value of isChecked to determine if the checkbox is checked or not
-  };
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const toggleSecureEntry = () => {
-    setSecureTextEntry(!secureTextEntry);
-  };
-
+import {useLogin} from './useLogin';
+import {Image} from 'react-native';
+const Login = () => {
+  const {
+    logEmail,
+    logPassword,
+    navigation,
+    passwordVisible,
+    isChecked,
+    handleCheckBoxToggle,
+    handleLogIn,
+    secureTextEntry,
+    toggleSecureEntry,
+    handleLogEmail,
+    handleLogPassword,
+  } = useLogin();
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
       <KeyboardAvoidingView style={{alignItems: 'center'}}>
@@ -60,19 +48,22 @@ const Login = (props: any) => {
             <TouchableOpacity
               style={styles.forgotContainer}
               onPress={() => {
-                props.navigation.navigate('forgotPassword');
+                navigation.navigate('ForgotPassword');
               }}>
               <Text style={styles.forgotPass}>Forgot Password?</Text>
             </TouchableOpacity>
             <View style={styles.orContainer}>
               <Text style={styles.orText}>or</Text>
             </View>
-            <View>
-              <ButtonGoogle
-                icon={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
-                text="Sign Up with Google"
-              />
-            </View>
+            <TouchableOpacity style={styles.button} onPress={handleLogIn}>
+              <View style={styles.content}>
+                <Image
+                  source={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
+                  style={styles.icon}
+                />
+                <Text style={styles.btnText}>Sign Up with Google</Text>
+              </View>
+            </TouchableOpacity>
             <View style={styles.account}>
               <Text style={styles.accountText1}>
                 Don't have an account yet?
@@ -80,7 +71,7 @@ const Login = (props: any) => {
               <TouchableOpacity
                 style={styles.accountTouchable}
                 onPress={() => {
-                  props.navigation.navigate('signup');
+                  navigation.navigate('SignUp');
                 }}>
                 <Text style={styles.accountBtn}>Sign Up</Text>
               </TouchableOpacity>
@@ -91,7 +82,6 @@ const Login = (props: any) => {
     </ScrollView>
   );
 };
-
 export default Login;
 
 const styles = StyleSheet.create({
@@ -138,5 +128,32 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Bold',
     color: '#7F3DFF',
     paddingRight: 8,
+  },
+  content: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 32,
+    height: 32,
+    padding: 5,
+    marginRight: 10,
+  },
+  btnText: {
+    color: 'black',
+    fontFamily: 'Inter-SemiBold',
+    fontWeight: '600',
+    fontSize: 17,
+  },
+  button: {
+    height: 56,
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 16,
+    marginTop: 10,
+    justifyContent: 'center',
+    borderColor: 'lightgrey',
+    borderWidth: 0.5,
   },
 });

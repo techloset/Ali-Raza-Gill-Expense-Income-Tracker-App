@@ -13,30 +13,25 @@ export type AuthRoutes = {
   ForgotPassword: undefined;
   AddTodo: undefined;
 };
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<AuthRoutes>();
 
 const Navigationscreen = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
-          name="login"
+          name="Login"
           component={Login}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="signup"
+          name="SignUp"
           component={SignUp}
           // options={{headerShown: true}}
         />
         <Stack.Screen
-          name="forgotPassword"
+          name="ForgotPassword"
           component={ForgotPassword}
-          // options={{headerShown: true}}
-        />
-        <Stack.Screen
-          name="addtodo"
-          component={AddTodo}
           // options={{headerShown: true}}
         />
       </Stack.Navigator>

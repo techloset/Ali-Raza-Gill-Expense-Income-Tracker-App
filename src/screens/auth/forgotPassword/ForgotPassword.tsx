@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-import InputField from '../../../components/comman/InputField';
-import Button from '../../../components/comman/Button';
+import InputField from '../../../components/InputField';
+import Button from '../../../components/Button';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const ForgotPassword = (props: any) => {
