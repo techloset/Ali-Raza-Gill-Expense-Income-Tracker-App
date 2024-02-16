@@ -8,19 +8,19 @@ import {useNavigation} from '@react-navigation/native';
 const navigation = useNavigation<StackNavigationProp<AuthRoutes>>();
 
 export const useLogin = () => {
-  const [logEmail, setLogEmail] = useState('');
-  const [logPassword, setLogPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   const [isChecked, setChecked] = useState(false);
 
   const handleLogEmail = (text: string) => {
-    setLogEmail(text);
+    setEmail(text);
   };
 
   const handleLogPassword = (text: string) => {
-    setLogPassword(text);
+    setPassword(text);
   };
 
   const handleCheckBoxToggle = () => {
@@ -35,12 +35,9 @@ export const useLogin = () => {
 
   const handleLogIn = () => {
     auth()
-      .signInWithEmailAndPassword(
-        'jane.doe@example.com',
-        'SuperSecretPassword!',
-      )
+      .signInWithEmailAndPassword(email, password)
       .then(() => {
-        console.log('User account created & signed in!');
+        console.log('User signed in!');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -59,9 +56,40 @@ export const useLogin = () => {
     setSecureTextEntry(!secureTextEntry);
   };
 
+  useEffect(() => {
+    const ClientId =
+      '577251364044-7kqqdtbio0420g24gburmmreheh8cadr.apps.googleusercontent.com';
+    GoogleSignin.configure({
+      webClientId: ClientId,
+    });
+  }, []);
+
+  const handleGoogleSignup = async () => {
+    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+    const {idToken} = await GoogleSignin.signIn();
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    return auth().signInWithCredential(googleCredential);
+  };
+  const handleSignUp = () => {
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+        console.error(error);
+      });
+  };
+
   return {
-    logEmail,
-    logPassword,
+    email,
+    password,
     passwordVisible,
     isChecked,
     handleCheckBoxToggle,
@@ -71,5 +99,6 @@ export const useLogin = () => {
     handleLogEmail,
     handleLogPassword,
     navigation,
+    handleGoogleSignup,
   };
 };

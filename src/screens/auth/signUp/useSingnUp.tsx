@@ -18,7 +18,8 @@ export const useSignUp = () => {
   };
 
   useEffect(() => {
-    const ClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+    const ClientId =
+      '577251364044-7kqqdtbio0420g24gburmmreheh8cadr.apps.googleusercontent.com';
     GoogleSignin.configure({
       webClientId: ClientId,
     });
@@ -26,7 +27,6 @@ export const useSignUp = () => {
 
   const handleGoogleSignup = async () => {
     await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-    // Get the users ID token
     const {idToken} = await GoogleSignin.signIn();
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     return auth().signInWithCredential(googleCredential);

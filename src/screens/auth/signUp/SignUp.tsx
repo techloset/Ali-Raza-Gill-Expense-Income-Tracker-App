@@ -27,10 +27,15 @@ const SignUp = () => {
     handleSignUp,
     navigation,
   } = useSignUp();
+
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: 'white'}}>
       <KeyboardAvoidingView
-        style={{flex: 1, marginTop: 70, marginBottom: 'auto'}}>
+        style={{
+          flex: 1,
+          marginTop: 70,
+          marginBottom: 'auto',
+        }}>
         <View style={styles.mainHeaderSection}>
           <View>
             <InputField

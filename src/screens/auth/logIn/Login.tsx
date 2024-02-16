@@ -1,4 +1,5 @@
 import {
+  GestureResponderEvent,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
@@ -11,20 +12,25 @@ import Button from '../../../components/Button';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useLogin} from './useLogin';
 import {Image} from 'react-native';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+
 const Login = () => {
   const {
-    logEmail,
-    logPassword,
+    email,
+    password,
     navigation,
     passwordVisible,
     isChecked,
     handleCheckBoxToggle,
+    handleGoogleSignup,
     handleLogIn,
     secureTextEntry,
     toggleSecureEntry,
     handleLogEmail,
     handleLogPassword,
   } = useLogin();
+
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
       <KeyboardAvoidingView style={{alignItems: 'center'}}>
@@ -33,17 +39,19 @@ const Login = () => {
             <InputField
               placeholder="Email"
               keyboardType="email-address"
-              value={logEmail}
+              value={email}
+              onChangeText={handleLogEmail}
             />
             <View>
               <InputField
                 placeholder="Password"
                 secureTextEntry={true}
-                value={logPassword}
+                value={password}
+                onChangeText={handleLogPassword}
               />
             </View>
             <View style={styles.loginbtn}>
-              <Button name="Log In" onPress={() => {}} />
+              <Button name="Log In" onPress={handleLogIn} />
             </View>
             <TouchableOpacity
               style={styles.forgotContainer}
@@ -55,7 +63,9 @@ const Login = () => {
             <View style={styles.orContainer}>
               <Text style={styles.orText}>or</Text>
             </View>
-            <TouchableOpacity style={styles.button} onPress={handleLogIn}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleGoogleSignup}>
               <View style={styles.content}>
                 <Image
                   source={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
