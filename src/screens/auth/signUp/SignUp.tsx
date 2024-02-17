@@ -1,7 +1,7 @@
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
 import {ScrollView} from 'react-native-gesture-handler';
-import {LoginProps} from '../../../types/Types';
+import {LoginProps} from '../../../types/types';
 import {useSignUp} from '../signUp/useSingnUp';
 import {
   StyleSheet,

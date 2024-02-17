@@ -7,11 +7,15 @@ export default function useHome() {
   const handlePress = (buttonNumber: number) => {
     setActiveButton(buttonNumber);
   };
+  const currentDate = new Date(); 
+  const month = currentDate.toLocaleString('default', { month: 'long' });
+ 
   return (
     {
       activeButton,
       handlePress,
       setActiveButton,
+      month,
     }
   );
 }

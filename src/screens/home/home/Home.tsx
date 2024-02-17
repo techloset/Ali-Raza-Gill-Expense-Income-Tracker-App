@@ -12,6 +12,7 @@ import useHome from './useHome';
 import ExpenseCard from '../../../components/ExpenseCard';
 import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './HomeStyle';
+import ShoppingCard from '../../../components/ShoppingCard';
 
 export default function Home() {
   const {activeButton, handlePress} = useHome();
@@ -117,6 +118,62 @@ export default function Home() {
               </View>
             </TouchableOpacity>
           </View>
+        </View>
+        <View>
+          <ShoppingCard
+            img={require('../../../assets/images/HomeScreenImages/Shopping.png')}
+            category="Shopping"
+            description="I buy a car"
+            amount={-500}
+            time={'10:20 pm'}
+            onPress={() => {}}
+            style={{}}
+          />
+        </View>
+
+        <View>
+          <ShoppingCard
+            img={require('../../../assets/images/HomeScreenImages/Subscription.png')}
+            category="Subscription"
+            description="I buy a car"
+            amount={-500}
+            time={'10:20 pm'}
+            onPress={() => {}}
+            style={{}}
+          />
+          <View>
+            <ShoppingCard
+              img={require('../../../assets/images/HomeScreenImages/Food.png')}
+              category="Food"
+              description="I buy a car"
+              amount={-500}
+              time={'10:20 pm'}
+              onPress={() => {}}
+              style={{}}
+            />
+          </View>
+        </View>
+        <View>
+          <ShoppingCard
+            img={require('../../../assets/images/HomeScreenImages/Salary.png')}
+            category="Salary"
+            description="I buy a car"
+            amount={-500}
+            time={'10:20 pm'}
+            onPress={() => {}}
+            style={{}}
+          />
+        </View>
+        <View>
+          <ShoppingCard
+            img={require('../../../assets/images/HomeScreenImages/Transpotation.png')}
+            category="Transpotation"
+            description="I buy a car"
+            amount={-500}
+            time={'10:20 pm'}
+            onPress={() => {}}
+            style={{}}
+          />
         </View>
       </View>
     </ScrollView>
