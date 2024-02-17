@@ -4,7 +4,7 @@ import {LoginProps} from '../../../types/Types';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthRoutes} from '../../../navigation/Navigation';
+import {AuthRoutes} from '../../../navigation/stackNavigation/StackNavigation';
 
 export const useSignUp = () => {
   const navigation = useNavigation<StackNavigationProp<AuthRoutes>>();
