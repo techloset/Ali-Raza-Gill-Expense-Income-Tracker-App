@@ -8,37 +8,42 @@ import {
 import React, {useState} from 'react';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
+import CustomHeader from '../../../components/CustomHeader';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const ForgotPassword = (props: any) => {
   const [forgotEmail, setForgotEmail] = useState('');
 
   return (
-    <View style={styles.forgotMainContainer}>
-      <KeyboardAvoidingView>
-        <View style={styles.forgotContainer}>
-          <View style={styles.forgotTextContainer}>
-            <Text style={styles.forgotText}>Don't worry.</Text>
-            <Text style={styles.forgotText}>
-              Enter your email and we'll send you a link to reset your password.
-            </Text>
-          </View>
-          <View style={styles.emailContainer}>
-            <InputField
-              placeholder="Email"
-              keyboardType="email-address"
-              value={forgotEmail}
-            />
-          </View>
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate('addtodo')}>
-            <View style={styles.senddEmailBtn}>
-              <Button name="Send Email" onPress={() => {}} />
+    <>
+      <CustomHeader title="Forgot Password" />
+      <View style={styles.forgotMainContainer}>
+        <KeyboardAvoidingView>
+          <View style={styles.forgotContainer}>
+            <View style={styles.forgotTextContainer}>
+              <Text style={styles.forgotText}>Don't worry.</Text>
+              <Text style={styles.forgotText}>
+                Enter your email and we'll send you a link to reset your
+                password.
+              </Text>
             </View>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
-    </View>
+            <View style={styles.emailContainer}>
+              <InputField
+                placeholder="Email"
+                keyboardType="email-address"
+                value={forgotEmail}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('addtodo')}>
+              <View style={styles.senddEmailBtn}>
+                <Button name="Send Email" onPress={() => {}} />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </View>
+    </>
   );
 };
 

@@ -32,72 +32,90 @@ const Login = () => {
   } = useLogin();
 
   return (
-    <ScrollView style={{backgroundColor: 'white'}}>
-      <KeyboardAvoidingView style={{alignItems: 'center'}}>
-        <View style={styles.mainHeaderSection}>
-          <View>
-            <InputField
-              placeholder="Email"
-              keyboardType="email-address"
-              value={email}
-              onChangeText={handleLogEmail}
-            />
+    <>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Login</Text>
+      </View>
+      <ScrollView style={{backgroundColor: 'white'}}>
+        <KeyboardAvoidingView style={{alignItems: 'center'}}>
+          <View style={styles.mainHeaderSection}>
             <View>
               <InputField
-                placeholder="Password"
-                secureTextEntry={true}
-                value={password}
-                onChangeText={handleLogPassword}
+                placeholder="Email"
+                keyboardType="email-address"
+                value={email}
+                onChangeText={handleLogEmail}
               />
-            </View>
-            <View style={styles.loginbtn}>
-              <Button name="Log In" onPress={handleLogIn} />
-            </View>
-            <TouchableOpacity
-              style={styles.forgotContainer}
-              onPress={() => {
-                navigation.navigate('ForgotPassword');
-              }}>
-              <Text style={styles.forgotPass}>Forgot Password?</Text>
-            </TouchableOpacity>
-            <View style={styles.orContainer}>
-              <Text style={styles.orText}>or</Text>
-            </View>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleGoogleSignup}>
-              <View style={styles.content}>
-                <Image
-                  source={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
-                  style={styles.icon}
+              <View>
+                <InputField
+                  placeholder="Password"
+                  secureTextEntry={true}
+                  value={password}
+                  onChangeText={handleLogPassword}
                 />
-                <Text style={styles.btnText}>Sign Up with Google</Text>
               </View>
-            </TouchableOpacity>
-            <View style={styles.account}>
-              <Text style={styles.accountText1}>
-                Don't have an account yet?
-              </Text>
+              <View style={styles.loginbtn}>
+                <Button name="Log In" onPress={handleLogIn} />
+              </View>
               <TouchableOpacity
-                style={styles.accountTouchable}
+                style={styles.forgotContainer}
                 onPress={() => {
-                  navigation.navigate('SignUp');
+                  navigation.navigate('ForgotPassword');
                 }}>
-                <Text style={styles.accountBtn}>Sign Up</Text>
+                <Text style={styles.forgotPass}>Forgot Password?</Text>
               </TouchableOpacity>
+              <View style={styles.orContainer}>
+                <Text style={styles.orText}>or</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleGoogleSignup}>
+                <View style={styles.content}>
+                  <Image
+                    source={require('../../../assets/images/SignUpImages/GoogleIcon.png')}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.btnText}>Sign Up with Google</Text>
+                </View>
+              </TouchableOpacity>
+              <View style={styles.account}>
+                <Text style={styles.accountText1}>
+                  Don't have an account yet?
+                </Text>
+                <TouchableOpacity
+                  style={styles.accountTouchable}
+                  onPress={() => {
+                    navigation.navigate('SignUp');
+                  }}>
+                  <Text style={styles.accountBtn}>Sign Up</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </>
   );
 };
 export default Login;
 
 const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 65,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+  },
+  headerText: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 18,
+    color: 'black',
+  },
   mainHeaderSection: {
     paddingLeft: 0,
-    marginTop: 100,
+    marginTop: 72,
     width: 320,
   },
   account: {

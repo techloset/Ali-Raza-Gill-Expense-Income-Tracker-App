@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import CustomHeader from '../../../components/CustomHeader';
 
 const SignUp = () => {
   const {
@@ -30,6 +31,7 @@ const SignUp = () => {
 
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
+      <CustomHeader title="Sign Up" />
       <KeyboardAvoidingView
         style={{
           flex: 1,
