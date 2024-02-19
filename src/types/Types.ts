@@ -8,3 +8,4 @@ export type RootStackParamsList = {
 export interface LoginProps {
   navigation: StackNavigationProp<RootStackParamsList, 'login', 'signUp'>;
 }
+

@@ -18,7 +18,7 @@ import Shopping from '../../../assets/images/HomeScreenImages/Shopping.png';
 import Subscription from '../../../assets/images/HomeScreenImages/Subscription.png';
 import Food from '../../../assets/images/HomeScreenImages/Food.png';
 import Salary from '../../../assets/images/HomeScreenImages/Salary.png';
-import Transportation from '../../../assets/images/HomeScreenImages/Transpotation.png';
+import Transpotation from '../../../assets/images/HomeScreenImages/Transpotation.png';
 interface Category {
   id: number;
   name: string;
@@ -29,7 +29,7 @@ const categories: Category[] = [
   {id: 2, name: 'Subscription', image: Subscription},
   {id: 3, name: 'Food', image: Food},
   {id: 4, name: 'Salary', image: Salary},
-  {id: 5, name: 'Transportation', image: Transportation},
+  {id: 5, name: 'Transportation', image: Transpotation},
 ];
 
 interface CreateTransactionProps {
