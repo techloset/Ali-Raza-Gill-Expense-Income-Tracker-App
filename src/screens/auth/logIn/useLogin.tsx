@@ -1,4 +1,4 @@
-import React, {isValidElement, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';

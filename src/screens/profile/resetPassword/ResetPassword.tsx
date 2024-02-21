@@ -1,24 +1,49 @@
-import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
+import {ScrollView, StyleSheet, TextInput, View, Alert} from 'react-native';
 import Button from '../../../components/Button';
 import CustomHeader from '../../../components/CustomHeader';
+import useResetPassword from './useResetPassword';
 
 const ResetPassword = () => {
+  const {
+    setCurrentPass,
+    currentPass,
+    newPasss,
+    setNewPass,
+    confirmNewPass,
+    setConfirmNewPass,
+    handleResetPassword,
+  } = useResetPassword();
   return (
     <ScrollView style={styles.MainContainer}>
       <View>
         <View style={styles.container}>
           <CustomHeader title={'Reset Password'} style={{}} />
           <View>
-            <TextInput style={styles.textInput} placeholder="New Password" />
-            <TextInput style={styles.textInput} placeholder="New Password" />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Old Password"
+              secureTextEntry={true}
+              value={currentPass}
+              onChangeText={text => setCurrentPass(text)}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder="New Password"
+              secureTextEntry={true}
+              value={newPasss}
+              onChangeText={text => setNewPass(text)}
+            />
             <TextInput
               style={styles.textInput}
               placeholder="Retype New Password"
+              secureTextEntry={true}
+              value={confirmNewPass}
+              onChangeText={text => setConfirmNewPass(text)}
             />
           </View>
           <View style={styles.resetPasswordBtn}>
-            <Button name={'Reset Password'} onPress={() => {}} />
+            <Button name={'Reset Password'} onPress={handleResetPassword} />
           </View>
         </View>
       </View>
@@ -37,7 +62,6 @@ const styles = StyleSheet.create({
     height: 712,
     margin: 16,
     position: 'relative',
-    // height: '100%',
   },
   textInput: {
     width: '100%',
