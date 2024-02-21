@@ -3,42 +3,45 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation hook
 import CustomHeader from '../../../components/CustomHeader';
 import Button from '../../../components/Button';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const UpdateProfile = () => {
   //   const navigation = useNavigation(); // Use useNavigation hook to get navigation object
 
   return (
-    <View style={styles.Main}>
-      <View style={styles.container}>
-        <CustomHeader title="Update Profile" style={{}} />
+    <ScrollView>
+      <View style={styles.Main}>
+        <View style={styles.container}>
+          <CustomHeader title="Update Profile" style={{}} />
 
-        <View style={styles.profileView}>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.userImage}
-              source={require('../../../assets/images/Profile/ProfilePic.png')}
-            />
-          </View>
-          <View style={styles.editButtonContainer}>
-            <View style={styles.editButton}>
+          <View style={styles.profileView}>
+            <View style={styles.imageContainer}>
               <Image
-                source={require('../../../assets/images/Profile/Edit.png')}
-                style={styles.editIcon}
+                style={styles.userImage}
+                source={require('../../../assets/images/Profile/ProfilePic.png')}
               />
             </View>
+            <View style={styles.editButtonContainer}>
+              <View style={styles.editButton}>
+                <Image
+                  source={require('../../../assets/images/Profile/Edit.png')}
+                  style={styles.editIcon}
+                />
+              </View>
+            </View>
+          </View>
+          <View>
+            <Text style={styles.inputLable}>Email</Text>
+            <TextInput style={styles.textInput} placeholder="Email" />
+            <Text style={styles.inputLable}>Name</Text>
+            <TextInput style={styles.textInput} placeholder="Name" />
+          </View>
+          <View style={styles.UpdateProfileBtn}>
+            <Button name="Update Profile" onPress={() => {}} />
           </View>
         </View>
-        <View>
-          <Text style={styles.inputLable}>Email</Text>
-          <TextInput style={styles.textInput} placeholder="Email" />
-          <Text style={styles.inputLable}>Name</Text>
-          <TextInput style={styles.textInput} placeholder="Name" />
-        </View>
-        <View style={styles.UpdateProfileBtn}>
-          <Button name="Update Profile" onPress={() => {}} />
-        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -47,6 +50,8 @@ export default UpdateProfile;
 const styles = StyleSheet.create({
   Main: {
     backgroundColor: 'white',
+    flex: 1,
+    height: 712,
   },
   container: {
     margin: 16,
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
     paddingLeft: 100,
     position: 'absolute',
     bottom: 5,
-    left: 85,
+    left: 80,
   },
   editButton: {
     height: 36,
@@ -110,7 +115,7 @@ const styles = StyleSheet.create({
   },
   UpdateProfileBtn: {
     position: 'absolute',
-    bottom: 70,
+    bottom: 60,
     width: '100%',
   },
 });

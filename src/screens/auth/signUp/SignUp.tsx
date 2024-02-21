@@ -31,7 +31,7 @@ const SignUp = () => {
 
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
-      <CustomHeader title="Sign Up" />
+      <CustomHeader title="Sign Up" style={{}} />
       <KeyboardAvoidingView
         style={{
           flex: 1,

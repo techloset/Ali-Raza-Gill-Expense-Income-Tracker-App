@@ -12,8 +12,6 @@ import Button from '../../../components/Button';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useLogin} from './useLogin';
 import {Image} from 'react-native';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
 
 const Login = () => {
   const {
@@ -26,7 +24,6 @@ const Login = () => {
     handleGoogleSignup,
     handleLogIn,
     secureTextEntry,
-    toggleSecureEntry,
     handleLogEmail,
     handleLogPassword,
   } = useLogin();

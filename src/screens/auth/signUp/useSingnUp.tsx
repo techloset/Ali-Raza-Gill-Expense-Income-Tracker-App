@@ -5,6 +5,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthRoutes} from '../../../navigation/stackNavigation/StackNavigation';
+import {Alert} from 'react-native';
 
 export const useSignUp = () => {
   const navigation = useNavigation<StackNavigationProp<AuthRoutes>>();
@@ -36,6 +37,7 @@ export const useSignUp = () => {
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         console.log('User account created & signed in!');
+        Alert.alert('User account created Successfully!');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {

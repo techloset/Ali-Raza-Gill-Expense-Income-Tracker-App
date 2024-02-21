@@ -1,4 +1,11 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 
 interface ProfileHomeProps {
@@ -9,7 +16,7 @@ import auth from '@react-native-firebase/auth';
 const hnadleSignOut = () => {
   auth()
     .signOut()
-    .then(() => console.log('User signed out!'));
+    .then(() => Alert.alert('User signed out!'));
 };
 
 const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
@@ -29,8 +36,7 @@ const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
           </View>
         </View>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate('UpdateProfileScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('UpdateProfile')}>
           <Image source={require('../../../assets/images/Profile/Edit.png')} />
         </TouchableOpacity>
       </View>
@@ -110,10 +116,11 @@ const styles = StyleSheet.create({
   },
   usernameText: {
     fontSize: 14,
+    fontFamily: 'Inter-Medium',
   },
   nameText: {
     fontSize: 24,
-    fontWeight: '600',
+    fontFamily: 'Inter-Bold',
   },
   ProfileText: {
     marginLeft: 16,
@@ -136,6 +143,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     marginLeft: 9,
+    fontFamily: 'Inter-Medium',
   },
   actionImgContainer: {},
   actionContainer: {

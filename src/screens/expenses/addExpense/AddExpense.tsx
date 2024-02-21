@@ -9,6 +9,7 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Image,
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
 import CustomHeader from '../../../components/CustomHeader';
@@ -69,77 +70,81 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
           paddingRight: 20,
         }}
       />
-      <TouchableWithoutFeedback onPress={handleOutsidePress}>
-        <View style={[styles.container, {backgroundColor: backgroundColor}]}>
-          <View style={styles.navigationContainer}></View>
-          <View style={styles.displayContainer}>
-            <Text style={styles.displayContainerHeading}>How Much ?</Text>
-            <Text style={styles.displayContainerCash}>$0</Text>
-          </View>
-          <View
-            style={[styles.inputContainer, {flex: fileModalVisible ? 5 : 2}]}>
-            <View>
-              <TouchableOpacity
-                style={styles.textInput}
-                onPress={() => setModalVisible(true)}>
-                <Text>{category || 'Select Category'}</Text>
-              </TouchableOpacity>
-              <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}>
-                <View style={styles.modalContainer}>
-                  <FlatList
-                    data={categories}
-                    keyExtractor={item => item.id.toString()}
-                    renderItem={({item}) => (
-                      <TouchableOpacity
-                        style={styles.categoryItem}
-                        onPress={() => selectCategory(item.name)}>
-                        <Image
-                          source={item.image}
-                          style={styles.categoryImage}
-                        />
-                        <Text style={styles.categoryText}>{item.name}</Text>
-                      </TouchableOpacity>
-                    )}
-                  />
-                </View>
-              </Modal>
-              <TextInput
-                style={styles.textInput}
-                placeholder="Description"
-                value={expenseName}
-                onChangeText={text => setExpenseName(text)}
-              />
-              <TouchableOpacity
-                style={styles.fileInput}
-                onPress={toggleFileModal}>
-                <Image
-                  source={require('../../../assets/images/InputPopup/Vector.png')}
-                />
-                <Text style={{fontFamily: 'Inter-Medium'}}>Add Attachment</Text>
-              </TouchableOpacity>
-              <Modal
-                animationType="fade"
-                transparent={true}
-                visible={fileModalVisible}>
-                <TouchableWithoutFeedback onPress={handleOutsidePress}>
-                  <View style={styles.fileModalContainer}>
-                    <View style={styles.modalBackground} />
-                    <View style={styles.attachmentPopup}>
-                      <AttachmentInputPopUp />
-                    </View>
+      <ScrollView style={styles.Maincontainer}>
+        <TouchableWithoutFeedback onPress={handleOutsidePress}>
+          <View style={[styles.container, {backgroundColor: backgroundColor}]}>
+            <View style={styles.navigationContainer}></View>
+            <View style={styles.displayContainer}>
+              <Text style={styles.displayContainerHeading}>How Much ?</Text>
+              <Text style={styles.displayContainerCash}>$0</Text>
+            </View>
+            <View
+              style={[styles.inputContainer, {flex: fileModalVisible ? 5 : 2}]}>
+              <View>
+                <TouchableOpacity
+                  style={styles.textInput}
+                  onPress={() => setModalVisible(true)}>
+                  <Text>{category || 'Select Category'}</Text>
+                </TouchableOpacity>
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}>
+                  <View style={styles.modalContainer}>
+                    <FlatList
+                      data={categories}
+                      keyExtractor={item => item.id.toString()}
+                      renderItem={({item}) => (
+                        <TouchableOpacity
+                          style={styles.categoryItem}
+                          onPress={() => selectCategory(item.name)}>
+                          <Image
+                            source={item.image}
+                            style={styles.categoryImage}
+                          />
+                          <Text style={styles.categoryText}>{item.name}</Text>
+                        </TouchableOpacity>
+                      )}
+                    />
                   </View>
-                </TouchableWithoutFeedback>
-              </Modal>
-            </View>
-            <View style={styles.button}>
-              <AppButton name="Continue" onPress={() => {}} />
+                </Modal>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="Description"
+                  value={expenseName}
+                  onChangeText={text => setExpenseName(text)}
+                />
+                <TouchableOpacity
+                  style={styles.fileInput}
+                  onPress={toggleFileModal}>
+                  <Image
+                    source={require('../../../assets/images/InputPopup/Vector.png')}
+                  />
+                  <Text style={{fontFamily: 'Inter-Medium'}}>
+                    Add Attachment
+                  </Text>
+                </TouchableOpacity>
+                <Modal
+                  animationType="fade"
+                  transparent={true}
+                  visible={fileModalVisible}>
+                  <TouchableWithoutFeedback onPress={handleOutsidePress}>
+                    <View style={styles.fileModalContainer}>
+                      <View style={styles.modalBackground} />
+                      <View style={styles.attachmentPopup}>
+                        <AttachmentInputPopUp />
+                      </View>
+                    </View>
+                  </TouchableWithoutFeedback>
+                </Modal>
+              </View>
+              <View style={styles.button}>
+                <AppButton name="Continue" onPress={() => {}} />
+              </View>
             </View>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </ScrollView>
     </>
   );
 };
@@ -147,11 +152,11 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
 export default CreateTransaction;
 
 const styles = StyleSheet.create({
+  Maincontainer: {},
   container: {
     flex: 1,
   },
   displayContainer: {
-    flex: 1,
     paddingTop: '10%',
     paddingHorizontal: 25,
   },
@@ -164,6 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 64,
     fontWeight: '600',
     color: '#FCFCFC',
+    marginBottom: 90,
   },
   inputContainer: {
     backgroundColor: '#FFFFFF',

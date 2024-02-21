@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {isValidElement, useEffect, useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native';
 import {AuthRoutes} from '../../../navigation/stackNavigation/StackNavigation';
+import {Alert} from 'react-native';
 
 const navigation = useNavigation<StackNavigationProp<AuthRoutes>>();
 
 export const useLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   const [isChecked, setChecked] = useState(false);
@@ -37,7 +38,7 @@ export const useLogin = () => {
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        console.log('User signed in!');
+        Alert.alert('User signed in!');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -50,10 +51,6 @@ export const useLogin = () => {
 
         console.error(error);
       });
-  };
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const toggleSecureEntry = () => {
-    setSecureTextEntry(!secureTextEntry);
   };
 
   useEffect(() => {
@@ -79,7 +76,6 @@ export const useLogin = () => {
     handleCheckBoxToggle,
     handleLogIn,
     secureTextEntry,
-    toggleSecureEntry,
     handleLogEmail,
     handleLogPassword,
     navigation,

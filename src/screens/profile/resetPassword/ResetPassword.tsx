@@ -1,39 +1,43 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
 import Button from '../../../components/Button';
 import CustomHeader from '../../../components/CustomHeader';
 
 const ResetPassword = () => {
   return (
-    <View style={styles.Main}>
-      <View style={styles.container}>
-        <CustomHeader title={'Reset Password'} style={{}} />
-        <View>
-          <TextInput style={styles.textInput} placeholder="New Password" />
-          <TextInput style={styles.textInput} placeholder="New Password" />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Retype New Password"
-          />
-        </View>
-        <View style={styles.resetPasswordBtn}>
-          <Button name={'Reset Password'} onPress={() => {}} />
+    <ScrollView style={styles.MainContainer}>
+      <View>
+        <View style={styles.container}>
+          <CustomHeader title={'Reset Password'} style={{}} />
+          <View>
+            <TextInput style={styles.textInput} placeholder="New Password" />
+            <TextInput style={styles.textInput} placeholder="New Password" />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Retype New Password"
+            />
+          </View>
+          <View style={styles.resetPasswordBtn}>
+            <Button name={'Reset Password'} onPress={() => {}} />
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 export default ResetPassword;
 
 const styles = StyleSheet.create({
-  Main: {
+  MainContainer: {
+    width: '100%',
     backgroundColor: 'white',
   },
   container: {
+    height: 712,
     margin: 16,
     position: 'relative',
-    height: '100%',
+    // height: '100%',
   },
   textInput: {
     width: '100%',
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
   },
   resetPasswordBtn: {
     position: 'absolute',
-    bottom: 70,
+    bottom: 60,
     width: '100%',
   },
 });
