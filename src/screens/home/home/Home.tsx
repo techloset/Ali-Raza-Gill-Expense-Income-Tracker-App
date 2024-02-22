@@ -1,13 +1,13 @@
 import {
-  StyleSheet,
   Text,
   View,
   Image,
   BackHandler,
   TouchableOpacity,
   ScrollView,
+  FlatList,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import useHome from './useHome';
 import ExpenseCard from '../../../components/ExpenseCard';
 import LinearGradient from 'react-native-linear-gradient';
@@ -15,7 +15,23 @@ import {styles} from './HomeStyle';
 import ShoppingCard from '../../../components/ShoppingCard';
 
 export default function Home() {
-  const {activeButton, handlePress} = useHome();
+  const {activeButton, handlePress, submit, expence} = useHome();
+
+  // console.log('first', expence.length);
+  let setTotal = 0;
+
+  for (let i = 0; i < expence.length; i++) {
+    const amount = parseInt(expence[i].amount.trim(), 10); // Parse and trim whitespace
+    if (!isNaN(amount)) {
+      // Check if parsing was successful
+      console.log(amount);
+      setTotal += amount;
+    } else {
+      console.log('Invalid amount:', expence[i].amount);
+    }
+  }
+
+  console.log(setTotal);
   return (
     <ScrollView>
       <View style={styles.MainContainer1}>
@@ -55,14 +71,14 @@ export default function Home() {
             <View style={styles.ExpenseCards}>
               <ExpenseCard
                 name="Income"
-                amount={5000}
+                amount={setTotal}
                 imag={require('../../../assets/images/HomeScreenImages/income.png')}
                 onPress={() => {}}
                 style={{backgroundColor: '#00A86B'}}
               />
               <ExpenseCard
                 name="Expense"
-                amount={5000}
+                amount={500}
                 imag={require('../../../assets/images/HomeScreenImages/Expnese.png')}
                 onPress={() => {}}
                 style={{backgroundColor: '#FD3C4A'}}
@@ -112,7 +128,10 @@ export default function Home() {
         <View>
           <View style={styles.recentTransContainer}>
             <Text style={styles.recentTransText1}>Recent Transaction</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                submit();
+              }}>
               <View style={styles.recentTransText2Container}>
                 <Text style={styles.recentTransText2}>See All</Text>
               </View>
@@ -120,18 +139,20 @@ export default function Home() {
           </View>
         </View>
         <View>
-          <ShoppingCard
-            img={require('../../../assets/images/HomeScreenImages/Shopping.png')}
-            category="Shopping"
-            description="I buy a car"
-            amount={-500}
-            time={'10:20 pm'}
-            onPress={() => {}}
-            style={{}}
+          <FlatList
+            data={expence}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => (
+              <View>
+                <Text style={{fontSize: 34}}>{item.category}</Text>
+                <Text style={{fontSize: 12}}>{item.expenseName}</Text>
+                <Text style={{fontSize: 12}}>{item.amount}</Text>
+              </View>
+            )}
           />
         </View>
 
-        <View>
+        {/* <View>
           <ShoppingCard
             img={require('../../../assets/images/HomeScreenImages/Subscription.png')}
             category="Subscription"
@@ -174,7 +195,7 @@ export default function Home() {
             onPress={() => {}}
             style={{}}
           />
-        </View>
+        </View> */}
       </View>
     </ScrollView>
   );

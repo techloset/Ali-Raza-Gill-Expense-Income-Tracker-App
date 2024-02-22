@@ -9,7 +9,16 @@ export type RootStackParamsList = {
  
 
 };
+export type expenses={
+  description: string;
+  category:string;
+
+}
 export interface LoginProps {
   navigation: StackNavigationProp<RootStackParamsList, 'login', 'signUp'>;
 }
-
+export type counterState ={
+  expense:expenses[],
+  isLoading: boolean,
+  isError: string | null,
+};

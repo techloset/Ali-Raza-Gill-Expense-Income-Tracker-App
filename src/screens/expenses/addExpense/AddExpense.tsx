@@ -20,6 +20,10 @@ import Subscription from '../../../assets/images/HomeScreenImages/Subscription.p
 import Food from '../../../assets/images/HomeScreenImages/Food.png';
 import Salary from '../../../assets/images/HomeScreenImages/Salary.png';
 import Transpotation from '../../../assets/images/HomeScreenImages/Transpotation.png';
+import {useAppDispatch} from '../../../store/hooks';
+import {addExpense} from '../../../store/slices/expenseSlice';
+import InputField from '../../../components/InputField';
+
 interface Category {
   id: number;
   name: string;
@@ -42,10 +46,22 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
   navigation,
   backgroundColor,
 }) => {
-  const [category, setCategory] = useState('');
-  const [expenseName, setExpenseName] = useState('');
+  const [category, setCategory] = useState<any>('');
+  const [expenseName, setExpenseName] = useState<any>('');
+  const [amount, setAmount] = useState<any>('');
   const [modalVisible, setModalVisible] = useState(false);
   const [fileModalVisible, setFileModalVisible] = useState(false);
+  const [transType, setTransType] = useState<string>('Expense');
+  const disPatch = useAppDispatch();
+  console.log('trans', transType);
+  const addExpens = () => {
+    let expense = {expenseName, amount, category};
+    try {
+      disPatch(addExpense({expense, transType}));
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   const selectCategory = (categoryName: string) => {
     setCategory(categoryName);
@@ -59,11 +75,13 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
   const handleOutsidePress = () => {
     setFileModalVisible(false);
   };
-
+  const handleamount = (text: any) => {
+    setAmount(text);
+  };
   return (
     <>
       <CustomHeader
-        title="Income Expense"
+        title={transType === 'Expense' ? 'Expense' : 'Income'}
         style={{
           backgroundColor: 'transparent',
           paddingTop: 20,
@@ -74,9 +92,32 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
         <TouchableWithoutFeedback onPress={handleOutsidePress}>
           <View style={[styles.container, {backgroundColor: backgroundColor}]}>
             <View style={styles.navigationContainer}></View>
+            <View style={styles.toggleButtonsContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.toggleButton,
+                  transType === 'Expense' && styles.activeButton,
+                ]}
+                onPress={() => setTransType('Expense')}>
+                <Text style={styles.toggleButtonText}>Add Expense</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.toggleButton,
+                  transType === 'Income' && styles.activeButton,
+                ]}
+                onPress={() => setTransType('Income')}>
+                <Text style={styles.toggleButtonText}>Add Income</Text>
+              </TouchableOpacity>
+            </View>
             <View style={styles.displayContainer}>
               <Text style={styles.displayContainerHeading}>How Much ?</Text>
-              <Text style={styles.displayContainerCash}>$0</Text>
+              <InputField
+                value={amount}
+                placeholder="$0"
+                onChangeText={handleamount}
+                keyboardType="numeric"
+              />
             </View>
             <View
               style={[styles.inputContainer, {flex: fileModalVisible ? 5 : 2}]}>
@@ -139,7 +180,12 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
                 </Modal>
               </View>
               <View style={styles.button}>
-                <AppButton name="Continue" onPress={() => {}} />
+                <AppButton
+                  name="Continue"
+                  onPress={() => {
+                    addExpens();
+                  }}
+                />
               </View>
             </View>
           </View>
@@ -242,5 +288,25 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
     padding: 20,
+  },
+
+  toggleButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  toggleButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginHorizontal: 10,
+    backgroundColor: 'grey',
+  },
+  activeButton: {
+    backgroundColor: '#7F3DFF',
+  },
+  toggleButtonText: {
+    color: 'white',
+    fontFamily: 'Inter-SemiBold',
   },
 });
