@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  KeyboardTypeOptions,
-} from 'react-native';
+import {View, TextInput, StyleSheet, KeyboardTypeOptions} from 'react-native';
 import React from 'react';
 
 interface InputFieldProps {
@@ -13,6 +7,7 @@ interface InputFieldProps {
   keyboardType?: KeyboardTypeOptions;
   onChangeText?: (text: string) => void;
   value: string;
+  style: object;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -21,16 +16,20 @@ const InputField: React.FC<InputFieldProps> = ({
   keyboardType = 'default',
   onChangeText,
   value,
+  style,
 }) => {
   return (
     <View style={styles.inputContainer}>
       <TextInput
         placeholder={placeholder}
+        placeholderTextColor="white"
+        textAlignVertical="center"
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
-        style={styles.input}
+        style={[styles.input, style]}
         onChangeText={onChangeText}
         value={value}
+        selectionColor="white"
       />
     </View>
   );

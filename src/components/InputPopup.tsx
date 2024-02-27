@@ -1,18 +1,60 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
+import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 
 const AttachmentInputPopUp = () => {
+  const [image, setImage] = useState<ImageOrVideo | null>(null);
+  const handleImageThroughGallery = async () => {
+    try {
+      const pickedImage = await ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+      });
+      setImage(pickedImage);
+      // console.log(pickedImage);
+    } catch (error) {
+      console.log('Error selecting image:', error);
+    }
+  };
+
+  const handleImageThroughCamera = async () => {
+    try {
+      const pickedImage = await ImagePicker.openCamera({
+        width: 300,
+        height: 400,
+        cropping: true,
+      });
+      setImage(pickedImage);
+    } catch (error) {
+      console.log('Error taking picture:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={handleImageThroughCamera}>
         <Image source={require('../assets/images/InputPopup/camera.png')} />
         <Text style={styles.Text}>Camera</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={handleImageThroughGallery}>
         <Image source={require('../assets/images/InputPopup/gallery.png')} />
         <Text style={styles.Text}>Gallery</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={handleImageThroughGallery}>
         <Image source={require('../assets/images/InputPopup/document.png')} />
         <Text style={styles.Text}>File</Text>
       </TouchableOpacity>

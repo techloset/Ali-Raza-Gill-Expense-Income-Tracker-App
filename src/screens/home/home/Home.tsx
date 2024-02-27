@@ -13,25 +13,20 @@ import ExpenseCard from '../../../components/ExpenseCard';
 import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './HomeStyle';
 import ShoppingCard from '../../../components/ShoppingCard';
+import moment from 'moment';
 
 export default function Home() {
-  const {activeButton, handlePress, submit, expence} = useHome();
+  const {
+    activeButton,
+    handlePress,
+    submit,
+    expence,
+    totalExpense,
+    totalIncome,
+    accountBalance,
+  } = useHome();
 
   // console.log('first', expence.length);
-  let setTotal = 0;
-
-  for (let i = 0; i < expence.length; i++) {
-    const amount = parseInt(expence[i].amount.trim(), 10); // Parse and trim whitespace
-    if (!isNaN(amount)) {
-      // Check if parsing was successful
-      console.log(amount);
-      setTotal += amount;
-    } else {
-      console.log('Invalid amount:', expence[i].amount);
-    }
-  }
-
-  console.log(setTotal);
   return (
     <ScrollView>
       <View style={styles.MainContainer1}>
@@ -65,20 +60,20 @@ export default function Home() {
             </View>
             <View>
               <View style={styles.accountBalanceContainer}>
-                <Text style={styles.accountBalance}>$1000</Text>
+                <Text style={styles.accountBalance}>${accountBalance}</Text>
               </View>
             </View>
             <View style={styles.ExpenseCards}>
               <ExpenseCard
                 name="Income"
-                amount={setTotal}
+                amount={totalIncome}
                 imag={require('../../../assets/images/HomeScreenImages/income.png')}
                 onPress={() => {}}
                 style={{backgroundColor: '#00A86B'}}
               />
               <ExpenseCard
                 name="Expense"
-                amount={500}
+                amount={totalExpense}
                 imag={require('../../../assets/images/HomeScreenImages/Expnese.png')}
                 onPress={() => {}}
                 style={{backgroundColor: '#FD3C4A'}}
@@ -90,6 +85,7 @@ export default function Home() {
 
       <View style={styles.MainContainer2}>
         <View style={styles.frequencyContainer}>
+          {/* server timestamp we use here to set the time of the transction time. */}
           <View style={styles.frequencyMain}>
             <Text style={styles.frequencyText}>Spend Frequency</Text>
           </View>
@@ -130,7 +126,7 @@ export default function Home() {
             <Text style={styles.recentTransText1}>Recent Transaction</Text>
             <TouchableOpacity
               onPress={() => {
-                submit();
+                // submit();
               }}>
               <View style={styles.recentTransText2Container}>
                 <Text style={styles.recentTransText2}>See All</Text>
@@ -138,64 +134,24 @@ export default function Home() {
             </TouchableOpacity>
           </View>
         </View>
-        <View>
-          <FlatList
-            data={expence}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-              <View>
-                <Text style={{fontSize: 34}}>{item.category}</Text>
-                <Text style={{fontSize: 12}}>{item.expenseName}</Text>
-                <Text style={{fontSize: 12}}>{item.amount}</Text>
-              </View>
-            )}
-          />
-        </View>
 
-        {/* <View>
-          <ShoppingCard
-            img={require('../../../assets/images/HomeScreenImages/Subscription.png')}
-            category="Subscription"
-            description="I buy a car"
-            amount={-500}
-            time={'10:20 pm'}
-            onPress={() => {}}
-            style={{}}
-          />
-          <View>
-            <ShoppingCard
-              img={require('../../../assets/images/HomeScreenImages/Food.png')}
-              category="Food"
-              description="I buy a car"
-              amount={-500}
-              time={'10:20 pm'}
-              onPress={() => {}}
-              style={{}}
-            />
-          </View>
-        </View>
-        <View>
-          <ShoppingCard
-            img={require('../../../assets/images/HomeScreenImages/Salary.png')}
-            category="Salary"
-            description="I buy a car"
-            amount={-500}
-            time={'10:20 pm'}
-            onPress={() => {}}
-            style={{}}
-          />
-        </View>
-        <View>
-          <ShoppingCard
-            img={require('../../../assets/images/HomeScreenImages/Transpotation.png')}
-            category="Transpotation"
-            description="I buy a car"
-            amount={-500}
-            time={'10:20 pm'}
-            onPress={() => {}}
-            style={{}}
-          />
-        </View> */}
+        <FlatList
+          data={expence}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+            <View>
+              <ShoppingCard
+                img={require('../../../assets/images/HomeScreenImages/Subscription.png')}
+                category={item.category}
+                description={item.expenseName.slice(0, 20)}
+                amount={item.amount}
+                time={moment(item.addExpneseTime).format('hh:mm A')}
+                onPress={() => {}}
+                style={{}}
+              />
+            </View>
+          )}
+        />
       </View>
     </ScrollView>
   );

@@ -50,9 +50,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#F6F6F6',
     paddingHorizontal: 15,
-    marginTop: 20,
+    marginTop: 10,
     height: 89,
     borderRadius: 20,
+    // marginBottom: 10,
   },
   ShoppingMain: {
     flexDirection: 'row',
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
   },
   expenseContainerDate: {
     fontFamily: 'Inter-Medium',
+    fontSize: 13,
   },
 });
 

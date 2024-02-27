@@ -6,91 +6,56 @@ import {
   TouchableOpacity,
   Modal,
   FlatList,
-  ImageBackground,
   TouchableWithoutFeedback,
   Image,
   ScrollView,
 } from 'react-native';
-import React, {useState} from 'react';
-import CustomHeader from '../../../components/CustomHeader';
-import AppButton from '../../../components/Button';
-import AttachmentInputPopUp from '../../../components/InputPopup';
-import Shopping from '../../../assets/images/HomeScreenImages/Shopping.png';
-import Subscription from '../../../assets/images/HomeScreenImages/Subscription.png';
-import Food from '../../../assets/images/HomeScreenImages/Food.png';
-import Salary from '../../../assets/images/HomeScreenImages/Salary.png';
-import Transpotation from '../../../assets/images/HomeScreenImages/Transpotation.png';
-import {useAppDispatch} from '../../../store/hooks';
-import {addExpense} from '../../../store/slices/expenseSlice';
+
 import InputField from '../../../components/InputField';
-
-interface Category {
-  id: number;
-  name: string;
-  image: any;
-}
-const categories: Category[] = [
-  {id: 1, name: 'Shopping', image: Shopping},
-  {id: 2, name: 'Subscription', image: Subscription},
-  {id: 3, name: 'Food', image: Food},
-  {id: 4, name: 'Salary', image: Salary},
-  {id: 5, name: 'Transportation', image: Transpotation},
-];
-
-interface CreateTransactionProps {
-  navigation?: any;
-  backgroundColor?: string;
-}
-
-const CreateTransaction: React.FC<CreateTransactionProps> = ({
-  navigation,
-  backgroundColor,
-}) => {
-  const [category, setCategory] = useState<any>('');
-  const [expenseName, setExpenseName] = useState<any>('');
-  const [amount, setAmount] = useState<any>('');
-  const [modalVisible, setModalVisible] = useState(false);
-  const [fileModalVisible, setFileModalVisible] = useState(false);
-  const [transType, setTransType] = useState<string>('Expense');
-  const disPatch = useAppDispatch();
-  console.log('trans', transType);
-  const addExpens = () => {
-    let expense = {expenseName, amount, category};
-    try {
-      disPatch(addExpense({expense, transType}));
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  const selectCategory = (categoryName: string) => {
-    setCategory(categoryName);
-    setModalVisible(false);
-  };
-
-  const toggleFileModal = () => {
-    setFileModalVisible(!fileModalVisible);
-  };
-
-  const handleOutsidePress = () => {
-    setFileModalVisible(false);
-  };
-  const handleamount = (text: any) => {
-    setAmount(text);
-  };
+import CustomHeader from '../../../components/CustomHeader';
+import {useAddExpense} from './useAddExpense';
+import React from 'react';
+import Button from '../../../components/Button';
+import AttachmentInputPopUp from '../../../components/InputPopup';
+export default function AddExpense() {
+  const {
+    toggleFileModal,
+    handleOutsidePress,
+    handleAmount,
+    selectCategory,
+    modalVisible,
+    setModalVisible,
+    fileModalVisible,
+    setFileModalVisible,
+    addExpens,
+    category,
+    setCategory,
+    expenseName,
+    setExpenseName,
+    amount,
+    setAmount,
+    image,
+    setImage,
+    transType,
+    setTransType,
+    categories,
+  } = useAddExpense();
   return (
     <>
       <CustomHeader
         title={transType === 'Expense' ? 'Expense' : 'Income'}
-        style={{
-          backgroundColor: 'transparent',
-          paddingTop: 20,
-          paddingRight: 20,
-        }}
+        style={[
+          styles.color,
+          {backgroundColor: transType === 'Expense' ? 'red' : 'green'},
+        ]}
       />
-      <ScrollView style={styles.Maincontainer}>
+      <ScrollView
+        style={[
+          styles.container,
+          {backgroundColor: transType === 'Expense' ? 'red' : 'green'},
+        ]}>
         <TouchableWithoutFeedback onPress={handleOutsidePress}>
-          <View style={[styles.container, {backgroundColor: backgroundColor}]}>
+          <View style={[styles.container]}>
             <View style={styles.navigationContainer}></View>
             <View style={styles.toggleButtonsContainer}>
               <TouchableOpacity
@@ -115,8 +80,9 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
               <InputField
                 value={amount}
                 placeholder="$0"
-                onChangeText={handleamount}
+                onChangeText={handleAmount}
                 keyboardType="numeric"
+                style={styles.amountContainer}
               />
             </View>
             <View
@@ -164,23 +130,24 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
                   <Text style={{fontFamily: 'Inter-Medium'}}>
                     Add Attachment
                   </Text>
-                </TouchableOpacity>
-                <Modal
-                  animationType="fade"
-                  transparent={true}
-                  visible={fileModalVisible}>
-                  <TouchableWithoutFeedback onPress={handleOutsidePress}>
-                    <View style={styles.fileModalContainer}>
-                      <View style={styles.modalBackground} />
-                      <View style={styles.attachmentPopup}>
-                        <AttachmentInputPopUp />
+
+                  <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={fileModalVisible}>
+                    <TouchableWithoutFeedback onPress={handleOutsidePress}>
+                      <View style={styles.fileModalContainer}>
+                        <View style={styles.modalBackground} />
+                        <View style={styles.attachmentPopup}>
+                          <AttachmentInputPopUp />
+                        </View>
                       </View>
-                    </View>
-                  </TouchableWithoutFeedback>
-                </Modal>
+                    </TouchableWithoutFeedback>
+                  </Modal>
+                </TouchableOpacity>
               </View>
               <View style={styles.button}>
-                <AppButton
+                <Button
                   name="Continue"
                   onPress={() => {
                     addExpens();
@@ -193,29 +160,38 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
       </ScrollView>
     </>
   );
-};
-
-export default CreateTransaction;
+}
 
 const styles = StyleSheet.create({
-  Maincontainer: {},
+  Maincontainer: {
+    backgroundColor: 'red',
+  },
   container: {
     flex: 1,
+  },
+  color: {
+    color: 'white',
   },
   displayContainer: {
     paddingTop: '10%',
     paddingHorizontal: 25,
+    paddingBottom: '16%',
   },
   displayContainerHeading: {
     fontSize: 18,
     fontWeight: '600',
     color: '#FCFCFC',
+    fontFamily: 'Inter-Bold',
   },
-  displayContainerCash: {
-    fontSize: 64,
-    fontWeight: '600',
+  amountContainer: {
+    fontSize: 45,
+    alignContent: 'center',
+    justifyContent: 'center',
     color: '#FCFCFC',
-    marginBottom: 90,
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    height: 77,
+    fontFamily: 'Inter-Bold',
   },
   inputContainer: {
     backgroundColor: '#FFFFFF',
@@ -309,4 +285,5 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Inter-SemiBold',
   },
+  backgroundColor: {},
 });

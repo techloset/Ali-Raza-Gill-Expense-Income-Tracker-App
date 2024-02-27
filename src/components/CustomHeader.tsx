@@ -19,11 +19,11 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, style}) => {
       <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
         <Image
           source={require('../assets/images/SignUpImages/arrowleft.png')}
-          style={styles.backIcon}
+          style={[styles.backIcon]}
           resizeMode="contain"
         />
       </TouchableOpacity>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title, style]}>{title}</Text>
     </View>
   );
 };
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     fontFamily: 'Inter-SemiBold',
-    color: 'black',
+    // color: 'white',
   },
 });
 
