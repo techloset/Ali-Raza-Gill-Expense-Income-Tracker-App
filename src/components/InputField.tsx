@@ -22,7 +22,7 @@ const InputField: React.FC<InputFieldProps> = ({
     <View style={styles.inputContainer}>
       <TextInput
         placeholder={placeholder}
-        placeholderTextColor="white"
+        placeholderTextColor="black"
         textAlignVertical="center"
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}

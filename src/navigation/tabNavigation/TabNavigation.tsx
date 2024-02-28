@@ -1,7 +1,7 @@
 import {ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from '../../screens/home/home/Home';
+import Home from '../../screens/home/Home';
 import AddExpense from '../../screens/expenses/addExpense/AddExpense';
 import Expense from '../../screens/expenses/expense/Expense';
 import TabScreen from '../../screens/expenses/expense/Expense';

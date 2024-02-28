@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import useHome from './useHome';
-import ExpenseCard from '../../../components/ExpenseCard';
+import ExpenseCard from '../../components/ExpenseCard';
 import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './HomeStyle';
-import ShoppingCard from '../../../components/ShoppingCard';
+import ShoppingCard from '../../components/ShoppingCard';
 import moment from 'moment';
 
 export default function Home() {
@@ -38,19 +38,19 @@ export default function Home() {
               <View style={styles.TopNavigation1}>
                 <View>
                   <Image
-                    source={require('../../../assets/images/HomeScreenImages/Avatar.png')}
+                    source={require('../../assets/images/HomeScreenImages/Avatar.png')}
                   />
                 </View>
                 <View style={styles.TopNavigation2}>
                   <Image
-                    source={require('../../../assets/images/HomeScreenImages/arrow-down-2.png')}
+                    source={require('../../assets/images/HomeScreenImages/arrow-down-2.png')}
                     style={styles.TopNavigation2Image}
                   />
                   <Text style={styles.TopNavigation2Text}>October</Text>
                 </View>
                 <View style={styles.TopNavigation3}>
                   <Image
-                    source={require('../../../assets/images/HomeScreenImages/notifiaction.png')}
+                    source={require('../../assets/images/HomeScreenImages/notifiaction.png')}
                   />
                 </View>
               </View>
@@ -67,14 +67,14 @@ export default function Home() {
               <ExpenseCard
                 name="Income"
                 amount={totalIncome}
-                imag={require('../../../assets/images/HomeScreenImages/income.png')}
+                imag={require('../../assets/images/HomeScreenImages/income.png')}
                 onPress={() => {}}
                 style={{backgroundColor: '#00A86B'}}
               />
               <ExpenseCard
                 name="Expense"
                 amount={totalExpense}
-                imag={require('../../../assets/images/HomeScreenImages/Expnese.png')}
+                imag={require('../../assets/images/HomeScreenImages/Expnese.png')}
                 onPress={() => {}}
                 style={{backgroundColor: '#FD3C4A'}}
               />
@@ -85,7 +85,6 @@ export default function Home() {
 
       <View style={styles.MainContainer2}>
         <View style={styles.frequencyContainer}>
-          {/* server timestamp we use here to set the time of the transction time. */}
           <View style={styles.frequencyMain}>
             <Text style={styles.frequencyText}>Spend Frequency</Text>
           </View>
@@ -93,7 +92,7 @@ export default function Home() {
         <View>
           <View style={styles.graphMain}>
             <Image
-              source={require('../../../assets/images/HomeScreenImages/Graph.png')}
+              source={require('../../assets/images/HomeScreenImages/Graph.png')}
             />
           </View>
         </View>
@@ -133,15 +132,15 @@ export default function Home() {
               </View>
             </TouchableOpacity>
           </View>
-        </View>
 
-        <FlatList
-          data={expence}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <View>
+          <FlatList
+            data={expence}
+            keyExtractor={(item, index) =>
+              item.id ? item.id.toString() : index.toString()
+            }
+            renderItem={({item}) => (
               <ShoppingCard
-                img={require('../../../assets/images/HomeScreenImages/Subscription.png')}
+                img={require('../../assets/images/HomeScreenImages/Subscription.png')}
                 category={item.category}
                 description={item.expenseName.slice(0, 20)}
                 amount={item.amount}
@@ -149,9 +148,9 @@ export default function Home() {
                 onPress={() => {}}
                 style={{}}
               />
-            </View>
-          )}
-        />
+            )}
+          />
+        </View>
       </View>
     </ScrollView>
   );

@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import AppButton from '../../../components/Button';
+import {firebase} from '@react-native-firebase/firestore';
+// import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import AttachmentInputPopUp from '../../../components/InputPopup';
 import Shopping from '../../../assets/images/HomeScreenImages/Shopping.png';
 import Subscription from '../../../assets/images/HomeScreenImages/Subscription.png';
@@ -8,6 +11,8 @@ import Salary from '../../../assets/images/HomeScreenImages/Salary.png';
 import Transpotation from '../../../assets/images/HomeScreenImages/Transpotation.png';
 import {useAppDispatch} from '../../../store/hooks';
 import {addExpense} from '../../../store/slices/expenseSlice';
+import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
+import {Alert} from 'react-native';
 
 interface Category {
   id: number;
@@ -35,9 +40,11 @@ export function useAddExpense() {
   const [modalVisible, setModalVisible] = useState(false);
   const [fileModalVisible, setFileModalVisible] = useState(false);
   const [transType, setTransType] = useState<string>('Expense');
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<String | null>(null);
+  const [uploading, setUploading] = useState(false);
   const disPatch = useAppDispatch();
-  console.log('trans', transType);
+
+  // console.log('trans', transType);
 
   const addExpens = () => {
     let expense = {
@@ -45,7 +52,7 @@ export function useAddExpense() {
       category,
       expenseName,
       image,
-      addExpneseTime: new Date(Date()).toString(),
+      addExpenseTime: new Date().toISOString(),
     };
 
     try {
@@ -77,6 +84,62 @@ export function useAddExpense() {
     setAmount(text);
   };
 
+  console.log(image);
+  const handleImageThroughGallery = async () => {
+    try {
+      const pickedImage = await ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+      });
+      const uri = pickedImage.path;
+      // console.log(uri);
+      setImage(uri);
+    } catch (error) {
+      console.log('Error selecting image:', error);
+    }
+  };
+
+  const handleImageThroughCamera = async () => {
+    try {
+      const pickedImage = await ImagePicker.openCamera({
+        width: 300,
+        height: 400,
+        cropping: true,
+      });
+      const uri = pickedImage.path;
+      // console.log(uri);
+      setImage(uri);
+    } catch (error) {
+      console.log('Error taking picture:', error);
+    }
+  };
+
+  // const uploadImage = async () => {
+  //   if (!image) {
+  //     console.log('No image selected');
+  //     return;
+  //   }
+
+  //   setUploading(true);
+
+  //   try {
+  //     const response = await fetch(image as string);
+  //     const blob = await response.blob();
+  //     const filename = image.substring(image.lastIndexOf('/') + 1);
+  //     const ref = firebase.storage().ref().child(filename);
+  //     await ref.put(blob);
+  //     console.log('Image uploaded successfully!');
+  //     Alert.alert('Photo uploaded!');
+  //     setImage(null);
+  //   } catch (error) {
+  //     console.error('Error uploading image:', error);
+  //     Alert.alert('Error uploading photo!');
+  //   } finally {
+  //     setUploading(false);
+  //   }
+  // };
+
   return {
     toggleFileModal,
     handleOutsidePress,
@@ -100,5 +163,8 @@ export function useAddExpense() {
     AppButton,
     AttachmentInputPopUp,
     categories,
+    handleImageThroughCamera,
+    handleImageThroughGallery,
+    // uploadImage,
   };
 }

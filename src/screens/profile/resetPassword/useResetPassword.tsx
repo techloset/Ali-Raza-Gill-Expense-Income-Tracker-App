@@ -4,9 +4,11 @@ import auth, {firebase} from '@react-native-firebase/auth';
 
 interface Reset {
   currentPass: string;
-  newPass: string;
-  confirmNewPass: string;
-  //   setCurrentPass: (pass: string) => void;
+  newPass: any;
+  setNewPass: any;
+  confirmNewPass: any;
+  setConfirmNewPass: any;
+  setCurrentPass: (pass: string) => void;
   handleResetPassword: () => void;
 }
 

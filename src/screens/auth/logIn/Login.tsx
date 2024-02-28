@@ -42,6 +42,7 @@ const Login = () => {
                 keyboardType="email-address"
                 value={email}
                 onChangeText={handleLogEmail}
+                style={{}}
               />
               <View>
                 <InputField
@@ -49,6 +50,7 @@ const Login = () => {
                   secureTextEntry={true}
                   value={password}
                   onChangeText={handleLogPassword}
+                  style={{}}
                 />
               </View>
               <View style={styles.loginbtn}>

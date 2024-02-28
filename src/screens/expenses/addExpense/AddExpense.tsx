@@ -39,6 +39,9 @@ export default function AddExpense() {
     transType,
     setTransType,
     categories,
+    handleImageThroughCamera,
+    handleImageThroughGallery,
+    // uploadImage,
   } = useAddExpense();
   return (
     <>
@@ -77,12 +80,16 @@ export default function AddExpense() {
             </View>
             <View style={styles.displayContainer}>
               <Text style={styles.displayContainerHeading}>How Much ?</Text>
-              <InputField
-                value={amount}
+              <TextInput
                 placeholder="$0"
-                onChangeText={handleAmount}
+                placeholderTextColor="white"
+                textAlignVertical="center"
                 keyboardType="numeric"
-                style={styles.amountContainer}
+                secureTextEntry={false}
+                style={[styles.amountContainer]}
+                onChangeText={handleAmount}
+                value={amount}
+                selectionColor="white"
               />
             </View>
             <View
@@ -139,13 +146,41 @@ export default function AddExpense() {
                       <View style={styles.fileModalContainer}>
                         <View style={styles.modalBackground} />
                         <View style={styles.attachmentPopup}>
-                          <AttachmentInputPopUp />
+                          <View>
+                            <View style={styles.container2}>
+                              <TouchableOpacity
+                                style={styles.buttonContainer}
+                                onPress={handleImageThroughCamera}>
+                                <Image
+                                  source={require('../../../assets/images/InputPopup/camera.png')}
+                                />
+                                <Text style={styles.Text}>Camera</Text>
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                style={styles.buttonContainer}
+                                onPress={handleImageThroughGallery}>
+                                <Image
+                                  source={require('../../../assets/images/InputPopup/gallery.png')}
+                                />
+                                <Text style={styles.Text}>Gallery</Text>
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                style={styles.buttonContainer}
+                                onPress={handleImageThroughGallery}>
+                                <Image
+                                  source={require('../../../assets/images/InputPopup/document.png')}
+                                />
+                                <Text style={styles.Text}>File</Text>
+                              </TouchableOpacity>
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </TouchableWithoutFeedback>
                   </Modal>
                 </TouchableOpacity>
               </View>
+
               <View style={styles.button}>
                 <Button
                   name="Continue"
@@ -286,4 +321,35 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-SemiBold',
   },
   backgroundColor: {},
+  containerimg: {
+    padding: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderTopEndRadius: 16,
+    borderTopStartRadius: 16,
+  },
+  buttonContainer: {
+    padding: 14,
+    backgroundColor: '#eee5ff',
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+    borderRadius: 16,
+    flex: 1,
+  },
+  Text: {
+    fontFamily: 'Inter-Medium',
+  },
+  container2: {
+    padding: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderTopEndRadius: 16,
+    borderTopStartRadius: 16,
+  },
 });

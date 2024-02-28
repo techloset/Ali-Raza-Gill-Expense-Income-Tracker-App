@@ -8,7 +8,7 @@ const ResetPassword = () => {
   const {
     setCurrentPass,
     currentPass,
-    newPasss,
+    newPass,
     setNewPass,
     confirmNewPass,
     setConfirmNewPass,
@@ -31,7 +31,7 @@ const ResetPassword = () => {
               style={styles.textInput}
               placeholder="New Password"
               secureTextEntry={true}
-              value={newPasss}
+              value={newPass}
               onChangeText={text => setNewPass(text)}
             />
             <TextInput

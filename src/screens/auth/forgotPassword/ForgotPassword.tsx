@@ -5,47 +5,14 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
 import CustomHeader from '../../../components/CustomHeader';
-import auth from '@react-native-firebase/auth';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthRoutes} from '../../../navigation/stackNavigation/StackNavigation';
+import useForgotPassword from './useForgotPassword';
 
-type ForgotPasswordScreenNavigationProp = StackNavigationProp<
-  AuthRoutes,
-  'ForgotPassword'
->;
-
-type Props = {
-  navigation: ForgotPasswordScreenNavigationProp;
-};
-
-const ForgotPassword: React.FC<Props> = ({navigation}) => {
-  const [email, setEmail] = useState<string>('');
-
-  const forgotPassword = async () => {
-    try {
-      if (!email) {
-        Alert.alert('Please enter your email address');
-        return;
-      }
-      await auth().sendPasswordResetEmail(email);
-      Alert.alert('Password reset email sent!');
-      navigation.goBack();
-    } catch (error: any) {
-      let errorMessage =
-        'An error occurred while sending the password reset email. Please try again.';
-      if (error.code === 'auth/user-not-found') {
-        errorMessage = 'That email address is not registered!';
-      }
-      Alert.alert(errorMessage);
-      // console.error(error);
-      Alert.alert(error);
-    }
-  };
+const ForgotPassword = ({navigation}: any) => {
+  const {email, setEmail, forgotPassword} = useForgotPassword({navigation});
 
   return (
     <>
@@ -65,6 +32,7 @@ const ForgotPassword: React.FC<Props> = ({navigation}) => {
                 placeholder="Email"
                 keyboardType="email-address"
                 value={email}
+                style={{}}
                 onChangeText={(text: string) => setEmail(text)}
               />
             </View>

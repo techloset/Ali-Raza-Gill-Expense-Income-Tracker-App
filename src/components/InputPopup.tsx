@@ -11,6 +11,7 @@ import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 
 const AttachmentInputPopUp = () => {
   const [image, setImage] = useState<ImageOrVideo | null>(null);
+  console.log(image);
   const handleImageThroughGallery = async () => {
     try {
       const pickedImage = await ImagePicker.openPicker({
@@ -38,28 +39,7 @@ const AttachmentInputPopUp = () => {
     }
   };
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={handleImageThroughCamera}>
-        <Image source={require('../assets/images/InputPopup/camera.png')} />
-        <Text style={styles.Text}>Camera</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={handleImageThroughGallery}>
-        <Image source={require('../assets/images/InputPopup/gallery.png')} />
-        <Text style={styles.Text}>Gallery</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={handleImageThroughGallery}>
-        <Image source={require('../assets/images/InputPopup/document.png')} />
-        <Text style={styles.Text}>File</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  return <></>;
 };
 
 export default AttachmentInputPopUp;
