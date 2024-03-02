@@ -5,7 +5,6 @@ import {
   BackHandler,
   TouchableOpacity,
   ScrollView,
-  FlatList,
 } from 'react-native';
 import React, {useState} from 'react';
 import useHome from './useHome';
@@ -120,37 +119,32 @@ export default function Home() {
             </TouchableOpacity>
           </View>
         </View>
-        <View>
-          <View style={styles.recentTransContainer}>
-            <Text style={styles.recentTransText1}>Recent Transaction</Text>
-            <TouchableOpacity
-              onPress={() => {
-                // submit();
-              }}>
-              <View style={styles.recentTransText2Container}>
-                <Text style={styles.recentTransText2}>See All</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
 
-          <FlatList
-            data={expence}
-            keyExtractor={(item, index) =>
-              item.id ? item.id.toString() : index.toString()
-            }
-            renderItem={({item}) => (
-              <ShoppingCard
-                img={require('../../assets/images/HomeScreenImages/Subscription.png')}
-                category={item.category}
-                description={item.expenseName.slice(0, 20)}
-                amount={item.amount}
-                time={moment(item.addExpneseTime).format('hh:mm A')}
-                onPress={() => {}}
-                style={{}}
-              />
-            )}
-          />
+        <View style={styles.recentTransContainer}>
+          <Text style={styles.recentTransText1}>Recent Transaction</Text>
+          <TouchableOpacity
+            onPress={() => {
+              // submit();
+            }}>
+            <View style={styles.recentTransText2Container}>
+              <Text style={styles.recentTransText2}>See All</Text>
+            </View>
+          </TouchableOpacity>
         </View>
+
+        {expence.map((item, index) => (
+          <ShoppingCard
+            key={index.toString()}
+            img={require('../../assets/images/HomeScreenImages/Subscription.png')}
+            category={item.category}
+            description={item.discription.slice(0, 20)}
+            amount={item.amount}
+            time={moment(item.addExpneseTime).format('hh:mm A')}
+            onPress={() => {}}
+            style={{}}
+            wallet={''}
+          />
+        ))}
       </View>
     </ScrollView>
   );

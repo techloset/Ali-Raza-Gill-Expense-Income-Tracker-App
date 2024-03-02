@@ -11,12 +11,10 @@ import {
   ScrollView,
 } from 'react-native';
 
-import InputField from '../../../components/InputField';
 import CustomHeader from '../../../components/CustomHeader';
 import {useAddExpense} from './useAddExpense';
 import React from 'react';
 import Button from '../../../components/Button';
-import AttachmentInputPopUp from '../../../components/InputPopup';
 export default function AddExpense() {
   const {
     toggleFileModal,
@@ -30,8 +28,8 @@ export default function AddExpense() {
     addExpens,
     category,
     setCategory,
-    expenseName,
-    setExpenseName,
+    discription,
+    setDiscription,
     amount,
     setAmount,
     image,
@@ -41,8 +39,8 @@ export default function AddExpense() {
     categories,
     handleImageThroughCamera,
     handleImageThroughGallery,
-    // uploadImage,
   } = useAddExpense();
+
   return (
     <>
       <CustomHeader
@@ -125,9 +123,10 @@ export default function AddExpense() {
                 <TextInput
                   style={styles.textInput}
                   placeholder="Description"
-                  value={expenseName}
-                  onChangeText={text => setExpenseName(text)}
+                  value={discription}
+                  onChangeText={text => setDiscription(text)}
                 />
+
                 <TouchableOpacity
                   style={styles.fileInput}
                   onPress={toggleFileModal}>
@@ -179,6 +178,11 @@ export default function AddExpense() {
                     </TouchableWithoutFeedback>
                   </Modal>
                 </TouchableOpacity>
+                <View>
+                  {image && (
+                    <Image source={{uri: image}} style={styles.imagePreview} />
+                  )}
+                </View>
               </View>
 
               <View style={styles.button}>
@@ -351,5 +355,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderTopEndRadius: 16,
     borderTopStartRadius: 16,
+  },
+  imagePreview: {
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+    marginTop: 10,
   },
 });

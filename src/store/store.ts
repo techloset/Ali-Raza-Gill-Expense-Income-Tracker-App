@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
 import expenseReducer from './slices/expenseSlice';
+import transactionReducer from './slices/transactionDetails';
 export const store = configureStore({
   reducer: {
     expense: expenseReducer,
+    transactiondetails: transactionReducer,
   },
 });
 

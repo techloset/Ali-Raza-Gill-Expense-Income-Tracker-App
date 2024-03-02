@@ -8,15 +8,17 @@ export type RootStackParamsList = {
   Home: undefined;
   Settings: undefined;
 };
-export type expenses = {
-  description: string;
+export type Expense = {
+  discription: string;
   category: string;
+  amount: string;
+  image: string | null;
 };
 export interface LoginProps {
   navigation: StackNavigationProp<RootStackParamsList, 'login', 'signUp'>;
 }
 export type counterState = {
-  expense: expenses[];
+  expense: Expense[];
   isLoading: boolean;
   isError: string | null;
 };
