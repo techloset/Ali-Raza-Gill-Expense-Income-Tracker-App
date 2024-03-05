@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import moment from 'moment';
 
 const uid = auth().currentUser?.uid;
 
@@ -37,10 +38,11 @@ export default function useHome() {
       throw error;
     }
   };
+
   useEffect(() => {
-    submit();
     setTotalExpense(totalExpense);
     setTotalIncome(totalIncome);
+    submit();
   }, []);
 
   useEffect(() => {

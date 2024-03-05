@@ -36,10 +36,13 @@ const ShoppingCard: React.FC<ExpenseCardProps> = ({
           </View>
         </View>
         <View style={styles.expenseContainer}>
-          <Text style={{color: amount < 0 ? 'red' : 'green'}}>
-            +{amount < 0 ? `- ${Math.abs(amount)}` : amount}
+          {/* <Text style={{color: amount < 0 ? 'red' : 'green'}}>
+            {amount < 0 ? `- ${Math.abs(amount)}` : amount}
+          </Text> */}
+          <Text
+            style={category === 'Expense' ? {color: 'red'} : {color: 'green'}}>
+            {amount}
           </Text>
-          {/* <Text style={styles.expenseContainerAmount}>{amount}</Text> */}
           <Text style={styles.expenseContainerDate}>{time}</Text>
         </View>
       </View>

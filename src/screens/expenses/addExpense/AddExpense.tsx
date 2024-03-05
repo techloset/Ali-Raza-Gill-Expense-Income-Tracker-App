@@ -15,6 +15,8 @@ import CustomHeader from '../../../components/CustomHeader';
 import {useAddExpense} from './useAddExpense';
 import React from 'react';
 import Button from '../../../components/Button';
+import {ActivityIndicator} from 'react-native';
+import CustomDialogBox from '../../../components/CustomDialogBox';
 export default function AddExpense() {
   const {
     toggleFileModal,
@@ -39,6 +41,10 @@ export default function AddExpense() {
     categories,
     handleImageThroughCamera,
     handleImageThroughGallery,
+    loading,
+    showAlert,
+    setIsDialogVisible,
+    isDialogVisible,
   } = useAddExpense();
 
   return (
@@ -148,8 +154,8 @@ export default function AddExpense() {
                           <View>
                             <View style={styles.container2}>
                               <TouchableOpacity
-                                style={styles.buttonContainer}
-                                onPress={handleImageThroughCamera}>
+                                onPress={handleImageThroughCamera}
+                                style={styles.buttonContainer}>
                                 <Image
                                   source={require('../../../assets/images/InputPopup/camera.png')}
                                 />
@@ -179,23 +185,52 @@ export default function AddExpense() {
                   </Modal>
                 </TouchableOpacity>
                 <View>
-                  {image && (
-                    <Image source={{uri: image}} style={styles.imagePreview} />
-                  )}
+                  {loading ? (
+                    <ActivityIndicator size="large" color="blue" />
+                  ) : image ? (
+                    <View>
+                      <TouchableOpacity
+                        style={styles.closeButton}
+                        onPress={() => setImage(null)}>
+                        <Image
+                          source={require('../../../assets/images/InputPopup/close.png')}
+                        />
+                      </TouchableOpacity>
+                      <Image
+                        source={{uri: image}}
+                        style={styles.imagePreview}
+                      />
+                      <View style={styles.previewcontianer}>
+                        <Text style={styles.repeate}>Repeate</Text>
+                        <Text style={styles.previewtext}>
+                          Repeat transaction
+                        </Text>
+                      </View>
+                    </View>
+                  ) : null}
                 </View>
               </View>
 
               <View style={styles.button}>
-                <Button
-                  name="Continue"
-                  onPress={() => {
-                    addExpens();
-                  }}
-                />
+                <View style={styles.button}>
+                  <Button
+                    name="Continue"
+                    onPress={() => {
+                      addExpens();
+                    }}
+                  />
+                </View>
               </View>
             </View>
           </View>
         </TouchableWithoutFeedback>
+        <CustomDialogBox
+          message="Transaction Added Succcessfully"
+          visible={isDialogVisible}
+          onClose={() => {
+            setIsDialogVisible(false);
+          }}
+        />
       </ScrollView>
     </>
   );
@@ -359,7 +394,30 @@ const styles = StyleSheet.create({
   imagePreview: {
     width: 150,
     height: 150,
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     marginTop: 10,
+    marginLeft: 16,
+    borderRadius: 25,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 7,
+    left: 147,
+    zIndex: 1,
+  },
+  previewtext: {
+    marginLeft: 20,
+    marginTop: 10,
+    fontFamily: 'Inter-Medium',
+  },
+  repeate: {
+    color: 'black',
+    marginLeft: 20,
+    marginTop: 10,
+    fontFamily: 'Inter-Bold',
+    fontSize: 16,
+  },
+  previewcontianer: {
+    marginLeft: 20,
   },
 });

@@ -1,5 +1,4 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import firestore from '@react-native-firebase/firestore';
 
 export type RootStackParamsList = {
   signUp: undefined;
@@ -13,6 +12,7 @@ export type Expense = {
   category: string;
   amount: string;
   image: string | null;
+  transactionType: string | null;
 };
 export interface LoginProps {
   navigation: StackNavigationProp<RootStackParamsList, 'login', 'signUp'>;

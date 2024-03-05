@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {firebase} from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import Shopping from '../../../assets/images/HomeScreenImages/Shopping.png';
@@ -30,14 +30,17 @@ export function useAddExpense() {
   const [discription, setDiscription] = useState<string>('');
   const [amount, setAmount] = useState<string>('');
   const [wallet, setWallet] = useState<string>('');
-  const [modalVisible, setModalVisible] = useState(false);
   const [fileModalVisible, setFileModalVisible] = useState(false);
   const [transType, setTransType] = useState<string>('Expense');
+  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<string | null>('');
   const [uploading, setUploading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
+
   const disPatch = useAppDispatch();
 
-  const addExpens = () => {
+  const addExpens = async () => {
     if (!amount) {
       Alert.alert('Enter Amount ');
       return;
@@ -65,7 +68,7 @@ export function useAddExpense() {
     };
 
     try {
-      disPatch(
+      await disPatch(
         addExpense({
           expense,
           transType,
@@ -75,8 +78,10 @@ export function useAddExpense() {
       setDiscription('');
       setAmount('');
       setImage(null);
+      setIsDialogVisible(true);
     } catch (error) {
       console.log('error', error);
+      Alert.alert('Transaction not Successfully added');
     }
   };
 
@@ -95,6 +100,10 @@ export function useAddExpense() {
 
   const handleAmount = (text: any) => {
     setAmount(text);
+  };
+
+  const showAlert = () => {
+    setIsDialogVisible(true);
   };
 
   const handleImageThroughGallery = async () => {
@@ -122,8 +131,6 @@ export function useAddExpense() {
       await reference.put(blob);
 
       const downloadURL = await reference.getDownloadURL();
-
-      console.log('Image uploaded successfully. Download URL:', downloadURL);
 
       setImage(downloadURL);
 
@@ -156,9 +163,8 @@ export function useAddExpense() {
         const reference = firebase.storage().ref(`/images/${filename}`);
         await reference.put(blob);
         const downloadURL = await reference.getDownloadURL();
-        console.log('Image uploaded successfully:', downloadURL);
+
         setImage(downloadURL);
-        Alert.alert('Photo uploaded!');
       } catch (error) {
         console.error('Error uploading image:', error);
         Alert.alert('Error uploading photo!');
@@ -195,5 +201,9 @@ export function useAddExpense() {
     categories,
     handleImageThroughCamera,
     handleImageThroughGallery,
+    loading,
+    showAlert,
+    setIsDialogVisible,
+    isDialogVisible,
   };
 }

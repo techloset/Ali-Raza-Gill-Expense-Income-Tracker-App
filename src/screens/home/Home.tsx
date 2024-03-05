@@ -25,7 +25,6 @@ export default function Home() {
     accountBalance,
   } = useHome();
 
-  // console.log('first', expence.length);
   return (
     <ScrollView>
       <View style={styles.MainContainer1}>

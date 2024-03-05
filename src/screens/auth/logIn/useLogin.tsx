@@ -28,7 +28,8 @@ export const useLogin = () => {
     setChecked(!isChecked);
   };
   useEffect(() => {
-    const ClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+    const ClientId =
+      '577251364044-7kqqdtbio0420g24gburmmreheh8cadr.apps.googleusercontent.com';
     GoogleSignin.configure({
       webClientId: ClientId,
     });
