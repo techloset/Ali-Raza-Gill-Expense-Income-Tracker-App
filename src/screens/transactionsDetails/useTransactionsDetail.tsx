@@ -1,90 +1,97 @@
 import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import moment from 'moment';
 
 const uid = auth().currentUser?.uid;
 
-export default function useTransactionsDetail() {
-  const [activeButton, setActiveButton] = useState<number>(1);
-  const [expence, setExpence] = useState<any[]>([]);
-  const [income, setIncome] = useState<any>([]);
-  const [totalExpense, setTotalExpense] = useState<any>(0);
-  const [totalIncome, setTotalIncome] = useState<any>(0);
-  const [accountBalance, setAccountBalance] = useState<any>(0);
-  const handlePress = (buttonNumber: number) => {
-    setActiveButton(buttonNumber);
-  };
+interface Transaction {
+  addExpneseTime: string; // Assuming addExpneseTime is a string representing the date
+  category: string;
+  description: string;
+  amount: number;
+}
 
-  const submit = async () => {
+export default function useTransactionsDetail() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [combinedTransactions, setCombinedTransactions] = useState<
+    Transaction[]
+  >([]);
+  const [todaysTransactions, setTodaysTransactions] = useState<Transaction[]>(
+    [],
+  );
+  const [yesterdaysTransactions, setYesterdaysTransactions] = useState<
+    Transaction[]
+  >([]);
+  const [previousTransactions, setPreviousTransactions] = useState<
+    Transaction[]
+  >([]);
+
+  const fetchTransactions = async () => {
     try {
+      setIsLoading(true);
       const collection = `${uid}`;
-      const res = await firestore()
+
+      const incomeSnapshot = await firestore()
         .collection('user')
         .doc(collection)
         .collection('Income')
         .get();
-      const data = res.docs.map(doc => doc.data());
-      setIncome([...data]);
-      const resu = await firestore()
+      const incomeData = incomeSnapshot.docs.map(
+        doc => doc.data() as Transaction,
+      );
+
+      const expenseSnapshot = await firestore()
         .collection('user')
         .doc(collection)
         .collection('Expense')
         .get();
-      const daa = resu.docs.map(doc => doc.data());
-      setExpence([...daa]);
+      const expenseData = expenseSnapshot.docs.map(
+        doc => doc.data() as Transaction,
+      );
+
+      const combinedData = [...expenseData, ...incomeData];
+      setCombinedTransactions(combinedData);
+
+      setIsLoading(false);
     } catch (error) {
-      console.error('Error in adding data:', error);
-      throw error;
+      console.error('Error fetching transactions:', error);
+      setIsLoading(false);
+      setIsError(true);
     }
   };
+
   useEffect(() => {
-    submit();
-    setTotalExpense(totalExpense);
-    setTotalIncome(totalIncome);
+    fetchTransactions();
   }, []);
 
-  //   useEffect(() => {
-  //     let TotalExpense = 0;
-  //     for (let i = 0; i < expence.length; i++) {
-  //       const amount = parseInt(expence[i].amount.trim(), 10);
-  //       if (!isNaN(amount)) {
-  //         console.log(TotalExpense);
+  useEffect(() => {
+    const today = moment().startOf('day');
+    const yesterday = moment().subtract(1, 'days').startOf('day');
+    const previousDays = moment().subtract(2, 'days').startOf('day');
 
-  //         TotalExpense += amount;
-  //       } else {
-  //         console.log('Invalid amount:', expence[i].amount);
-  //       }
-  //     }
-  //     setTotalExpense(TotalExpense);
-  //   }, [expence]);
+    const todayTransactions = combinedTransactions.filter(item =>
+      moment(item.addExpneseTime)?.isSame(today, 'day'),
+    );
+    const yesterdaysTransactions = combinedTransactions.filter(item =>
+      moment(item.addExpneseTime)?.isSame(yesterday, 'day'),
+    );
+    const previousTransactions = combinedTransactions.filter(item =>
+      moment(item.addExpneseTime)?.isBefore(previousDays, 'day'),
+    );
 
-  //   useEffect(() => {
-  //     let TotalIncome = 0;
-  //     for (let i = 0; i < income.length; i++) {
-  //       const amount = parseInt(income[i].amount.trim(), 10);
-  //       if (!isNaN(amount)) {
-  //         console.log(amount);
-  //         TotalIncome += amount;
-  //       } else {
-  //         console.log('Invalid amount:', income[i].amount);
-  //       }
-  //     }
-  //     setTotalIncome(TotalIncome);
-  //   }, [income]);
-
-  //   useEffect(() => {
-  //     const balance = parseFloat(totalIncome) - parseFloat(totalExpense);
-  //     setAccountBalance(balance);
-  //   }, [totalIncome, totalExpense]);
+    setTodaysTransactions(todayTransactions);
+    setYesterdaysTransactions(yesterdaysTransactions);
+    setPreviousTransactions(previousTransactions);
+  }, [combinedTransactions]);
 
   return {
-    activeButton,
-    handlePress,
-    setActiveButton,
-    submit,
-    expence,
-    totalExpense,
-    totalIncome,
-    accountBalance,
+    isLoading,
+    isError,
+    todaysTransactions,
+    yesterdaysTransactions,
+    previousTransactions,
+    combinedTransactions,
   };
 }

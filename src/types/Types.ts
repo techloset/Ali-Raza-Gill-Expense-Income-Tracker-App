@@ -12,7 +12,6 @@ export type Expense = {
   category: string;
   amount: string;
   image: string | null;
-  transactionType: string | null;
 };
 export interface LoginProps {
   navigation: StackNavigationProp<RootStackParamsList, 'login', 'signUp'>;

@@ -4,7 +4,13 @@ import firestore from '@react-native-firebase/firestore';
 import moment from 'moment';
 
 const uid = auth().currentUser?.uid;
-
+interface Transaction {
+  [x: string]: any;
+  addExpneseTime: string;
+  category: string;
+  description: string;
+  amount: number;
+}
 export default function useHome() {
   const [activeButton, setActiveButton] = useState<number>(1);
   const [expence, setExpence] = useState<any[]>([]);
@@ -12,6 +18,9 @@ export default function useHome() {
   const [totalExpense, setTotalExpense] = useState<any>(0);
   const [totalIncome, setTotalIncome] = useState<any>(0);
   const [accountBalance, setAccountBalance] = useState<any>(0);
+  const [combinedTransactions, setCombinedTransactions] = useState<
+    Transaction[]
+  >([]);
   const handlePress = (buttonNumber: number) => {
     setActiveButton(buttonNumber);
   };
@@ -24,15 +33,18 @@ export default function useHome() {
         .doc(collection)
         .collection('Income')
         .get();
-      const data = res.docs.map(doc => doc.data());
-      setIncome([...data]);
+      const incomeData = res.docs.map(doc => doc.data());
+      setIncome([...incomeData]);
       const resu = await firestore()
         .collection('user')
         .doc(collection)
         .collection('Expense')
         .get();
-      const daa = resu.docs.map(doc => doc.data());
-      setExpence([...daa]);
+      const expenseData = resu.docs.map(doc => doc.data());
+      setExpence([...expenseData]);
+
+      const combinedData = [...expenseData, ...incomeData] as Transaction[];
+      setCombinedTransactions(combinedData);
     } catch (error) {
       console.error('Error in adding data:', error);
       throw error;
@@ -84,9 +96,9 @@ export default function useHome() {
     handlePress,
     setActiveButton,
     submit,
-    expence,
     totalExpense,
     totalIncome,
     accountBalance,
+    combinedTransactions,
   };
 }

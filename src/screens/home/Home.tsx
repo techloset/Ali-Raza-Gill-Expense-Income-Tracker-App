@@ -18,11 +18,11 @@ export default function Home() {
   const {
     activeButton,
     handlePress,
-    submit,
-    expence,
+
     totalExpense,
     totalIncome,
     accountBalance,
+    combinedTransactions,
   } = useHome();
 
   return (
@@ -67,7 +67,7 @@ export default function Home() {
                 amount={totalIncome}
                 imag={require('../../assets/images/HomeScreenImages/income.png')}
                 onPress={() => {}}
-                style={{backgroundColor: '#00A86B'}}
+                style={{backgroundColor: '#00A86B', flexWrap: 'wrap'}}
               />
               <ExpenseCard
                 name="Expense"
@@ -131,17 +131,21 @@ export default function Home() {
           </TouchableOpacity>
         </View>
 
-        {expence.map((item, index) => (
+        {combinedTransactions?.map((item, index) => (
           <ShoppingCard
             key={index.toString()}
             img={require('../../assets/images/HomeScreenImages/Subscription.png')}
             category={item.category}
-            description={item.discription.slice(0, 20)}
+            description={item.description?.slice(0, 20)}
             amount={item.amount}
-            time={moment(item.addExpneseTime).format('hh:mm A')}
+            time={
+              item.addExpenseTime
+                ? moment(item.addExpenseTime).format('hh:mm A')
+                : ''
+            }
             onPress={() => {}}
             style={{}}
-            wallet={''}
+            wallet=""
           />
         ))}
       </View>

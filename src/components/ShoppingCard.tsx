@@ -18,6 +18,7 @@ const ShoppingCard: React.FC<ExpenseCardProps> = ({
   description,
   amount,
   time,
+
   style,
 }) => {
   return (
@@ -40,7 +41,7 @@ const ShoppingCard: React.FC<ExpenseCardProps> = ({
             {amount < 0 ? `- ${Math.abs(amount)}` : amount}
           </Text> */}
           <Text
-            style={category === 'Expense' ? {color: 'red'} : {color: 'green'}}>
+            style={category == 'Expense' ? {color: 'red'} : {color: 'green'}}>
             {amount}
           </Text>
           <Text style={styles.expenseContainerDate}>{time}</Text>
@@ -53,7 +54,7 @@ const ShoppingCard: React.FC<ExpenseCardProps> = ({
 const styles = StyleSheet.create({
   ShoppingContainer: {
     flexDirection: 'row',
-    marginHorizontal: 20,
+    marginHorizontal: 0,
     justifyContent: 'space-between',
     backgroundColor: '#F6F6F6',
     paddingHorizontal: 15,

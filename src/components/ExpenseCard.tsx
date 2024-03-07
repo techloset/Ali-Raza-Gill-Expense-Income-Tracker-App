@@ -65,6 +65,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-SemiBold',
     fontSize: 22,
     color: 'white',
+    width: 80,
+    maxHeight: 55,
   },
 });
 

@@ -3,12 +3,14 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../../screens/home/Home';
 import AddExpense from '../../screens/expenses/addExpense/AddExpense';
-import Expense from '../../screens/expenses/expense/Expense';
-import TabScreen from '../../screens/expenses/expense/Expense';
+// import Expense from '../../screens/expenses/expense/Expense';
+// import TabScreen from '../../screens/expenses/expense/Expense';
 import {Image} from 'react-native';
 import UpdateProfile from '../../screens/profile/updateProfile/UpdateProfile';
 import ResetPassword from '../../screens/profile/resetPassword/ResetPassword';
 import ProfileHome from '../../screens/profile/profile/Profile';
+import TransactionsDetails from '../../screens/transactionsDetails/TransactionsDetails';
+import FinancialReports from '../../screens/financialReports/FinancialReports';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +54,7 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         name="Transactions"
-        component={AddExpense}
+        component={TransactionsDetails}
         options={{
           tabBarIcon: ({focused}) => (
             <Image
@@ -87,7 +89,7 @@ export default function TabNavigation() {
 
       <Tab.Screen
         name="Budget"
-        component={AddExpense}
+        component={FinancialReports}
         options={{
           tabBarIcon: ({focused}) => (
             <Image
