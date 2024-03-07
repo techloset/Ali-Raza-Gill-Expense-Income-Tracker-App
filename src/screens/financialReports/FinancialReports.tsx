@@ -242,6 +242,7 @@ import {
   View,
 } from 'react-native';
 import CustomHeader from '../../components/CustomHeader';
+import Category from '../../components/Category';
 
 const FinancialReports = () => {
   const [isExpenseSelected, setIsExpenseSelected] = useState<boolean>(true);
@@ -255,9 +256,62 @@ const FinancialReports = () => {
   const incomeBackgroundColor = isExpenseSelected ? '#F1F1FA' : '#F1F1FA';
 
   const imageText = isExpenseSelected ? 'Expense' : 'Income';
-  const bottomContentText = isExpenseSelected
-    ? 'Expense Content'
-    : 'Income Content';
+  const bottomContentText = isExpenseSelected ? (
+    <>
+      <View style={styles.BarGraphContainer}>
+        <Category
+          color=""
+          category="Shopping"
+          amount={35445}
+          image={require('../../assets/images/Report_images/ShoppiingLineGraph.png')}
+          style={styles.category1}
+          styleamount={styles.amountColor1}
+          transactionType="Expense"
+        />
+        <Category
+          color=""
+          category="Subscription"
+          amount={2000}
+          image={require('../../assets/images/Report_images/SubscriptionLineGraph.png')}
+          style={styles.category2}
+          styleamount={styles.amountColor1}
+          transactionType="Expense"
+        />
+        <Category
+          color=""
+          category="Food"
+          amount={500}
+          image={require('../../assets/images/Report_images/FoodLineGraph.png')}
+          style={styles.category3}
+          styleamount={styles.amountColor1}
+          transactionType="Expense"
+        />
+      </View>
+    </>
+  ) : (
+    <>
+      <View style={styles.BarGraphContainer}>
+        <Category
+          color=""
+          category="Salary"
+          amount={45}
+          image={require('../../assets/images/Report_images/SalaryLineGraph.png')}
+          style={styles.Incomecategory}
+          styleamount={styles.IncomeAmountColor}
+          transactionType="Income"
+        />
+        <Category
+          color=""
+          category="Passive Income"
+          amount={700}
+          image={require('../../assets/images/Report_images/PassiveIncome.png')}
+          style={styles.IncomeCategory2}
+          styleamount={styles.IncomeAmountColor}
+          transactionType="Income"
+        />
+      </View>
+    </>
+  );
   const financialText = `$${isExpenseSelected ? 30000000 : 50000000}`;
 
   return (
@@ -337,7 +391,6 @@ const FinancialReports = () => {
         </View>
 
         <View style={styles.bottomContent}>
-          <Text>{bottomContentText}</Text>
           <View style={styles.bottomContainer}>
             <TouchableOpacity style={styles.bottomContentButton}>
               <Image
@@ -353,19 +406,8 @@ const FinancialReports = () => {
               />
             </TouchableOpacity>
           </View>
-
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            {isLoading ? (
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <ActivityIndicator size="large" color="#0000ff" />
-                <Text style={{marginLeft: 10, fontSize: 18}}>Shopping</Text>
-              </View>
-            ) : (
-              <Text style={{fontSize: 18}}>Shopping complete!</Text>
-            )}
-          </View>
         </View>
+        <Text>{bottomContentText}</Text>
       </ScrollView>
     </View>
   );
@@ -474,10 +516,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 45,
   },
-  bottomContent: {
-    marginTop: 20,
-    // alignItems: 'center',
-  },
+  bottomContent: {},
   bottomContainer: {
     marginTop: 20,
     marginHorizontal: 20,
@@ -512,8 +551,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: 'lightgrey',
   },
-  categorybtn: {
-    height: 40,
-    width: 40,
+  categorybtn: {height: 40, width: 40},
+  category1: {backgroundColor: 'orange'},
+  category2: {backgroundColor: '#7F3DFF'},
+  category3: {backgroundColor: 'red'},
+  amountColor1: {color: 'red'},
+  BarGraphContainer: {
+    paddingVertical: 20,
   },
+  Incomecategory: {backgroundColor: '#00A86B'},
+  IncomeCategory2: {backgroundColor: 'black'},
+  IncomeAmountColor: {color: '#00A86B'},
 });
