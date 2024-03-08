@@ -1,14 +1,8 @@
 import {useEffect, useState} from 'react';
-import {StackNavigationProp} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {useNavigation} from '@react-navigation/native';
-import {AuthRoutes} from '../../../navigation/stackNavigation/StackNavigation';
-import {Alert} from 'react-native';
 import {useAppDispatch} from '../../../store/hooks';
 import {Login} from '../../../store/slices/authSlice';
-
-const navigation = useNavigation<StackNavigationProp<AuthRoutes>>();
 
 export const useLogin = () => {
   const [email, setEmail] = useState('');
@@ -70,7 +64,6 @@ export const useLogin = () => {
     secureTextEntry,
     handleLogEmail,
     handleLogPassword,
-    navigation,
     handleGoogleSignup,
   };
 };

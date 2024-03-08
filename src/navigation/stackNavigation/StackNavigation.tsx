@@ -11,6 +11,7 @@ import {View} from 'react-native';
 import Profile from '../../screens/profile/profile/Profile';
 import UpdateProfile from '../../screens/profile/updateProfile/UpdateProfile';
 import ResetPassword from '../../screens/profile/resetPassword/ResetPassword';
+import FinancialReports from '../../screens/financialReports/FinancialReports';
 export type AuthRoutes = {
   Login: undefined;
   SignUp: undefined;
@@ -20,6 +21,7 @@ export type AuthRoutes = {
   ResetPassword: undefined;
   UpdateProfile: undefined;
   Home: undefined;
+  FinancialReports: undefined;
 };
 const Stack = createNativeStackNavigator<AuthRoutes>();
 const Tab = createBottomTabNavigator<AuthRoutes>();
@@ -79,6 +81,15 @@ const StackNav = () => {
           name="TabNavigation"
           component={TabNavigation}
           options={{headerShown: false}}
+        />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen
+          name="FinancialReports"
+          component={FinancialReports}
+          options={{
+            headerShown: false,
+          }}
         />
       </Stack.Group>
       <Stack.Group>

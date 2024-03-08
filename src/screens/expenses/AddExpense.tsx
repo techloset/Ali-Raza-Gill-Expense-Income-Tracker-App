@@ -11,12 +11,12 @@ import {
   ScrollView,
 } from 'react-native';
 
-import CustomHeader from '../../../components/CustomHeader';
+import CustomHeader from '../../components/CustomHeader';
 import {useAddExpense} from './useAddExpense';
 import React from 'react';
-import Button from '../../../components/Button';
+import Button from '../../components/Button';
 import {ActivityIndicator} from 'react-native';
-import CustomDialogBox from '../../../components/CustomDialogBox';
+import CustomDialogBox from '../../components/CustomDialogBox';
 export default function AddExpense() {
   const {
     toggleFileModal,
@@ -137,7 +137,7 @@ export default function AddExpense() {
                   style={styles.fileInput}
                   onPress={toggleFileModal}>
                   <Image
-                    source={require('../../../assets/images/InputPopup/Vector.png')}
+                    source={require('../../assets/images/InputPopup/Vector.png')}
                   />
                   <Text style={{fontFamily: 'Inter-Medium'}}>
                     Add Attachment
@@ -157,7 +157,7 @@ export default function AddExpense() {
                                 onPress={handleImageThroughCamera}
                                 style={styles.buttonContainer}>
                                 <Image
-                                  source={require('../../../assets/images/InputPopup/camera.png')}
+                                  source={require('../../assets/images/InputPopup/camera.png')}
                                 />
                                 <Text style={styles.Text}>Camera</Text>
                               </TouchableOpacity>
@@ -165,7 +165,7 @@ export default function AddExpense() {
                                 style={styles.buttonContainer}
                                 onPress={handleImageThroughGallery}>
                                 <Image
-                                  source={require('../../../assets/images/InputPopup/gallery.png')}
+                                  source={require('../../assets/images/InputPopup/gallery.png')}
                                 />
                                 <Text style={styles.Text}>Gallery</Text>
                               </TouchableOpacity>
@@ -173,7 +173,7 @@ export default function AddExpense() {
                                 style={styles.buttonContainer}
                                 onPress={handleImageThroughGallery}>
                                 <Image
-                                  source={require('../../../assets/images/InputPopup/document.png')}
+                                  source={require('../../assets/images/InputPopup/document.png')}
                                 />
                                 <Text style={styles.Text}>File</Text>
                               </TouchableOpacity>
@@ -193,7 +193,7 @@ export default function AddExpense() {
                         style={styles.closeButton}
                         onPress={() => setImage(null)}>
                         <Image
-                          source={require('../../../assets/images/InputPopup/close.png')}
+                          source={require('../../assets/images/InputPopup/close.png')}
                         />
                       </TouchableOpacity>
                       <Image

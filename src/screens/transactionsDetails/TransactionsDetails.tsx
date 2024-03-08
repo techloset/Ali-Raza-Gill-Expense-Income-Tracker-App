@@ -1,20 +1,17 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Modal,
-  FlatList,
-} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import useTransactionsDetail from './useTransactionsDetail';
 import moment from 'moment';
 import ShoppingCard from '../../components/ShoppingCard';
-import useHome from '../home/useHome';
 import {ScrollView} from 'react-native-gesture-handler';
+import {AuthRoutes} from '../../navigation/stackNavigation/StackNavigation';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 
-const TransactionsDetails: React.FC = () => {
+interface Props {
+  navigation: StackNavigationProp<AuthRoutes>;
+}
+const TransactionsDetails: React.FC<Props> = ({navigation}) => {
   const {
     isLoading,
     isError,
@@ -42,7 +39,11 @@ const TransactionsDetails: React.FC = () => {
             />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.financialContainer}>
+        <TouchableOpacity
+          style={styles.financialContainer}
+          onPress={() => {
+            navigation.navigate('FinancialReports');
+          }}>
           <Text style={styles.financialContainerText}>
             See your financial report
           </Text>
@@ -66,14 +67,18 @@ const TransactionsDetails: React.FC = () => {
           <Text>Error fetching transactions</Text>
         ) : (
           <>
-            {todaysTransactions.map((item: any, index: number) => (
+            {combinedTransactions?.map((item: any, index: number) => (
               <ShoppingCard
                 key={index.toString()}
                 img={require('../../assets/images/HomeScreenImages/Shopping.png')}
                 category={item.category}
                 description={item.discription.slice(0, 10)}
                 amount={item.amount}
-                time={moment(item.addExpneseTime).format('hh:mm A')}
+                time={
+                  item.addExpenseTime
+                    ? moment(item.addExpenseTime).format('hh:mm A')
+                    : ''
+                }
                 onPress={() => {}}
                 style={{}}
                 wallet=""
@@ -93,7 +98,11 @@ const TransactionsDetails: React.FC = () => {
                 category={item.category}
                 description={item.discription.slice(0, 10)}
                 amount={item.amount}
-                time={item.addExpneseTime.format('DD-MMM-YYYY,')}
+                time={
+                  item.addExpenseTime
+                    ? moment(item.addExpenseTime).format('hh:mm A')
+                    : ''
+                }
                 onPress={() => {}}
                 style={{}}
                 wallet=""
@@ -112,7 +121,11 @@ const TransactionsDetails: React.FC = () => {
                 category={item.category}
                 description={item.discription.slice(0, 10)}
                 amount={item.amount}
-                time={item.addExpenseTime.format('DD-MMM-YYYY')}
+                time={
+                  item.addExpenseTime
+                    ? moment(item.addExpenseTime).format('hh:mm A')
+                    : ''
+                }
                 onPress={() => {}}
                 style={{}}
                 wallet=""
