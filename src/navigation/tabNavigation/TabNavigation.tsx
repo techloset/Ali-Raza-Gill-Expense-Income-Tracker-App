@@ -9,7 +9,7 @@ import {Image} from 'react-native';
 import UpdateProfile from '../../screens/profile/updateProfile/UpdateProfile';
 import ResetPassword from '../../screens/profile/resetPassword/ResetPassword';
 import ProfileHome from '../../screens/profile/profile/Profile';
-import TransactionsDetails from '../../screens/transactionsDetails/TransactionsDetails';
+import TransactionsDetails from '../../screens/transactionsDetails/TransactionsDetail';
 import FinancialReports from '../../screens/financialReports/FinancialReports';
 
 const Tab = createBottomTabNavigator();

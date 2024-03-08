@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -10,9 +10,18 @@ import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
 import CustomHeader from '../../../components/CustomHeader';
 import useForgotPassword from './useForgotPassword';
+import CustomDialogBox from '../../../components/CustomDialogBox';
 
 const ForgotPassword = ({navigation}: any) => {
-  const {email, setEmail, forgotPassword} = useForgotPassword({navigation});
+  const {
+    email,
+    setEmail,
+    handleforgotPassword,
+    isDialogVisible,
+    setIsDialogVisible,
+  } = useForgotPassword({
+    navigation,
+  });
 
   return (
     <>
@@ -38,11 +47,18 @@ const ForgotPassword = ({navigation}: any) => {
             </View>
             <TouchableOpacity>
               <View style={styles.senddEmailBtn}>
-                <Button name="Send Email" onPress={forgotPassword} />
+                <Button name="Send Email" onPress={handleforgotPassword} />
               </View>
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
+        <CustomDialogBox
+          message="Check your email for a link to reset your password."
+          visible={isDialogVisible}
+          onClose={() => {
+            setIsDialogVisible(false);
+          }}
+        />
       </View>
     </>
   );

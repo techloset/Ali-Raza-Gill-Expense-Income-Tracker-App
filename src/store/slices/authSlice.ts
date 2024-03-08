@@ -1,39 +1,3 @@
-// import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-// import {SignIn, SignUp, UserProfile, AuthState} from '../../types/types';
-// import firestore from '@react-native-firebase/firestore';
-
-// interface authState {
-//     user: UserProfile | null;
-//     isLoading: boolean;
-//     error: string | null;
-//  }
-
-//  const initialState: authState = {
-//     user: null,
-//     isLoading: false,
-//     error: null,
-//  };
-
-//  export const authSlice = createAsyncThunk(
-//     'auth/auth',
-//     async ({email, password}: SignIn, {rejectWithValue}) => {
-//       try {
-//         const user = await firestore()
-//           .collection('user')
-//           .where('email', '==', email)
-//           .get();
-//         if (user.docs.length > 0) {
-//           const userData = user.docs[0].data() as UserProfile;
-//           if (userData.password === password) {
-//             return userData;
-//           } else {
-//             throw new Error('Invalid password');
-//           }}}
-//           catch (error) {
-//             console.error('Error in getting data:', error);
-//             return rejectWithValue(error);
-//           }});
-
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ToastAndroid} from 'react-native';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
@@ -48,11 +12,13 @@ const initialState: AuthState = {
 };
 
 GoogleSignin.configure({
-  webClientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+  webClientId:
+    '577251364044-7kqqdtbio0420g24gburmmreheh8cadr.apps.googleusercontent.com',
+  // webClientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
 });
 
-export const SignupUser = createAsyncThunk(
-  'auth/SignupUser',
+export const Signup = createAsyncThunk(
+  'auth/Signup',
   async ({displayName, email, password}: SignUp, {dispatch}) => {
     dispatch(setLoading(true));
     if (!displayName || !email || !password) {
@@ -148,7 +114,7 @@ export const forgotPassword = createAsyncThunk(
   },
 );
 
-export const googleSignin = async () => {
+export const googleSignUp = async () => {
   try {
     await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
     await GoogleSignin.signOut();
@@ -168,7 +134,6 @@ export const googleSignin = async () => {
           displayName: auth()?.currentUser?.displayName,
           email: auth()?.currentUser?.email,
           photoUrl: auth()?.currentUser?.photoURL || null,
-
           uid: auth()?.currentUser?.uid,
         });
       ToastAndroid.show('New user signed up successfully!', ToastAndroid.SHORT);
@@ -218,13 +183,13 @@ export const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(SignupUser.pending, state => {
+      .addCase(Signup.pending, state => {
         state.isLoading = true;
       })
-      .addCase(SignupUser.fulfilled, state => {
+      .addCase(Signup.fulfilled, state => {
         state.isLoading = false;
       })
-      .addCase(SignupUser.rejected, (state, action) => {
+      .addCase(Signup.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Signup failed';
       })

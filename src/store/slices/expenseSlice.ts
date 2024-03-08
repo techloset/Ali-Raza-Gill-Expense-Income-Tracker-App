@@ -22,10 +22,10 @@ export const addExpense = createAsyncThunk<
   {expense: Expense; transType: string}
 >('expense/addExpense', async ({expense, transType}) => {
   try {
-    const collection = `${uid}`;
+    const uid = auth().currentUser?.uid;
     await firestore()
       .collection('user')
-      .doc(collection)
+      .doc(uid)
       .collection(`${transType}`)
       .add(expense);
     return expense;
@@ -77,7 +77,7 @@ export const expenseSlice = createSlice({
       )
       .addCase(addExpense.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = action.error.message as string | null; // Use the actual error message
+        state.isError = action.error.message as string | null;
       })
       .addCase(getExpense.pending, state => {
         state.isLoading = true;
@@ -92,7 +92,7 @@ export const expenseSlice = createSlice({
       )
       .addCase(getExpense.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = action.error.message as string | null; // Use the actual error message
+        state.isError = action.error.message as string | null;
         state.expense = [];
       });
   },

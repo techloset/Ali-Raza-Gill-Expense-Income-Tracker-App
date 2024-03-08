@@ -7,20 +7,19 @@ interface Transaction {
 }
 
 export const TransactionsDetails = createAsyncThunk<Transaction[]>(
-  'transactiondetails/TransactionsDetails',
+  'transactiondetails/TransactionsDetailsSlice',
   async () => {
-    const userEmail: string = auth().currentUser?.email || '';
-
+    // const userEmail: string = auth()?.currentUser?.email as string;
+    const uid = auth()?.currentUser?.uid;
     try {
       const incomeSnapshot = await db
-        .collection('users')
-        .doc(userEmail)
+        .collection('user')
+        .doc(uid)
         .collection('Income')
         .get();
-
       const expenseSnapshot = await db
-        .collection('users')
-        .doc(userEmail)
+        .collection('user')
+        .doc(uid)
         .collection('Expense')
         .get();
 
@@ -28,6 +27,7 @@ export const TransactionsDetails = createAsyncThunk<Transaction[]>(
         id: doc.id,
         ...doc.data(),
       }));
+
       const Expense = expenseSnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
@@ -70,5 +70,5 @@ export const transactionSlice = createSlice({
   },
 });
 
-// export const {} = transactionSlice.actions;
+export const {} = transactionSlice.actions;
 export default transactionSlice.reducer;

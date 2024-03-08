@@ -17,8 +17,8 @@ const ResetPassword = () => {
   return (
     <ScrollView style={styles.MainContainer}>
       <View>
+        <CustomHeader title={'Reset Password'} style={{color: 'black'}} />
         <View style={styles.container}>
-          <CustomHeader title={'Reset Password'} style={{}} />
           <View>
             <TextInput
               style={styles.textInput}
@@ -56,12 +56,14 @@ export default ResetPassword;
 const styles = StyleSheet.create({
   MainContainer: {
     width: '100%',
+
     backgroundColor: 'white',
   },
   container: {
-    height: 712,
+    height: 650,
+    width: '90%',
+    alignSelf: 'center',
     margin: 16,
-    position: 'relative',
   },
   textInput: {
     width: '100%',
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
   },
   resetPasswordBtn: {
     position: 'absolute',
-    bottom: 60,
+    bottom: 20,
     width: '100%',
   },
 });

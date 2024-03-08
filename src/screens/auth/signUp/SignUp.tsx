@@ -1,7 +1,6 @@
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
 import {ScrollView} from 'react-native-gesture-handler';
-import {LoginProps} from '../../../types/types';
 import {useSignUp} from '../signUp/useSingnUp';
 import {
   StyleSheet,
@@ -15,8 +14,8 @@ import CustomHeader from '../../../components/CustomHeader';
 
 const SignUp = () => {
   const {
-    userName,
-    setUserName,
+    displayName,
+    setDisplayName,
     email,
     setEmail,
     password,
@@ -42,14 +41,16 @@ const SignUp = () => {
           <View>
             <InputField
               placeholder="Name"
-              onChangeText={text => setUserName(text)}
-              value={userName}
+              onChangeText={text => setDisplayName(text)}
+              value={displayName}
+              style={{}}
             />
             <InputField
               placeholder="Email"
               keyboardType="email-address"
               onChangeText={text => setEmail(text)}
               value={email}
+              style={{}}
             />
             <View>
               <InputField
@@ -57,6 +58,7 @@ const SignUp = () => {
                 secureTextEntry={true}
                 onChangeText={text => setPassword(text)}
                 value={password}
+                style={{}}
               />
             </View>
 

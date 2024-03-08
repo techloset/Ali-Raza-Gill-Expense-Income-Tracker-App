@@ -1,65 +1,47 @@
-import React, {useEffect, useState} from 'react';
-import auth from '@react-native-firebase/auth';
-import {LoginProps} from '../../../types/types';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthRoutes} from '../../../navigation/stackNavigation/StackNavigation';
+import {useAppDispatch} from '../../../store/hooks';
+import {Signup, googleSignUp} from '../../../store/slices/authSlice';
 import {Alert} from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 export const useSignUp = () => {
   const navigation = useNavigation<StackNavigationProp<AuthRoutes>>();
-  const [userName, setUserName] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [isChecked, setChecked] = useState(false);
+  const dispatch = useAppDispatch();
   const handleCheckBoxToggle = () => {
     setChecked(!isChecked);
   };
 
-  useEffect(() => {
-    const ClientId =
-      '577251364044-7kqqdtbio0420g24gburmmreheh8cadr.apps.googleusercontent.com';
-    GoogleSignin.configure({
-      webClientId: ClientId,
-    });
-  }, []);
+  const handleSignUp = async () => {
+    try {
+      await dispatch(Signup({displayName, email, password}));
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   const handleGoogleSignup = async () => {
-    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-    const {idToken} = await GoogleSignin.signIn();
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    return auth().signInWithCredential(googleCredential);
+    try {
+      await dispatch(googleSignUp);
+    } catch (error) {
+      console.log('SignUp error', error);
+    }
   };
-  const handleSignUp = () => {
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User account created & signed in!');
-        Alert.alert('User account created Successfully!');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-        console.error(error);
-      });
-  };
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
+
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
-  interface ButtonGoogleProps {
-    icon: any;
-    text: string;
-  }
   return {
-    userName,
-    setUserName,
+    displayName,
+    setDisplayName,
     email,
     setEmail,
     password,

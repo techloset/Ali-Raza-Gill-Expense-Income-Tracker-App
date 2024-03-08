@@ -1,94 +1,40 @@
-// import React, {useState} from 'react';
-// import auth from '@react-native-firebase/auth';
-// import {Alert} from 'react-native';
-// import {StackNavigationProp} from '@react-navigation/stack';
-// import {AuthRoutes} from '../../../navigation/stackNavigation/StackNavigation';
-
-// type ForgotPasswordScreenNavigationProp = StackNavigationProp<
-//   AuthRoutes,
-//   'ForgotPassword'
-// >;
-// type Props = {
-//   navigation: ForgotPasswordScreenNavigationProp;
-// };
-
-// const useForgotPassword = ({navigation}: Props) => {
-//   const [email, setEmail] = useState<string>('');
-
-//   const forgotPassword = async () => {
-//     try {
-//       if (!email) {
-//         Alert.alert('Please enter your email address');
-//         return;
-//       }
-//       await auth().sendPasswordResetEmail(email);
-//       Alert.alert('Password reset email sent!');
-//       navigation.goBack();
-//     } catch (error: any) {
-//       let errorMessage =
-//         'An error occurred while sending the password reset email. Please try again.';
-//       if (error.code === 'auth/user-not-found') {
-//         errorMessage = 'That email address is not registered!';
-//       }
-//       Alert.alert(errorMessage);
-//       console.error(error);
-//     }
-//   };
-
-//   return {forgotPassword, email, setEmail};
-// };
-
-// export default useForgotPassword;
-
-import React, {useState} from 'react';
-import auth from '@react-native-firebase/auth';
-import {Alert} from 'react-native';
+import {useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthRoutes} from '../../../navigation/stackNavigation/StackNavigation';
+import {useAppDispatch} from '../../../store/hooks';
+import {forgotPassword} from '../../../store/slices/authSlice';
 
 type ForgotPasswordScreenNavigationProp = StackNavigationProp<
   AuthRoutes,
   'ForgotPassword'
 >;
-
 type Props = {
   navigation: ForgotPasswordScreenNavigationProp;
 };
 
 const useForgotPassword = ({navigation}: Props) => {
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState<string>('');
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
 
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const forgotPassword = async () => {
+  const handleforgotPassword = async () => {
     try {
-      if (!email) {
-        Alert.alert('Please enter your email address');
-        return;
-      }
-      if (!validateEmail(email)) {
-        Alert.alert('Please enter a valid email address');
-        return;
-      }
-
-      await auth().sendPasswordResetEmail(email);
-      Alert.alert('Password reset email sent!');
-      navigation.goBack();
-    } catch (error: any) {
-      let errorMessage =
-        'An error occurred while sending the password reset email. Please try again.';
-      if (error.code === 'auth/user-not-found') {
-        errorMessage = 'That email address is not registered!';
-      }
-      Alert.alert(errorMessage);
-      console.error(error);
+      await dispatch(forgotPassword(email));
+      setIsDialogVisible(true);
+      setEmail('');
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log('Error sending password reset email', error);
     }
   };
 
-  return {forgotPassword, email, setEmail};
+  return {
+    handleforgotPassword,
+    email,
+    setEmail,
+    isDialogVisible,
+    setIsDialogVisible,
+  };
 };
 
 export default useForgotPassword;

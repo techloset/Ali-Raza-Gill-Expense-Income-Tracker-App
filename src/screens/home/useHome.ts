@@ -1,11 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import moment from 'moment';
 
-const uid = auth().currentUser?.uid;
 interface Transaction {
-  [x: string]: any;
   addExpneseTime: string;
   category: string;
   description: string;
@@ -21,30 +18,31 @@ export default function useHome() {
   const [combinedTransactions, setCombinedTransactions] = useState<
     Transaction[]
   >([]);
+  const uid = auth()?.currentUser?.uid;
+
   const handlePress = (buttonNumber: number) => {
     setActiveButton(buttonNumber);
   };
 
   const submit = async () => {
     try {
-      const collection = `${uid}`;
-      const res = await firestore()
+      await firestore()
         .collection('user')
-        .doc(collection)
+        .doc(uid)
         .collection('Income')
-        .get();
-      const incomeData = res.docs.map(doc => doc.data());
-      setIncome([...incomeData]);
-      const resu = await firestore()
-        .collection('user')
-        .doc(collection)
-        .collection('Expense')
-        .get();
-      const expenseData = resu.docs.map(doc => doc.data());
-      setExpence([...expenseData]);
+        .onSnapshot(snapshot => {
+          const incomeData = snapshot.docs.map(doc => doc.data());
+          setIncome([...incomeData]);
+        });
 
-      const combinedData = [...expenseData, ...incomeData] as Transaction[];
-      setCombinedTransactions(combinedData);
+      await firestore()
+        .collection('user')
+        .doc(uid)
+        .collection('Expense')
+        .onSnapshot(snapshot => {
+          const expenseData = snapshot.docs.map(doc => doc.data());
+          setExpence([...expenseData]);
+        });
     } catch (error) {
       console.error('Error in adding data:', error);
       throw error;
@@ -52,8 +50,6 @@ export default function useHome() {
   };
 
   useEffect(() => {
-    setTotalExpense(totalExpense);
-    setTotalIncome(totalIncome);
     submit();
   }, []);
 
@@ -62,8 +58,6 @@ export default function useHome() {
     for (let i = 0; i < expence.length; i++) {
       const amount = parseInt(expence[i].amount.trim(), 10);
       if (!isNaN(amount)) {
-        console.log(TotalExpense);
-
         TotalExpense += amount;
       } else {
         console.log('Invalid amount:', expence[i].amount);
@@ -77,7 +71,6 @@ export default function useHome() {
     for (let i = 0; i < income.length; i++) {
       const amount = parseInt(income[i].amount.trim(), 10);
       if (!isNaN(amount)) {
-        console.log(amount);
         TotalIncome += amount;
       } else {
         console.log('Invalid amount:', income[i].amount);
@@ -91,11 +84,15 @@ export default function useHome() {
     setAccountBalance(balance);
   }, [totalIncome, totalExpense]);
 
+  useEffect(() => {
+    const combinedData = [...expence, ...income] as Transaction[];
+    setCombinedTransactions(combinedData);
+  }, [expence, income]);
+
   return {
     activeButton,
     handlePress,
     setActiveButton,
-    submit,
     totalExpense,
     totalIncome,
     accountBalance,

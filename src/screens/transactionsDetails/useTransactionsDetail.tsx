@@ -2,17 +2,20 @@ import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import moment from 'moment';
+import {useAppDispatch, useAppSelector} from '../../store/hooks';
+import {TransactionsDetails} from '../../store/slices/transactionDetailsSlice';
 
-const uid = auth().currentUser?.uid;
+const uid = auth()?.currentUser?.uid;
 
 interface Transaction {
-  addExpneseTime: string; // Assuming addExpneseTime is a string representing the date
+  addExpneseTime: string;
   category: string;
   description: string;
   amount: number;
 }
 
 export default function useTransactionsDetail() {
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [combinedTransactions, setCombinedTransactions] = useState<
@@ -28,43 +31,48 @@ export default function useTransactionsDetail() {
     Transaction[]
   >([]);
 
-  const fetchTransactions = async () => {
-    try {
-      setIsLoading(true);
-      const collection = `${uid}`;
-
-      const incomeSnapshot = await firestore()
-        .collection('user')
-        .doc(collection)
-        .collection('Income')
-        .get();
-      const incomeData = incomeSnapshot.docs.map(
-        doc => doc.data() as Transaction,
-      );
-
-      const expenseSnapshot = await firestore()
-        .collection('user')
-        .doc(collection)
-        .collection('Expense')
-        .get();
-      const expenseData = expenseSnapshot.docs.map(
-        doc => doc.data() as Transaction,
-      );
-
-      const combinedData = [...expenseData, ...incomeData];
-      setCombinedTransactions(combinedData);
-
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Error fetching transactions:', error);
-      setIsLoading(false);
-      setIsError(true);
-    }
-  };
+  const fetchTransactions = useAppSelector(
+    state => state.transactiondetails.transactions,
+  );
 
   useEffect(() => {
-    fetchTransactions();
+    dispatch(TransactionsDetails());
   }, []);
+  console.log('currentTransaction =>', fetchTransactions);
+
+  // // const fetchTransactions = async () => {
+  // //   try {
+  // //     setIsLoading(true);
+  // //     const collection = `${uid}`;
+  // //     const incomeSnapshot = await firestore()
+  // //       .collection('user')
+  // //       .doc(collection)
+  // //       .collection('Income')
+  // //       .get();
+  // //     const incomeData = incomeSnapshot.docs.map(
+  // //       doc => doc.data() as Transaction,
+  // //     );
+  // //     const expenseSnapshot = await firestore()
+  // //       .collection('user')
+  // //       .doc(collection)
+  // //       .collection('Expense')
+  // //       .get();
+  // //     const expenseData = expenseSnapshot.docs.map(
+  // //       doc => doc.data() as Transaction,
+  // //     );
+  // //     const combinedData = [...expenseData, ...incomeData];
+  // //     setCombinedTransactions(combinedData);
+  // //     setIsLoading(false);
+  // //   } catch (error) {
+  // //     console.error('Error fetching transactions:', error);
+  // //     setIsLoading(false);
+  // //     setIsError(true);
+  // //   }
+  // // };
+
+  // useEffect(() => {
+  //   fetchTransactions();
+  // }, []);
 
   useEffect(() => {
     const today = moment().startOf('day');
