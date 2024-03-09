@@ -95,7 +95,7 @@ interface Transaction {
   category: string;
   description: string;
   amount: number;
-  transType: string; // Added property for transaction type
+  transType: string;
 }
 
 export default function useHome() {
@@ -133,27 +133,27 @@ export default function useHome() {
       transaction => transaction.transType === 'Income',
     );
 
-    // Set expenses and incomes
-    setExpenses(filteredExpenses);
-    setIncomes(filteredIncomes);
+    let totalExpenses = 0;
+    for (let i = 0; i < filteredExpenses?.length; i++) {
+      const amount = parseInt(filteredExpenses[i]?.amount as any, 10);
+      if (!isNaN(amount)) {
+        totalExpenses += amount;
+      }
+    }
 
-    // Calculate total expenses
-    const totalExpenses = filteredExpenses.reduce(
-      (acc, curr) => acc + curr.amount,
-      0,
-    );
-    setTotalExpense(totalExpenses);
+    let totalIncomes = 0;
+    for (let i = 0; i < filteredIncomes.length; i++) {
+      const amount = parseInt(filteredIncomes[i].amount as any, 10);
+      if (!isNaN(amount)) {
+        totalIncomes += amount;
+      }
+    }
 
-    // Calculate total incomes
-    const totalIncomes = filteredIncomes.reduce(
-      (acc, curr) => acc + curr.amount,
-      0,
-    );
-    setTotalIncome(totalIncomes);
-
-    // Calculate account balance
-    const balance = totalIncomes - totalExpenses;
-    setAccountBalance(balance);
+    setExpenses((_prevExpenses: any) => [...filteredExpenses] as any);
+    setIncomes((_prevIncomes: any) => [...filteredIncomes] as any);
+    setTotalExpense(_prevTotalExpense => totalExpenses);
+    setTotalIncome(_prevTotalIncome => totalIncomes);
+    setAccountBalance(_prevAccountBalance => totalIncomes - totalExpenses);
   }, [fetchTransactions]);
 
   return {

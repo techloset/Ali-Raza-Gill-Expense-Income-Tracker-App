@@ -70,9 +70,7 @@ export const TransactionsDetails = createAsyncThunk<Transaction[]>(
         id: doc.id,
         ...doc.data(),
       })) as Transaction[];
-
       const TransactionsData = [...Income, ...Expense];
-      // console.log('first', TransactionsData);
       return TransactionsData;
     } catch (error) {
       console.error('Error getting TransactionsData:', error);

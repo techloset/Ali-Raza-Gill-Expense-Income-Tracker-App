@@ -243,11 +243,29 @@ import {
 } from 'react-native';
 import CustomHeader from '../../components/CustomHeader';
 import Category from '../../components/Category';
+import useFinancialReports from './useFinancialReports';
 
 const FinancialReports = () => {
-  const [isExpenseSelected, setIsExpenseSelected] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const {
+    activeButton,
+    setActiveButton,
+    handlePress,
+    totalExpense,
+    totalIncome,
+    accountBalance,
+    expenses,
+    incomes,
+    isExpenseSelected,
+    setIsExpenseSelected,
+    isLoading,
+    setIsLoading,
+    financialReports,
+    setFinancialReports,
+    setExpenses,
+    setIncomes,
+    setTotalExpense,
+    setTotalIncome,
+  } = useFinancialReports();
   const handleToggle = () => {
     setIsExpenseSelected(!isExpenseSelected);
   };
@@ -255,14 +273,14 @@ const FinancialReports = () => {
   const expenseBackgroundColor = isExpenseSelected ? '#F1F1FA' : '#F1F1FA';
   const incomeBackgroundColor = isExpenseSelected ? '#F1F1FA' : '#F1F1FA';
 
-  const imageText = isExpenseSelected ? 'Expense' : 'Income';
+  // const imageText = isExpenseSelected ? 'Expense' : 'Income';
   const bottomContentText = isExpenseSelected ? (
     <>
       <View style={styles.BarGraphContainer}>
         <Category
           color=""
           category="Shopping"
-          amount={35445}
+          amount={totalIncome}
           image={require('../../assets/images/Report_images/ShoppiingLineGraph.png')}
           style={styles.category1}
           styleamount={styles.amountColor1}
