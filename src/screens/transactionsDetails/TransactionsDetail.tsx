@@ -7,10 +7,29 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {AuthRoutes} from '../../navigation/stackNavigation/StackNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
+import Shopping from '../../assets/images/HomeScreenImages/Shopping.png';
+import Subscription from '../../assets/images/HomeScreenImages/Subscription.png';
+import Food from '../../assets/images/HomeScreenImages/Food.png';
+import Salary from '../../assets/images/HomeScreenImages/Salary.png';
+import Transpotation from '../../assets/images/HomeScreenImages/Transpotation.png';
 
 interface Props {
   navigation: StackNavigationProp<AuthRoutes>;
 }
+interface Category {
+  id: number;
+  name: string;
+  image: any;
+}
+
+const categories: Category[] = [
+  {id: 1, name: 'Shopping', image: Shopping},
+  {id: 2, name: 'Subscription', image: Subscription},
+  {id: 3, name: 'Food', image: Food},
+  {id: 4, name: 'Salary', image: Salary},
+  {id: 5, name: 'Transportation', image: Transpotation},
+];
+
 const TransactionsDetails: React.FC<Props> = ({navigation}) => {
   const {
     isLoading,
@@ -68,7 +87,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
           <Text>Error fetching transactions</Text>
         ) : (
           <>
-            {fetchTransactions?.map((item: any, index: number) => (
+            {/* {fetchTransactions?.map((item: any, index: number) => (
               <ShoppingCard
                 key={index.toString()}
                 img={require('../../assets/images/HomeScreenImages/Shopping.png')}
@@ -84,7 +103,36 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 style={{}}
                 wallet=""
               />
-            ))}
+            ))} */}
+
+            {fetchTransactions?.map((item: any, index: number) => {
+              const categoryObj = categories.find(
+                cat => cat.name === item.category,
+              );
+
+              const img = categoryObj
+                ? categoryObj.image
+                : require('../../assets/images/HomeScreenImages/Salary.png');
+
+              return (
+                <ShoppingCard
+                  key={index.toString()}
+                  img={img}
+                  category={item?.category}
+                  description={item?.discription?.slice(0, 20)}
+                  amount={item?.amount}
+                  time={
+                    item.addExpenseTime
+                      ? moment(item.addExpenseTime).format('hh:mm A')
+                      : ''
+                  }
+                  onPress={() => {}}
+                  style={{}}
+                  wallet=""
+                />
+              );
+            })}
+
             {fetchTransactions.length === 0 && (
               <Text style={styles.headingText1}>
                 No Today's transactions available
