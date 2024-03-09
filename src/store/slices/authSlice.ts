@@ -10,11 +10,8 @@ const initialState: AuthState = {
   isLoading: false,
   error: null,
 };
-
 GoogleSignin.configure({
-  webClientId:
-    '577251364044-7kqqdtbio0420g24gburmmreheh8cadr.apps.googleusercontent.com',
-  // webClientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+  webClientId: process.env.REACT_APP_GOOGLE_CLIENT_ID!,
 });
 
 export const Signup = createAsyncThunk(

@@ -14,6 +14,16 @@ export type Expense = {
   category: string;
   amount: string;
   image: string | null;
+  transType: string;
+  wallet: string;
+};
+export type Income = {
+  discription: string;
+  category: string;
+  amount: string;
+  image: string | null;
+  transType: string;
+  wallet: string;
 };
 export interface LoginProps {
   navigation: StackNavigationProp<RootStackParamsList, 'login', 'signUp'>;
@@ -22,6 +32,7 @@ export type counterState = {
   expense: Expense[];
   isLoading: boolean;
   isError: string | null;
+  income: Income[];
 };
 
 export interface User {

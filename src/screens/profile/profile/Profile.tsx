@@ -7,19 +7,15 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
+import useProfile from './useProfile';
 
 interface ProfileHomeProps {
   navigation: any;
 }
-import auth from '@react-native-firebase/auth';
-
-const hnadleSignOut = () => {
-  auth()
-    .signOut()
-    .then(() => Alert.alert('User signed out!'));
-};
 
 const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
+  const {hnadleSignOut} = useProfile();
+
   return (
     <View>
       <View style={styles.profileHeader}>

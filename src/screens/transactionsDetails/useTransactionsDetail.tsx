@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import moment from 'moment';
 import {useAppDispatch, useAppSelector} from '../../store/hooks';
 import {TransactionsDetails} from '../../store/slices/transactionDetailsSlice';
@@ -38,41 +37,6 @@ export default function useTransactionsDetail() {
   useEffect(() => {
     dispatch(TransactionsDetails());
   }, []);
-  console.log('currentTransaction =>', fetchTransactions);
-
-  // // const fetchTransactions = async () => {
-  // //   try {
-  // //     setIsLoading(true);
-  // //     const collection = `${uid}`;
-  // //     const incomeSnapshot = await firestore()
-  // //       .collection('user')
-  // //       .doc(collection)
-  // //       .collection('Income')
-  // //       .get();
-  // //     const incomeData = incomeSnapshot.docs.map(
-  // //       doc => doc.data() as Transaction,
-  // //     );
-  // //     const expenseSnapshot = await firestore()
-  // //       .collection('user')
-  // //       .doc(collection)
-  // //       .collection('Expense')
-  // //       .get();
-  // //     const expenseData = expenseSnapshot.docs.map(
-  // //       doc => doc.data() as Transaction,
-  // //     );
-  // //     const combinedData = [...expenseData, ...incomeData];
-  // //     setCombinedTransactions(combinedData);
-  // //     setIsLoading(false);
-  // //   } catch (error) {
-  // //     console.error('Error fetching transactions:', error);
-  // //     setIsLoading(false);
-  // //     setIsError(true);
-  // //   }
-  // // };
-
-  // useEffect(() => {
-  //   fetchTransactions();
-  // }, []);
 
   useEffect(() => {
     const today = moment().startOf('day');
@@ -80,19 +44,25 @@ export default function useTransactionsDetail() {
     const previousDays = moment().subtract(2, 'days').startOf('day');
 
     const todayTransactions = combinedTransactions.filter(item =>
-      moment(item.addExpneseTime)?.isSame(today, 'day'),
+      moment(item.addExpneseTime, 'YYYY-MM-DDTHH:mm:ss').isSame(today, 'day'),
     );
     const yesterdaysTransactions = combinedTransactions.filter(item =>
-      moment(item.addExpneseTime)?.isSame(yesterday, 'day'),
+      moment(item.addExpneseTime, 'YYYY-MM-DDTHH:mm:ss').isSame(
+        yesterday,
+        'day',
+      ),
     );
     const previousTransactions = combinedTransactions.filter(item =>
-      moment(item.addExpneseTime)?.isBefore(previousDays, 'day'),
+      moment(item.addExpneseTime, 'YYYY-MM-DDTHH:mm:ss').isBefore(
+        previousDays,
+        'day',
+      ),
     );
 
     setTodaysTransactions(todayTransactions);
     setYesterdaysTransactions(yesterdaysTransactions);
     setPreviousTransactions(previousTransactions);
-  }, [combinedTransactions]);
+  }, [fetchTransactions]);
 
   return {
     isLoading,
@@ -101,5 +71,6 @@ export default function useTransactionsDetail() {
     yesterdaysTransactions,
     previousTransactions,
     combinedTransactions,
+    fetchTransactions,
   };
 }

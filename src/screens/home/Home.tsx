@@ -22,7 +22,8 @@ export default function Home() {
     totalExpense,
     totalIncome,
     accountBalance,
-    combinedTransactions,
+    // combinedTransactions,
+    fetchTransactions,
   } = useHome();
 
   return (
@@ -131,13 +132,13 @@ export default function Home() {
           </TouchableOpacity>
         </View>
 
-        {combinedTransactions?.map((item, index) => (
+        {fetchTransactions?.map((item: any, index: number) => (
           <ShoppingCard
             key={index.toString()}
             img={require('../../assets/images/HomeScreenImages/Subscription.png')}
-            category={item.category}
-            description={item.description?.slice(0, 20)}
-            amount={item.amount}
+            category={item?.category}
+            description={item?.discription.slice(0, 12)}
+            amount={item?.amount}
             time={
               item.addExpenseTime
                 ? moment(item.addExpenseTime).format('hh:mm A')

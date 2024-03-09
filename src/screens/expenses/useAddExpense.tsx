@@ -64,6 +64,7 @@ export function useAddExpense() {
       discription,
       wallet,
       image,
+      transType,
       addExpenseTime: new Date().toISOString(),
     };
 

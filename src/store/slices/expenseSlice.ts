@@ -3,8 +3,6 @@ import {Expense} from '../../types/types';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-const uid = auth().currentUser?.uid;
-
 interface ExpenseState {
   expense: Expense[];
   isLoading: boolean;
@@ -15,6 +13,32 @@ const initialState: ExpenseState = {
   expense: [],
   isLoading: false,
   isError: null,
+};
+
+const submit = async () => {
+  try {
+    const uid = auth().currentUser?.uid;
+    firestore()
+      .collection('user')
+      .doc(uid)
+      .collection('Income')
+      .onSnapshot(snapshot => {
+        const incomeData = snapshot.docs.map(doc => doc.data());
+        // setIncome([...incomeData]);
+      });
+
+    firestore()
+      .collection('user')
+      .doc(uid)
+      .collection('Expense')
+      .onSnapshot(snapshot => {
+        const expenseData = snapshot.docs.map(doc => doc.data());
+        // setExpence([...expenseData]);
+      });
+  } catch (error) {
+    console.error('Error in adding data:', error);
+    throw error;
+  }
 };
 
 export const addExpense = createAsyncThunk<

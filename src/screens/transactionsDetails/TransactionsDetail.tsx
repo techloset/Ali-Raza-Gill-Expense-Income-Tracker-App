@@ -19,6 +19,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
     todaysTransactions,
     yesterdaysTransactions,
     previousTransactions,
+    fetchTransactions,
   } = useTransactionsDetail();
 
   return (
@@ -67,12 +68,12 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
           <Text>Error fetching transactions</Text>
         ) : (
           <>
-            {combinedTransactions?.map((item: any, index: number) => (
+            {fetchTransactions?.map((item: any, index: number) => (
               <ShoppingCard
                 key={index.toString()}
                 img={require('../../assets/images/HomeScreenImages/Shopping.png')}
                 category={item.category}
-                description={item.discription.slice(0, 10)}
+                description={item.discription.slice(0, 12)}
                 amount={item.amount}
                 time={
                   item.addExpenseTime
@@ -84,7 +85,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 wallet=""
               />
             ))}
-            {todaysTransactions.length === 0 && (
+            {fetchTransactions.length === 0 && (
               <Text style={styles.headingText1}>
                 No Today's transactions available
               </Text>
