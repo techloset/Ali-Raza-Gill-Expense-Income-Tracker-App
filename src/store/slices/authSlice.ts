@@ -142,14 +142,15 @@ export const googleSignUp = async () => {
   }
 };
 
-export const LogOut = createAsyncThunk('auth/LogOut', () => async () => {
-  await auth()
-    .signOut()
-    .then(() => {
+export const LogOut = createAsyncThunk<void, void>(
+  'auth/LogOut',
+  async (_, {dispatch}) => {
+    try {
+      await auth().signOut();
+      dispatch(setUser(null));
       ToastAndroid.show('User signed out!', ToastAndroid.SHORT);
-    })
-    .catch(error => {
-      ToastAndroid.show(error.message, ToastAndroid.SHORT);
+    } catch (error) {
+      ToastAndroid.show(error as string, ToastAndroid.SHORT);
       ToastAndroid.show(
         'An error occurred while signing out. Please try again.',
         ToastAndroid.LONG,
@@ -158,8 +159,10 @@ export const LogOut = createAsyncThunk('auth/LogOut', () => async () => {
         'An error occurred while signing out. Please try again.',
         error,
       );
-    });
-});
+    }
+  },
+);
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -215,6 +218,7 @@ export const authSlice = createSlice({
       })
       .addCase(LogOut.fulfilled, state => {
         state.isLoading = false;
+        state.user = null;
       })
       .addCase(LogOut.rejected, (state, action) => {
         state.isLoading = false;

@@ -18,6 +18,7 @@ import Subscription from '../../assets/images/HomeScreenImages/Subscription.png'
 import Food from '../../assets/images/HomeScreenImages/Food.png';
 import Salary from '../../assets/images/HomeScreenImages/Salary.png';
 import Transpotation from '../../assets/images/HomeScreenImages/Transpotation.png';
+import useProfile from '../profile/profile/useProfile';
 interface Category {
   id: number;
   name: string;
@@ -41,7 +42,7 @@ export default function Home({navigation}: any) {
     accountBalance,
     fetchTransactions,
   } = useHome();
-
+  const {userImageURL} = useProfile();
   return (
     <ScrollView>
       <View style={styles.MainContainer1}>
@@ -51,10 +52,18 @@ export default function Home({navigation}: any) {
           <View>
             <View style={styles.TopNavigationContainer}>
               <View style={styles.TopNavigation1}>
-                <View>
-                  <Image
-                    source={require('../../assets/images/HomeScreenImages/Avatar.png')}
-                  />
+                <View style={styles.ProfileImageContainer}>
+                  {userImageURL ? (
+                    <Image
+                      style={styles.ProfileImage}
+                      source={{uri: userImageURL}}
+                    />
+                  ) : (
+                    <Image
+                      style={styles.ProfileImage}
+                      source={require('../../assets/images/Profile//AvatarProfile.png')}
+                    />
+                  )}
                 </View>
                 <View style={styles.TopNavigation2}>
                   <Image

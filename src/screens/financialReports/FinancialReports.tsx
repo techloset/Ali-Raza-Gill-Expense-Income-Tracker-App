@@ -265,6 +265,9 @@ const FinancialReports = () => {
     setIncomes,
     setTotalExpense,
     setTotalIncome,
+    categoryIncomeTotals,
+    categoryExpenseTotals,
+    PassiveIncome,
   } = useFinancialReports();
   const handleToggle = () => {
     setIsExpenseSelected(!isExpenseSelected);
@@ -273,34 +276,46 @@ const FinancialReports = () => {
   const expenseBackgroundColor = isExpenseSelected ? '#F1F1FA' : '#F1F1FA';
   const incomeBackgroundColor = isExpenseSelected ? '#F1F1FA' : '#F1F1FA';
 
-  // const imageText = isExpenseSelected ? 'Expense' : 'Income';
   const bottomContentText = isExpenseSelected ? (
     <>
       <View style={styles.BarGraphContainer}>
         <Category
-          color=""
           category="Shopping"
-          amount={totalIncome}
+          amount={categoryExpenseTotals.Shopping}
           image={require('../../assets/images/Report_images/ShoppiingLineGraph.png')}
           style={styles.category1}
           styleamount={styles.amountColor1}
           transactionType="Expense"
         />
         <Category
-          color=""
           category="Subscription"
-          amount={2000}
+          amount={categoryExpenseTotals.Subscription}
           image={require('../../assets/images/Report_images/SubscriptionLineGraph.png')}
           style={styles.category2}
           styleamount={styles.amountColor1}
           transactionType="Expense"
         />
         <Category
-          color=""
           category="Food"
-          amount={500}
+          amount={categoryExpenseTotals.Food}
           image={require('../../assets/images/Report_images/FoodLineGraph.png')}
           style={styles.category3}
+          styleamount={styles.amountColor1}
+          transactionType="Expense"
+        />
+        <Category
+          category="Transportation"
+          amount={categoryExpenseTotals.Transportation}
+          image={require('../../assets/images/Report_images/PassiveIncome.png')}
+          style={styles.category4}
+          styleamount={styles.amountColor1}
+          transactionType="Expense"
+        />
+        <Category
+          category="Salary"
+          amount={categoryExpenseTotals.Salary}
+          image={require('../../assets/images/Report_images/SalaryLineGraph.png')}
+          style={styles.category5}
           styleamount={styles.amountColor1}
           transactionType="Expense"
         />
@@ -310,18 +325,16 @@ const FinancialReports = () => {
     <>
       <View style={styles.BarGraphContainer}>
         <Category
-          color=""
           category="Salary"
-          amount={45}
+          amount={categoryIncomeTotals.Salary || 0}
           image={require('../../assets/images/Report_images/SalaryLineGraph.png')}
           style={styles.Incomecategory}
           styleamount={styles.IncomeAmountColor}
           transactionType="Income"
         />
         <Category
-          color=""
           category="Passive Income"
-          amount={700}
+          amount={PassiveIncome || 0}
           image={require('../../assets/images/Report_images/PassiveIncome.png')}
           style={styles.IncomeCategory2}
           styleamount={styles.IncomeAmountColor}
@@ -330,7 +343,7 @@ const FinancialReports = () => {
       </View>
     </>
   );
-  const financialText = `$${isExpenseSelected ? 30000000 : 50000000}`;
+  const financialText = `$${isExpenseSelected ? totalExpense : totalIncome}`;
 
   return (
     <View style={styles.MainContainer}>
@@ -573,6 +586,8 @@ const styles = StyleSheet.create({
   category1: {backgroundColor: 'orange'},
   category2: {backgroundColor: '#7F3DFF'},
   category3: {backgroundColor: 'red'},
+  category4: {backgroundColor: 'black'},
+  category5: {backgroundColor: '#00A86B'},
   amountColor1: {color: 'red'},
   BarGraphContainer: {
     paddingVertical: 20,

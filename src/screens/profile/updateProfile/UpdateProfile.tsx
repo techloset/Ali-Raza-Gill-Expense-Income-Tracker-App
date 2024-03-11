@@ -1,43 +1,143 @@
-import {StyleSheet, Text, View, Image, TextInput} from 'react-native';
-import React from 'react';
-import {useNavigation} from '@react-navigation/native'; // Import useNavigation hook
+import React, {useState, useEffect} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  ToastAndroid,
+} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import CustomHeader from '../../../components/CustomHeader';
 import Button from '../../../components/Button';
-import {ScrollView} from 'react-native-gesture-handler';
+import {
+  launchImageLibrary,
+  ImagePickerResponse,
+} from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
-const UpdateProfile = () => {
-  //   const navigation = useNavigation(); // Use useNavigation hook to get navigation object
+const UpdateProfile: React.FC = () => {
+  const [email, setEmail] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [imageURI, setImageURI] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch user data from Firestore on component mount
+    const fetchUserData = async () => {
+      try {
+        const currentUser = auth().currentUser;
+        const userDoc = await firestore()
+          .collection('user')
+          .doc(currentUser?.uid)
+          .get();
+        const userData = userDoc.data();
+        if (userData) {
+          setEmail(userData.email || '');
+          setName(userData.name || '');
+          setImageURI(userData.imageURL || null);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleSelectImage = () => {
+    launchImageLibrary({mediaType: 'photo'}, response => {
+      if (
+        !response.didCancel &&
+        response.assets &&
+        response.assets.length > 0
+      ) {
+        const {uri} = response.assets[0];
+        if (uri) {
+          setImageURI(uri);
+        }
+      }
+    });
+  };
+
+  const uploadImageToStorage = async (uri: string) => {
+    try {
+      const fileName = `${Date.now()}-image.jpg`;
+      const reference = storage().ref(`images/${fileName}`);
+      await reference.putFile(uri);
+      const downloadURL = await reference.getDownloadURL();
+      return downloadURL;
+    } catch (error) {
+      console.error('Error uploading image to Firebase Storage:', error);
+      throw error;
+    }
+  };
+
+  const handleUpdateProfile = async () => {
+    try {
+      // Upload image if it's selected
+      let imageURL = null;
+      if (imageURI) {
+        imageURL = await uploadImageToStorage(imageURI);
+      }
+
+      // Update user profile data in Firestore
+      const currentUser = auth().currentUser;
+      await firestore().collection('user').doc(currentUser?.uid).update({
+        email,
+        name,
+        imageURL,
+      });
+
+      ToastAndroid.show('Profile updated successfully!', ToastAndroid.SHORT);
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      ToastAndroid.show('Failed to update profile', ToastAndroid.SHORT);
+    }
+  };
 
   return (
-    <ScrollView>
-      <View style={styles.Main}>
+    <ScrollView style={{backgroundColor: 'white'}}>
+      <View style={styles.main}>
         <View style={styles.container}>
           <CustomHeader title="Update Profile" style={{}} />
 
           <View style={styles.profileView}>
-            <View style={styles.imageContainer}>
-              <Image
-                style={styles.userImage}
-                source={require('../../../assets/images/Profile/ProfilePic.png')}
-              />
-            </View>
-            <View style={styles.editButtonContainer}>
-              <View style={styles.editButton}>
-                <Image
-                  source={require('../../../assets/images/Profile/Edit.png')}
-                  style={styles.editIcon}
-                />
+            <TouchableOpacity onPress={handleSelectImage}>
+              <View style={styles.imageContainer}>
+                {imageURI ? (
+                  <Image style={styles.profileImage} source={{uri: imageURI}} />
+                ) : (
+                  <Image
+                    style={styles.profileImage}
+                    source={require('../../../assets/images/Profile/AvatarProfile.png')}
+                  />
+                )}
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
+
           <View>
-            <Text style={styles.inputLable}>Email</Text>
-            <TextInput style={styles.textInput} placeholder="Email" />
-            <Text style={styles.inputLable}>Name</Text>
-            <TextInput style={styles.textInput} placeholder="Name" />
+            <Text style={styles.inputLabel}>Email</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Email"
+              value={email}
+              onChangeText={text => setEmail(text)}
+            />
+            <Text style={styles.inputLabel}>Name</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Name"
+              value={name}
+              onChangeText={text => setName(text)}
+            />
           </View>
-          <View style={styles.UpdateProfileBtn}>
-            <Button name="Update Profile" onPress={() => {}} />
+
+          <View style={styles.updateProfileBtn}>
+            <Button name="Update Profile" onPress={handleUpdateProfile} />
           </View>
         </View>
       </View>
@@ -48,7 +148,7 @@ const UpdateProfile = () => {
 export default UpdateProfile;
 
 const styles = StyleSheet.create({
-  Main: {
+  main: {
     backgroundColor: 'white',
     flex: 1,
     height: 712,
@@ -63,40 +163,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageContainer: {
-    position: 'relative',
     width: 120,
     height: 120,
     borderRadius: 60,
     overflow: 'hidden',
-    backgroundColor: 'red',
-    borderColor: '#AD00FF',
+    borderColor: '#7F3DFF',
     borderWidth: 2,
   },
-  userImage: {
-    width: '100%',
+  profileImage: {
     height: '100%',
+    width: '100%',
+    borderRadius: 40,
   },
-  editButtonContainer: {
-    paddingLeft: 100,
-    position: 'absolute',
-    bottom: 5,
-    left: 80,
-  },
-  editButton: {
-    height: 36,
-    width: 36,
-    borderRadius: 20,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#D3D3D3',
-  },
-  editIcon: {
-    width: 24,
-    height: 24,
-  },
-  inputLable: {
+  inputLabel: {
     color: 'black',
     fontSize: 18,
     marginLeft: 10,
@@ -113,7 +192,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontFamily: 'Inter-Medium',
   },
-  UpdateProfileBtn: {
+  updateProfileBtn: {
     position: 'absolute',
     bottom: 60,
     width: '100%',

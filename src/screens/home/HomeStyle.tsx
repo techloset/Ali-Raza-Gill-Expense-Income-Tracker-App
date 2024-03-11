@@ -15,10 +15,9 @@ export const styles = StyleSheet.create({
   TopNavigation1: {
     width: '100%',
     height: 64,
-    paddingHorizontal: 16,
     paddingVertical: 8,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   TopNavigation2: {
     height: 40,
@@ -152,5 +151,14 @@ export const styles = StyleSheet.create({
     color: '#7F3DFF',
     textAlign: 'center',
     borderRadius: 20,
+  },
+  ProfileImageContainer: {
+    width: '20%',
+    marginRight: -55,
+  },
+  ProfileImage: {
+    height: '80%',
+    width: '55%',
+    borderRadius: 40,
   },
 });

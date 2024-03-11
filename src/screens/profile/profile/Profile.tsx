@@ -14,21 +14,25 @@ interface ProfileHomeProps {
 }
 
 const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
-  const {hnadleSignOut} = useProfile();
+  const {handleLogout, userImageURL, name} = useProfile();
 
   return (
     <View>
       <View style={styles.profileHeader}>
         <View style={styles.UserProfile}>
           <View style={styles.ImageContainer}>
-            <Image
-              style={styles.ProfileImage}
-              source={require('../../../assets/images/Profile/ProfilePic.png')}
-            />
+            {userImageURL ? (
+              <Image style={styles.ProfileImage} source={{uri: userImageURL}} />
+            ) : (
+              <Image
+                style={styles.ProfileImage}
+                source={require('../../../assets/images/Profile/AvatarProfile.png')}
+              />
+            )}
           </View>
           <View style={styles.ProfileText}>
             <Text style={styles.usernameText}>Username</Text>
-            <Text style={styles.nameText}>Iriana Saliha</Text>
+            <Text style={styles.nameText}>{name}</Text>
           </View>
         </View>
 
@@ -64,7 +68,7 @@ const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={hnadleSignOut}
+            onPress={handleLogout}
             style={styles.actionContainer}>
             <View style={styles.actionImgContainer}>
               <Image
@@ -117,6 +121,7 @@ const styles = StyleSheet.create({
   nameText: {
     fontSize: 24,
     fontFamily: 'Inter-Bold',
+    color: 'black',
   },
   ProfileText: {
     marginLeft: 16,
@@ -140,6 +145,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginLeft: 9,
     fontFamily: 'Inter-Medium',
+    color: 'black',
   },
   actionImgContainer: {},
   actionContainer: {

@@ -4,7 +4,6 @@ import {Image} from 'react-native';
 
 interface CategoryProps {
   category: string;
-  color: string;
   style: object;
   styleamount: object;
   amount: number;
@@ -14,7 +13,6 @@ interface CategoryProps {
 
 const Category: React.FC<CategoryProps> = ({
   category,
-  color,
   amount,
   image,
   style,
@@ -25,7 +23,7 @@ const Category: React.FC<CategoryProps> = ({
     <View>
       <View style={styles.CategoryContainer}>
         <View style={styles.Container}>
-          <Text style={[styles.ContainerDot, style]}>{color}</Text>
+          <Text style={[styles.ContainerDot, style]}>{}</Text>
           <Text style={styles.ContainerText}>{category}</Text>
         </View>
         <View>
