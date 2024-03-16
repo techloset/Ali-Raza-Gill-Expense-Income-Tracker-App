@@ -53,6 +53,7 @@ export interface TransactionInterface {
   amount: any;
   id: string;
   docId: string;
+  documnetId: string;
   category: string;
   description: string;
   money: string;

@@ -168,7 +168,7 @@ export default function Home({navigation}: any) {
 
           return (
             <ShoppingCard
-              _id={item._id}
+              documnetId={item.docId}
               key={index.toString()}
               img={img}
               category={item?.category}

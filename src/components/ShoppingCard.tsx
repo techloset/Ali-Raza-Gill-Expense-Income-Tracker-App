@@ -6,7 +6,7 @@ import {AuthRoutes} from '../navigation/stackNavigation/StackNavigation';
 
 interface ExpenseCardProps {
   img: any;
-  docId: string;
+  documnetId: string;
   imageUrl: any;
   amount: number;
   description: string;
@@ -20,7 +20,7 @@ interface ExpenseCardProps {
 
 const ShoppingCard: React.FC<ExpenseCardProps> = ({
   img,
-  docId,
+  documnetId,
   imageUrl,
   amount,
   description,
@@ -31,7 +31,7 @@ const ShoppingCard: React.FC<ExpenseCardProps> = ({
   const navigation = useNavigation();
   const onPressHnadle = () => {
     navigation.navigate('EditTransaction', {
-      docId,
+      documnetId,
       imageUrl,
       amount,
       description,

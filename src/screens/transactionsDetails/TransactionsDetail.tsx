@@ -95,7 +95,8 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
               const img = categoryObj
                 ? categoryObj.cardimage
                 : require('../../assets/images/HomeScreenImages/Salary.png');
-              console.log('item._id', item.docId);
+              // console.log('Document ID=>', item.docId);
+              // console.log('Item ID =>', item.id);
               return (
                 <ShoppingCard
                   key={index.toString()}
@@ -108,7 +109,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                   onPress={() => {}}
                   wallet=""
                   transType={item.transType}
-                  docId={item.docId}
+                  documnetId={item.docId}
                   style={{}}
                 />
               );
@@ -135,7 +136,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 style={{}}
                 wallet=""
                 imageUrl={item?.imageUrl || ''}
-                docId={item.id}
+                documnetId={item.id}
                 transType={item.transType}
               />
             ))}
@@ -161,7 +162,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 style={{}}
                 wallet=""
                 imageUrl={item?.imageUrl}
-                docId={item.id}
+                documnetId={item.id}
                 transType={item.transType}
               />
             ))}

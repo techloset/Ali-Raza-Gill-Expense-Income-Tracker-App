@@ -105,7 +105,7 @@ interface TransactionDetailHook {
 // };
 
 const useEditTransaction = (
-  docId: string,
+  documnetId: string,
   category: string,
   discription: string,
   amount: number,
@@ -121,7 +121,7 @@ const useEditTransaction = (
   const handleEdit = async () => {
     try {
       const updatedTransactionData = {
-        docId,
+        documnetId,
         discription: editableDiscription,
         amount: editableMoney,
       };
