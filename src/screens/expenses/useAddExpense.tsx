@@ -10,7 +10,7 @@ import {useAppDispatch} from '../../store/hooks';
 import {addExpense} from '../../store/slices/expenseSlice';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Alert} from 'react-native';
-
+import auth from '@react-native-firebase/auth';
 interface Category {
   id: number;
   name: string;
@@ -59,6 +59,7 @@ export function useAddExpense() {
     }
 
     let expense = {
+      docId: Math.random().toString(36).substr(2, 9),
       amount,
       category,
       discription,
@@ -67,7 +68,6 @@ export function useAddExpense() {
       transType,
       addExpenseTime: new Date().toISOString(),
     };
-
     try {
       await disPatch(
         addExpense({

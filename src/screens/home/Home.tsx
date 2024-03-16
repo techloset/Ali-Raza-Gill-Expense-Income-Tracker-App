@@ -168,19 +168,18 @@ export default function Home({navigation}: any) {
 
           return (
             <ShoppingCard
+              _id={item._id}
               key={index.toString()}
               img={img}
               category={item?.category}
               description={item?.discription?.slice(0, 20)}
               amount={item?.amount}
-              time={
-                item.addExpenseTime
-                  ? moment(item.addExpenseTime).format('hh:mm A')
-                  : ''
-              }
+              time={item.time ? moment(item.time).format('hh:mm A') : ''}
               onPress={() => {}}
               style={{}}
               wallet=""
+              imageUrl={item?.imageUrl}
+              transType={item.transType}
             />
           );
         })}

@@ -142,7 +142,6 @@ export default function useTransactionsDetail() {
     setYesterdaysTransactions(yesterdaysTransactions);
     setPreviousTransactions(previousTransactions);
   }, [combinedTransactions]);
-  console.log('yesterda', yesterdaysTransactions);
 
   return {
     isLoading,

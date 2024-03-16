@@ -1,53 +1,18 @@
-import {Expense, Income} from './../../types/Types';
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {db} from '../../config/Firebase';
 import auth from '@react-native-firebase/auth';
-import {ToastAndroid} from 'react-native';
 
 interface Transaction {
-  category: any;
-  transType: 'Expense' | 'Income' | '';
-  amount: number;
   id: string;
-  Expense: Expense[];
-  Income: Income[];
+  category: string;
+  discription: string;
+  amount: string;
+  transType: 'Income' | 'Expense';
+  imageUrl: string;
+  time: string;
+  docId: string;
 }
 
-// export const TransactionsDetails = createAsyncThunk<Transaction[]>(
-//   'transactiondetails/TransactionsDetailsSlice',
-//   async () => {
-//     // const userEmail: string = auth()?.currentUser?.email as string;
-//     const uid = auth()?.currentUser?.uid;
-//     try {
-//       const incomeSnapshot = await db
-//         .collection('user')
-//         .doc(uid)
-//         .collection('Income')
-//         .get();
-//       const expenseSnapshot = await db
-//         .collection('user')
-//         .doc(uid)
-//         .collection('Expense')
-//         .get();
-//       const Income = incomeSnapshot.docs.map(doc => ({
-//         id: doc.id,
-//         ...doc.data(),
-//       }));
-
-//       const Expense = expenseSnapshot.docs.map(doc => ({
-//         id: doc.id,
-//         ...doc.data(),
-//       }));
-//       // console.log('Expense', Expense);
-//       const TransactionsData = [...Income, ...Expense];
-
-//       return TransactionsData;
-//     } catch (error) {
-//       console.error('Error getting TransactionsData:', error);
-//       throw error;
-//     }
-//   },
-// );
 export const TransactionsDetails = createAsyncThunk<Transaction[]>(
   'transactiondetails/TransactionsDetailsSlice',
   async () => {
@@ -66,29 +31,38 @@ export const TransactionsDetails = createAsyncThunk<Transaction[]>(
         .collection('Income')
         .get();
 
-      const Income = incomeSnapshot.docs.map(doc => ({
-        id: doc.id,
-        docId: doc.id,
-        category: doc.data().category,
-        description: doc.data().description,
-        money: doc.data().money,
-        transactionType: 'Income',
-        imageUrl: doc.data().imageUrl,
-        timestamp: doc.data().timestamp,
-      })) as unknown as Transaction[];
-      const Expense = expenseSnapshot.docs.map(doc => ({
-        id: doc.id,
-        docId: doc.id,
-        category: doc.data().category,
-        description: doc.data().description,
-        money: doc.data().money,
-        transactionType: 'Expense',
-        imageUrl: doc.data().imageUrl,
-        timestamp: doc.data().timestamp,
-      })) as unknown as Transaction[];
+      const Income = incomeSnapshot.docs.map(doc => {
+        const data = doc.data();
+
+        return {
+          docId: doc.id,
+          id: data.docId,
+          category: data.category,
+          discription: data.discription,
+          amount: data.amount,
+          transType: 'Income',
+          imageUrl: data.image,
+          time: data.addExpenseTime,
+        };
+      }) as Transaction[];
+      console.log('Income', Income);
+      const Expense = expenseSnapshot.docs.map(doc => {
+        const data = doc.data();
+        {
+          return {
+            docId: doc.id,
+            id: data.docId,
+            category: data.category,
+            discription: data.discription,
+            amount: data.amount,
+            transType: 'Expense',
+            imageUrl: data.image,
+            time: data.addExpenseTime,
+          };
+        }
+      }) as Transaction[];
 
       const TransactionsData = [...Income, ...Expense];
-
       return TransactionsData;
     } catch (error) {
       console.error('Error getting TransactionsData:', error);
@@ -97,30 +71,111 @@ export const TransactionsDetails = createAsyncThunk<Transaction[]>(
   },
 );
 
-// Edit Transaction
+const getUserEmail = () => auth().currentUser?.email || '';
 
-// export const editTransaction = createAsyncThunk<Transaction, Transaction>(
+interface UpdatedTransactionData {
+  id: string;
+  docId: string;
+  category: string;
+  discription: string;
+  amount: string;
+  transType: string;
+  imageUrl: string;
+  time: string;
+}
+export const editTransaction: any = createAsyncThunk<
+  Transaction,
+  Partial<Transaction>
+>('transactions/editTransaction', async TransactionsData => {
+  try {
+    const uid = auth().currentUser?.uid;
+    const {docId, discription, amount, transType} = TransactionsData;
+
+    await db
+      .collection('user')
+      .doc(uid)
+      .collection(transType === 'Income' ? 'Income' : 'Expense')
+      .doc(docId)
+      .update({
+        discription,
+        amount,
+      });
+
+    // const docRef = db
+    //   .collection('user')
+    //   .doc(uid)
+    //   .collection(transType === 'Income' ? 'Income' : 'Expense')
+    //   .doc(docId);
+    // const docId = docRef.id;
+    // await docRef.set({
+    //   discription,
+    //   amount,
+    // });
+    console.log('editTransaction', editTransaction);
+    return editTransaction;
+  } catch (error) {
+    console.error('Error editing transaction:', error);
+    throw error;
+  }
+});
+
+// export const editTransaction = createAsyncThunk<
+//   Transaction,
+//   Partial<UpdatedTransactionData>
+// >('transactions/editTransaction', async TransactionsData => {
+//   try {
+//     const uid = auth().currentUser?.uid;
+//     const {doc, discription, amount, transType} = TransactionsData;
+
+//     const docRef = db
+//       .collection('user')
+//       .doc(uid)
+//       .collection(transType === 'Income' ? 'Income' : 'Expense')
+//       .doc(doc);
+
+//     await docRef.update({
+//       discription,
+//       amount,
+//     });
+
+//     return TransactionsData;
+//   } catch (error) {
+//     console.error('Error editing transaction:', error);
+//     return error;
+//   }
+// });
+
+// export const editTransaction = createAsyncThunk<
+//   Transaction,
+//   Partial<UpdatedTransactionData>,
+//   {rejectValue: any}
+// >(
 //   'transactions/editTransaction',
-//   async (updatedTransactionData, {dispatch}) => {
+//   async (TransactionsData, {rejectWithValue}) => {
 //     try {
-//       const userEmail = getUserEmail();
-//       const collectionName = `${userEmail}`;
-//       await db
-//         .collection('transactions')
-//         .doc(collectionName)
-//         .collection(updatedTransactionData.transactionType)
-//         .doc(updatedTransactionData.id)
-//         .update(updatedTransactionData);
-//       dispatch(fetchTransactions() as any); // Assuming fetchTransactions fetches updated data
-//       return updatedTransactionData;
+//       const uid = auth().currentUser?.uid;
+//       const {docId, discription, amount, transType} = TransactionsData;
+
+//       const docRef = db
+//         .collection('user')
+//         .doc(uid)
+//         .collection(transType === 'Income' ? 'Income' : 'Expense')
+//         .doc(docId);
+
+//       await docRef.update({
+//         discription,
+//         amount,
+//       });
+
+//       return TransactionsData;
 //     } catch (error) {
-//       ToastAndroid.show('Error editing transaction', ToastAndroid.SHORT);
-//       throw error;
+//       console.error('Error editing transaction:', error);
+//       return rejectWithValue(error);
 //     }
 //   },
 // );
 
-// // Action to delete transaction
+// Delete data
 // export const deleteTransaction = createAsyncThunk<Transaction, Transaction>(
 //   'transactions/deleteTransaction',
 //   async (transactionData, {dispatch}) => {
@@ -128,41 +183,50 @@ export const TransactionsDetails = createAsyncThunk<Transaction[]>(
 //       const userEmail: string = auth().currentUser?.email || '';
 //       const collectionName: string = `${userEmail}`;
 
-//       // Get the transaction document snapshot
 //       const docSnapshot = await db
 //         .collection('transactions')
 //         .doc(collectionName)
 //         .collection(transactionData.transType)
-//         .doc(transactionData.docId)
+//         // .doc(transactionData.docId)
 //         .get();
 
-//       // Check if the document exists
-//       if (!docSnapshot.exists) {
-//         return;
+//       // if (!docSnapshot.exists) {
+//         // Return the original transaction data if the document doesn't exist
+//         // return transactionData;
 //       }
+
 //       await db
 //         .collection('transactions')
 //         .doc(collectionName)
-//         .collection(transactionData.transactionType)
+//         .collection(transactionData.transType)
 //         .doc(transactionData.docId)
 //         .delete();
-//       dispatch(fetchTransactions() as any);
+
+//       dispatch(TransactionsDetails() as any);
 
 //       return transactionData;
 //     } catch (error) {
-//       ToastAndroid.show('Error deleting transaction', ToastAndroid.SHORT);
+//       console.error('Error deleting transaction:', error);
 //       throw error;
 //     }
 //   },
 // );
 
+interface TransactionState {
+  transactions: Transaction[];
+  isLoading: boolean;
+  isError: boolean;
+}
+
+const initialState: TransactionState = {
+  transactions: [],
+  isLoading: false,
+  isError: false,
+};
+
 export const transactionSlice = createSlice({
   name: 'transactiondetails',
-  initialState: {
-    transactions: [] as Transaction[],
-    isLoading: false,
-    isError: false,
-  },
+  initialState,
   reducers: {},
   extraReducers: builder => {
     builder
@@ -177,7 +241,41 @@ export const transactionSlice = createSlice({
       .addCase(TransactionsDetails.rejected, state => {
         state.isLoading = false;
         state.isError = true;
+      })
+      .addCase(editTransaction.pending, state => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(editTransaction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Find and update the transaction in the state based on its docId
+        const index = state.transactions.findIndex(
+          transaction => transaction === action.payload.doc,
+        );
+        if (index !== -1) {
+          state.transactions[index] = {
+            ...state.transactions[index],
+            ...action.payload,
+          };
+        }
+      })
+      .addCase(editTransaction.rejected, state => {
+        state.isLoading = false;
+        state.isError = true;
       });
+
+    // .addCase(deleteTransaction.pending, state => {
+    //   state.isLoading = true;
+    //   state.isError = false;
+    // })
+    // .addCase(deleteTransaction.fulfilled, (state, action) => {
+    //   // Assuming you don't need to push anything here, as the data is being deleted
+    //   state.isLoading = false;
+    // })
+    // .addCase(deleteTransaction.rejected, state => {
+    //   state.isLoading = false;
+    //   state.isError = true;
+    // });
   },
 });
 

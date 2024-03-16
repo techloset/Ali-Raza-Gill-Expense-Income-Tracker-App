@@ -19,15 +19,15 @@ interface Props {
 interface Category {
   id: number;
   name: string;
-  image: any;
+  cardimage: any;
 }
 
 const categories: Category[] = [
-  {id: 1, name: 'Shopping', image: Shopping},
-  {id: 2, name: 'Subscription', image: Subscription},
-  {id: 3, name: 'Food', image: Food},
-  {id: 4, name: 'Salary', image: Salary},
-  {id: 5, name: 'Transportation', image: Transpotation},
+  {id: 1, name: 'Shopping', cardimage: Shopping},
+  {id: 2, name: 'Subscription', cardimage: Subscription},
+  {id: 3, name: 'Food', cardimage: Food},
+  {id: 4, name: 'Salary', cardimage: Salary},
+  {id: 5, name: 'Transportation', cardimage: Transpotation},
 ];
 
 const TransactionsDetails: React.FC<Props> = ({navigation}) => {
@@ -78,7 +78,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
         {isLoading ? (
           <Text
             style={{
-              fontSize: 30,
+              fontSize: 20,
               color: 'grey',
             }}>
             Loading...
@@ -87,33 +87,15 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
           <Text>Error fetching transactions</Text>
         ) : (
           <>
-            {/* {fetchTransactions?.map((item: any, index: number) => (
-              <ShoppingCard
-                key={index.toString()}
-                img={require('../../assets/images/HomeScreenImages/Shopping.png')}
-                category={item.category}
-                description={item.discription.slice(0, 12)}
-                amount={item.amount}
-                time={
-                  item.addExpenseTime
-                    ? moment(item.addExpenseTime).format('hh:mm A')
-                    : ''
-                }
-                onPress={() => {}}
-                style={{}}
-                wallet=""
-              />
-            ))} */}
-
             {fetchTransactions?.map((item: any, index: number) => {
               const categoryObj = categories.find(
                 cat => cat.name === item.category,
               );
 
               const img = categoryObj
-                ? categoryObj.image
+                ? categoryObj.cardimage
                 : require('../../assets/images/HomeScreenImages/Salary.png');
-
+              console.log('item._id', item.docId);
               return (
                 <ShoppingCard
                   key={index.toString()}
@@ -121,40 +103,40 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                   category={item?.category}
                   description={item?.discription?.slice(0, 20)}
                   amount={item?.amount}
-                  time={
-                    item.addExpenseTime
-                      ? moment(item.addExpenseTime).format('hh:mm A')
-                      : ''
-                  }
+                  time={item?.time ? moment(item.time).format('hh:mm A') : ''}
+                  imageUrl={item?.imageUrl}
                   onPress={() => {}}
-                  style={{}}
                   wallet=""
+                  transType={item.transType}
+                  docId={item.docId}
+                  style={{}}
                 />
               );
             })}
-
             {fetchTransactions.length === 0 && (
               <Text style={styles.headingText1}>
                 No Today's transactions available
               </Text>
             )}
-
             <Text style={styles.headingText}>Yesterday</Text>
             {yesterdaysTransactions.map((item: any, index: number) => (
               <ShoppingCard
                 key={index.toString()}
                 img={require('../../assets/images/HomeScreenImages/Shopping.png')}
-                category={item.category}
-                description={item.discription.slice(0, 10)}
-                amount={item.amount}
+                category={item?.category}
+                description={item?.discription.slice(0, 10)}
+                amount={item?.amount}
                 time={
                   item.addExpenseTime
-                    ? moment(item.addExpenseTime).format('hh:mm A')
+                    ? moment(item?.addExpenseTime).format('hh:mm A')
                     : ''
                 }
                 onPress={() => {}}
                 style={{}}
                 wallet=""
+                imageUrl={item?.imageUrl || ''}
+                docId={item.id}
+                transType={item.transType}
               />
             ))}
             {yesterdaysTransactions.length === 0 && (
@@ -178,9 +160,11 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 onPress={() => {}}
                 style={{}}
                 wallet=""
+                imageUrl={item?.imageUrl}
+                docId={item.id}
+                transType={item.transType}
               />
             ))}
-
             {previousTransactions.length === 0 && (
               <Text style={styles.headingText1}>
                 No previous transactions available

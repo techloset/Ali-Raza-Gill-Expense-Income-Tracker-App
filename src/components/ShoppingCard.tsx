@@ -1,28 +1,48 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
+import {RouteProp, useNavigation} from '@react-navigation/native';
+import {AuthRoutes} from '../navigation/stackNavigation/StackNavigation';
 
 interface ExpenseCardProps {
   img: any;
-  category: string;
-  description: string;
+  docId: string;
+  imageUrl: any;
   amount: number;
+  description: string;
+  category: string;
   wallet: string;
   time: string;
   style: object;
+  transType: string;
   onPress: () => void;
 }
+
 const ShoppingCard: React.FC<ExpenseCardProps> = ({
   img,
-  category,
-  description,
+  docId,
+  imageUrl,
   amount,
+  description,
+  category,
   time,
-
-  style,
+  transType,
 }) => {
+  const navigation = useNavigation();
+  const onPressHnadle = () => {
+    navigation.navigate('EditTransaction', {
+      docId,
+      imageUrl,
+      amount,
+      description,
+      category,
+      time,
+      transType,
+    });
+  };
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPressHnadle}>
       <View style={styles.ShoppingContainer}>
         <View style={styles.ShoppingMain}>
           <View>
@@ -61,7 +81,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 89,
     borderRadius: 20,
-    // marginBottom: 10,
   },
   ShoppingMain: {
     flexDirection: 'row',

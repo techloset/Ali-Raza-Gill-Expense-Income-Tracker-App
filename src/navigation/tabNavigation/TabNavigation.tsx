@@ -1,16 +1,15 @@
-import {ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
+import {ImageSourcePropType} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../../screens/home/Home';
 import AddExpense from '../../screens/expenses/AddExpense';
-// import Expense from '../../screens/expenses/expense/Expense';
-// import TabScreen from '../../screens/expenses/expense/Expense';
 import {Image} from 'react-native';
 import UpdateProfile from '../../screens/profile/updateProfile/UpdateProfile';
 import ResetPassword from '../../screens/profile/resetPassword/ResetPassword';
 import ProfileHome from '../../screens/profile/profile/Profile';
 import TransactionsDetails from '../../screens/transactionsDetails/TransactionsDetail';
 import FinancialReports from '../../screens/financialReports/FinancialReports';
+import EditTransaction from '../../screens/editTransaction/EditTransaction';
 
 const Tab = createBottomTabNavigator();
 

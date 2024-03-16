@@ -304,3 +304,230 @@
 //     marginHorizontal: 16,
 //   },
 // });
+
+import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  Image,
+  StyleSheet,
+} from 'react-native';
+import useEditTransaction from './useEditTransaction';
+import {TransactionInterface} from '../../types/types';
+import Button from '../../components/Button';
+import {useRoute} from '@react-navigation/native';
+import CustomHeader from '../../components/CustomHeader';
+// import customImg from "../../assets/images/HomeScreenImage"
+
+interface EditTransactionProps {
+  transactionTypes: string[];
+}
+interface EditTransactionProps {
+  category: string;
+  description: string;
+  amount: number;
+  time: string;
+  imageUrl: any;
+  transType: string;
+  _id: string;
+}
+
+const EditTransaction: React.FC<EditTransactionProps> = () => {
+  const route = useRoute();
+  const {docId, category, description, amount, time, imageUrl, transType} =
+    route.params as TransactionInterface;
+
+  const {
+    handleEdit,
+    editableCategory,
+    setEditableCategory,
+    editableDiscription,
+    setEditableDiscription,
+    editableMoney,
+    setEditableMoney,
+  } = useEditTransaction(docId, category, description, amount);
+
+  useEffect(() => {
+    setEditableCategory(category);
+    setEditableDiscription(description);
+    setEditableMoney(amount);
+  }, [docId, category, description, amount]);
+
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        <View
+          style={[
+            styles.UpperContainer,
+            {
+              backgroundColor: transType === 'Expense' ? '#FD3C4A' : '#00A86B',
+            },
+          ]}>
+          <CustomHeader
+            title="Detail Transaction"
+            style={{
+              backgroundColor: transType === 'Expense' ? '#FD3C4A' : '#00A86B',
+            }}
+          />
+          <View style={styles.UpperContainerText}>
+            <TextInput
+              onChangeText={setEditableMoney as any}
+              editable={true}
+              style={styles.uppercontainerCashText}
+              value={editableMoney as any}
+            />
+            <TextInput
+              style={styles.uppercontainerHeadingText}
+              value={(editableDiscription ?? '')
+                .split('')
+                .slice(0, 25)
+                .join('')}
+            />
+            <Text style={styles.upperContainerDateText}>{time}</Text>
+          </View>
+          <View style={styles.CategoryContainer}>
+            <View>
+              <Text style={styles.CategoryContainerText}>Type</Text>
+              <Text style={styles.CategoryContainerText1}>{transType}</Text>
+            </View>
+            <View>
+              <Text style={styles.CategoryContainerText}>Category</Text>
+              <Text style={styles.CategoryContainerText1}>
+                {editableCategory}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.CategoryContainerText}>Wallet</Text>
+              <Text style={styles.CategoryContainerText1}>Cash</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.lowerContainer}>
+          <Text style={styles.lowerContainerHeading}>Description</Text>
+          <TextInput
+            editable={true}
+            onChangeText={setEditableDiscription}
+            value={editableDiscription}
+            style={styles.lowerContainerDescription}
+          />
+          <Text style={styles.lowerContainerHeading}>Attachment</Text>
+          <View style={styles.preview}>
+            {/* <Image style={styles.image} source={{image: imageUrl}} /> */}
+            {imageUrl && (
+              <Image style={styles.image} source={{uri: imageUrl}} />
+            )}
+          </View>
+          <View style={styles.editButton}>
+            <Button
+              onPress={() => {
+                handleEdit();
+              }}
+              name="Edit"
+            />
+          </View>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+export default EditTransaction;
+
+const styles = StyleSheet.create({
+  container: {},
+  image: {
+    height: 116,
+    width: '100%',
+    borderRadius: 10,
+    objectFit: 'contain',
+  },
+  UpperContainer: {
+    backgroundColor: '#FD3C4A',
+    padding: 16,
+    flex: 2,
+    borderBottomEndRadius: 16,
+    borderBottomStartRadius: 16,
+    position: 'relative',
+  },
+  UpperContainerText: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  uppercontainerCashText: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 48,
+    fontWeight: '700',
+    color: 'white',
+  },
+  uppercontainerHeadingText: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 16,
+    fontWeight: '500',
+    color: 'white',
+    marginVertical: 0,
+  },
+  upperContainerDateText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: 'white',
+    marginBottom: 28,
+  },
+  lowerContainer: {
+    marginTop: 16,
+    paddingTop: 32,
+    flex: 4,
+    padding: 16,
+    position: 'relative',
+  },
+  CategoryContainer: {
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    backgroundColor: 'white',
+    marginHorizontal: 16,
+    width: '100%',
+    alignSelf: 'center',
+    borderRadius: 16,
+    position: 'absolute',
+    top: 240,
+  },
+  CategoryContainerText: {
+    fontFamily: 'Inter-SemiBold',
+    textAlign: 'center',
+  },
+  CategoryContainerText1: {
+    fontFamily: 'Inter-SemiBold',
+    color: 'black',
+    marginTop: 4,
+  },
+  preview: {
+    width: '100%',
+    height: 116,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'lightgrey',
+    borderRadius: 10,
+  },
+  lowerContainerHeading: {
+    fontSize: 16,
+    marginVertical: 8,
+    color: '#91919F',
+    fontFamily: 'Inter-Bold',
+    marginHorizontal: 8,
+  },
+  lowerContainerDescription: {
+    fontFamily: 'Inter-SemiBold',
+    marginHorizontal: 8,
+    flexWrap: 'wrap',
+    // flexDirection: 'column',
+  },
+  editButton: {
+    marginTop: 12,
+    width: '100%',
+  },
+});

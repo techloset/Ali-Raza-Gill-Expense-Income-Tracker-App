@@ -8,6 +8,7 @@ export type RootStackParamsList = {
   Home: undefined;
   Settings: undefined;
   FinancialReports: undefined;
+  EditTransaction: undefined;
 };
 export type Expense = {
   discription: string;
@@ -48,14 +49,18 @@ export interface User {
 }
 
 export interface TransactionInterface {
+  addExpenseTime: string;
+  amount: any;
   id: string;
   docId: string;
   category: string;
   description: string;
   money: string;
   transactionType: string;
-  imageUrl: string;
-  timestamp: string;
+  time: string;
+  imageUrl: string | null;
+  wallet: string;
+  transType: string;
 }
 
 export interface financeSummary {
