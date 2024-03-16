@@ -3,8 +3,8 @@ import {db} from '../../config/Firebase';
 import auth from '@react-native-firebase/auth';
 
 interface Transaction {
-  id: string;
-  documnetId: string;
+  itemId: string;
+  documentId: string;
   category: string;
   discription: string;
   amount: string;
@@ -12,6 +12,7 @@ interface Transaction {
   imageUrl: string;
   time: string;
   docId: string;
+  data: any;
 }
 
 export const TransactionsDetails = createAsyncThunk<Transaction[]>(
@@ -35,9 +36,11 @@ export const TransactionsDetails = createAsyncThunk<Transaction[]>(
       const Income = incomeSnapshot.docs.map(doc => {
         const data = doc.data();
 
+        // console.log('docId=========={', doc.id);
+
         return {
           docId: doc.id,
-          id: data.docId,
+          itemId: data.docId,
           category: data.category,
           discription: data.discription,
           amount: data.amount,
@@ -46,13 +49,12 @@ export const TransactionsDetails = createAsyncThunk<Transaction[]>(
           time: data.addExpenseTime,
         };
       }) as Transaction[];
-
       const Expense = expenseSnapshot.docs.map(doc => {
         const data = doc.data();
         {
           return {
             docId: doc.id,
-            id: data.docId,
+            itemId: data.docId,
             category: data.category,
             discription: data.discription,
             amount: data.amount,
@@ -74,62 +76,77 @@ export const TransactionsDetails = createAsyncThunk<Transaction[]>(
 
 const getUserEmail = () => auth().currentUser?.email || '';
 
-interface UpdatedTransactionData {
-  id: string;
-  docId: string;
-  category: string;
-  discription: string;
-  amount: string;
-  transType: string;
-  imageUrl: string;
-  time: string;
-}
-export const editTransaction: any = createAsyncThunk<
-  Transaction,
-  Partial<Transaction>
->('transactions/editTransaction', async TransactionsData => {
-  try {
-    const uid = auth().currentUser?.uid;
-    const {documnetId, discription, amount, transType} = TransactionsData;
+export const editTransaction = createAsyncThunk<Partial<Transaction>>(
+  'transactions/editTransaction',
+  async ({data: updatedTransactionData}: any) => {
+    try {
+      const uid = auth().currentUser?.uid;
+      const {documentId, discription, amount, transType} =
+        updatedTransactionData;
+      console.log(transType, documentId);
+      const res = await db
+        .collection('user')
+        .doc(uid)
+        .collection('Income')
+        .doc(documentId)
+        .update({
+          discription,
+          amount,
+        });
+      console.log('res', res);
+      console.log('Transaction updated successfully', updatedTransactionData);
+      console.log('documentId', documentId);
+      return updatedTransactionData;
+    } catch (error) {
+      console.error('Error editing transaction:', error);
+      throw error;
+    }
+  },
+);
 
-    // Update the document with the new data
-    await db
-      .collection('user')
-      .doc(uid)
-      .collection(transType === 'Income' ? 'Income' : 'Expense')
-      .doc(documnetId)
-      .set({
-        discription,
-        amount,
-      });
+// export const editTransaction: any = createAsyncThunk<
+//   Transaction,
+//   Partial<Transaction>
+// >('transactions/editTransaction', async (TransactionsData) => {
+//   try {
+//     const uid = auth().currentUser?.uid;
+//     const {documentId, discription, amount, transType} = TransactionsData;
+//     await db
+//       .collection('user')
+//       .doc(uid)
+//       .collection(transType === 'Income' ? 'Income' : 'Expense')
+//       .doc(documentId)
+//       .update({
+//         discription,
+//         amount,
+//       });
 
-    console.log('Transaction updated successfully');
+//     console.log('Transaction updated successfully');
 
-    return TransactionsData;
-  } catch (error) {
-    console.error('Error editing transaction:', error);
-    throw error;
-  }
-
-  // try {
-  //   const uid = auth().currentUser?.uid;
-  //   const {documnetId, discription, amount, transType} = TransactionsData;
-  //   const docRef = db
-  //     .collection('user')
-  //     .doc(uid)
-  //     .collection(transType === 'Income' ? 'Income' : 'Expense')
-  //     .doc(documnetId)
-  //     .update({
-  //       discription,
-  //       amount,
-  //     });
-  //   console.log('editTransaction', editTransaction);
-  //   return editTransaction;
-  // } catch (error) {
-  //   console.error('Error editing transaction:', error);
-  //   throw error;
-  // }
-});
+//     return TransactionsData;
+//   } catch (error) {
+//     console.error('Error editing transaction:', error);
+//     throw error;
+//   }
+// });
+// try {
+//   const uid = auth().currentUser?.uid;
+//   const {documentId, discription, amount, transType} = TransactionsData;
+//   const docRef = db
+//     .collection('user')
+//     .doc(uid)
+//     .collection(transType === 'Income' ? 'Income' : 'Expense')
+//     .doc(documentId)
+//     .update({
+//       discription,
+//       amount,
+//     });
+//   console.log('editTransaction', editTransaction);
+//   return editTransaction;
+// } catch (error) {
+//   console.error('Error editing transaction:', error);
+//   throw error;
+// }
 
 // Delete data
 // export const deleteTransaction = createAsyncThunk<Transaction, Transaction>(
@@ -204,9 +221,8 @@ export const transactionSlice = createSlice({
       })
       .addCase(editTransaction.fulfilled, (state, action) => {
         state.isLoading = false;
-        // Find and update the transaction in the state based on its docId
         const index = state.transactions.findIndex(
-          transaction => transaction === action.payload.doc,
+          transaction => transaction.documentId === action.payload.documentId,
         );
         if (index !== -1) {
           state.transactions[index] = {

@@ -80,7 +80,7 @@ import {TransactionsDetails} from '../../store/slices/transactionDetailsSlice';
 interface Transaction {
   addExpneseTime: string;
   category: string;
-  description: string;
+  discription: string;
   amount: number;
 }
 

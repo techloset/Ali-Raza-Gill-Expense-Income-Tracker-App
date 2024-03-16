@@ -93,7 +93,7 @@ interface Transaction {
   addExpenseTime: any;
   addExpneseTime: string;
   category: string;
-  description: string;
+  discription: string;
   amount: number;
   transType: string;
 }

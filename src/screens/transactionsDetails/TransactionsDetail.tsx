@@ -96,20 +96,20 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 ? categoryObj.cardimage
                 : require('../../assets/images/HomeScreenImages/Salary.png');
               // console.log('Document ID=>', item.docId);
-              // console.log('Item ID =>', item.id);
+              // console.log('Item ID =>', item.itemId);
               return (
                 <ShoppingCard
                   key={index.toString()}
                   img={img}
                   category={item?.category}
-                  description={item?.discription?.slice(0, 20)}
+                  discription={item?.discription?.slice(0, 20)}
                   amount={item?.amount}
                   time={item?.time ? moment(item.time).format('hh:mm A') : ''}
                   imageUrl={item?.imageUrl}
                   onPress={() => {}}
                   wallet=""
                   transType={item.transType}
-                  documnetId={item.docId}
+                  documentId={item.docId}
                   style={{}}
                 />
               );
@@ -125,7 +125,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 key={index.toString()}
                 img={require('../../assets/images/HomeScreenImages/Shopping.png')}
                 category={item?.category}
-                description={item?.discription.slice(0, 10)}
+                discription={item?.discription.slice(0, 10)}
                 amount={item?.amount}
                 time={
                   item.addExpenseTime
@@ -136,7 +136,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 style={{}}
                 wallet=""
                 imageUrl={item?.imageUrl || ''}
-                documnetId={item.id}
+                documentId={item.id}
                 transType={item.transType}
               />
             ))}
@@ -151,7 +151,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 key={index.toString()}
                 img={require('../../assets/images/HomeScreenImages/Shopping.png')}
                 category={item.category}
-                description={item.discription.slice(0, 10)}
+                discription={item.discription.slice(0, 10)}
                 amount={item.amount}
                 time={
                   item.addExpenseTime
@@ -162,7 +162,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 style={{}}
                 wallet=""
                 imageUrl={item?.imageUrl}
-                documnetId={item.id}
+                documentId={item.id}
                 transType={item.transType}
               />
             ))}

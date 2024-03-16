@@ -6,10 +6,10 @@ import {AuthRoutes} from '../navigation/stackNavigation/StackNavigation';
 
 interface ExpenseCardProps {
   img: any;
-  documnetId: string;
+  documentId: string;
   imageUrl: any;
   amount: number;
-  description: string;
+  discription: string;
   category: string;
   wallet: string;
   time: string;
@@ -20,10 +20,10 @@ interface ExpenseCardProps {
 
 const ShoppingCard: React.FC<ExpenseCardProps> = ({
   img,
-  documnetId,
+  documentId,
   imageUrl,
   amount,
-  description,
+  discription,
   category,
   time,
   transType,
@@ -31,10 +31,10 @@ const ShoppingCard: React.FC<ExpenseCardProps> = ({
   const navigation = useNavigation();
   const onPressHnadle = () => {
     navigation.navigate('EditTransaction', {
-      documnetId,
+      documentId,
       imageUrl,
       amount,
-      description,
+      discription,
       category,
       time,
       transType,
@@ -53,7 +53,7 @@ const ShoppingCard: React.FC<ExpenseCardProps> = ({
 
           <View style={styles.categoryContainer}>
             <Text style={styles.categoryContainerText}>{category}</Text>
-            <Text style={styles.categoryContainerDesc}>{description}</Text>
+            <Text style={styles.categoryContainerDesc}>{discription}</Text>
           </View>
         </View>
         <View style={styles.expenseContainer}>

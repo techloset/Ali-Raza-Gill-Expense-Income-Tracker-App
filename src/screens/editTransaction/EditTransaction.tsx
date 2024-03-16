@@ -326,7 +326,7 @@ interface EditTransactionProps {
 }
 interface EditTransactionProps {
   category: string;
-  description: string;
+  discription: string;
   amount: number;
   time: string;
   imageUrl: any;
@@ -336,9 +336,9 @@ interface EditTransactionProps {
 
 const EditTransaction: React.FC<EditTransactionProps> = () => {
   const route = useRoute();
-  const {documnetId, category, description, amount, time, imageUrl, transType} =
+  const {documentId, category, discription, amount, time, imageUrl, transType} =
     route.params as TransactionInterface;
-  // console.log('route.params', route.params);
+  console.log('route.params', route.params);
   const {
     handleEdit,
     editableCategory,
@@ -347,13 +347,13 @@ const EditTransaction: React.FC<EditTransactionProps> = () => {
     setEditableDiscription,
     editableMoney,
     setEditableMoney,
-  } = useEditTransaction(documnetId, category, description, amount);
+  } = useEditTransaction(documentId, category, discription, amount);
 
   useEffect(() => {
     setEditableCategory(category);
-    setEditableDiscription(description);
+    setEditableDiscription(discription);
     setEditableMoney(amount);
-  }, [documnetId, category, description, amount]);
+  }, [documentId, category, discription, amount]);
 
   return (
     <ScrollView>

@@ -53,9 +53,9 @@ export interface TransactionInterface {
   amount: any;
   id: string;
   docId: string;
-  documnetId: string;
+  documentId: string;
   category: string;
-  description: string;
+  discription: string;
   money: string;
   transactionType: string;
   time: string;

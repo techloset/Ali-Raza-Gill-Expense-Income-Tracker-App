@@ -168,11 +168,11 @@ export default function Home({navigation}: any) {
 
           return (
             <ShoppingCard
-              documnetId={item.docId}
+              documentId={item.docId}
               key={index.toString()}
               img={img}
               category={item?.category}
-              description={item?.discription?.slice(0, 20)}
+              discription={item?.discription?.slice(0, 20)}
               amount={item?.amount}
               time={item.time ? moment(item.time).format('hh:mm A') : ''}
               onPress={() => {}}

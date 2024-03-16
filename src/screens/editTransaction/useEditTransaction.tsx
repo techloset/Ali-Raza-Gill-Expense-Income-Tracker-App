@@ -21,13 +21,70 @@ interface TransactionDetailHook {
   setCategoryModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const useEditTransaction = (
+  documentId: string,
+  category: string,
+  discription: string,
+  amount: number,
+): TransactionDetailHook => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const [editableCategory, setEditableCategory] = useState<string>(category);
+  const [editableDiscription, setEditableDiscription] =
+    useState<string>(discription);
+  const [editableMoney, setEditableMoney] = useState<number>(amount);
+
+  const handleEdit = async () => {
+    try {
+      const updatedTransactionData = {
+        documentId,
+        discription: editableDiscription,
+        amount: editableMoney,
+        transType: '',
+      };
+      dispatch(editTransaction as any, {data: updatedTransactionData});
+      // navigation.goBack();
+    } catch (error) {
+      console.error('Error editing transaction:', error);
+    }
+  };
+
+  return {
+    handleEdit,
+    editableCategory,
+    setEditableCategory,
+    editableDiscription,
+    setEditableDiscription,
+    editableMoney,
+    setEditableMoney,
+  };
+};
+
+export default useEditTransaction;
+
+// import {useNavigation} from '@react-navigation/native';
+// import {useState} from 'react';
+// import {Alert} from 'react-native';
+// import {db} from '../../config/Firebase';
+// import auth from '@react-native-firebase/auth';
+
+// interface TransactionDetailHook {
+//   handleEdit: () => void;
+//   editableCategory: string;
+//   setEditableCategory: React.Dispatch<React.SetStateAction<string>>;
+//   editableDiscription: string;
+//   setEditableDiscription: React.Dispatch<React.SetStateAction<string>>;
+//   editableMoney: number;
+//   setEditableMoney: React.Dispatch<React.SetStateAction<number>>;
+// }
+
 // const useEditTransaction = (
-//   docId: string,
+//   documentId: string,
 //   category: string,
 //   discription: string,
 //   amount: number,
 // ): TransactionDetailHook => {
-//   const dispatch = useDispatch();
 //   const navigation = useNavigation();
 
 //   const [editableCategory, setEditableCategory] = useState<string>(category);
@@ -37,55 +94,19 @@ interface TransactionDetailHook {
 
 //   const handleEdit = async () => {
 //     try {
+//       const uid = auth().currentUser?.uid;
 //       const updatedTransactionData = {
-//         docId,
-//         discription: editableDiscription,
-//         money: editableMoney,
-//         transactionType: '',
-//       };
-//       dispatch(editTransaction(updatedTransactionData));
-
-//       navigation.goBack();
-//     } catch (error) {
-//       console.error('Error editing transaction:', error);
-//       Alert.alert('Error', 'Failed to edit transaction. Please try again.');
-//     }
-//   };
-
-//   return {
-//     handleEdit,
-//     editableCategory,
-//     setEditableCategory,
-//     editableDiscription,
-//     setEditableDiscription,
-//     editableMoney,
-//     setEditableMoney,
-//   };
-// };
-
-// const useEditTransaction = (
-//   docId: string,
-//   category: string,
-//   discription: string,
-//   amount: number,
-// ): TransactionDetailHook => {
-//   const dispatch = useDispatch();
-//   const navigation = useNavigation();
-
-//   const [editableCategory, setEditableCategory] = useState<string>(category);
-//   const [editableDiscription, setEditableDiscription] =
-//     useState<string>(discription);
-//   const [editableMoney, setEditableMoney] = useState<number>(amount);
-
-//   const handleEdit = async () => {
-//     try {
-//       const updatedTransactionData = {
-//         docId,
 //         discription: editableDiscription,
 //         amount: editableMoney,
 //       };
-//       await dispatch(editTransaction(updatedTransactionData));
-//       console.log('Updated transaction data:', updatedTransactionData);
+
+//       await db
+//         .collection('user')
+//         .doc(uid)
+//         .collection(category === 'Income' ? 'Income' : 'Expense')
+//         .doc(documentId)
+//         .update(updatedTransactionData);
+
 //       console.log('Transaction updated successfully');
 //       navigation.goBack();
 //     } catch (error) {
@@ -104,45 +125,4 @@ interface TransactionDetailHook {
 //   };
 // };
 
-const useEditTransaction = (
-  documnetId: string,
-  category: string,
-  discription: string,
-  amount: number,
-): TransactionDetailHook => {
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-
-  const [editableCategory, setEditableCategory] = useState<string>(category);
-  const [editableDiscription, setEditableDiscription] =
-    useState<string>(discription);
-  const [editableMoney, setEditableMoney] = useState<number>(amount);
-
-  const handleEdit = async () => {
-    try {
-      const updatedTransactionData = {
-        documnetId,
-        discription: editableDiscription,
-        amount: editableMoney,
-      };
-      dispatch(editTransaction as any, updatedTransactionData);
-      console.log('Updated transaction data:', updatedTransactionData);
-      console.log('Transaction updated successfully');
-      navigation.goBack();
-    } catch (error) {
-      console.error('Error editing transaction:', error);
-    }
-  };
-
-  return {
-    handleEdit,
-    editableCategory,
-    setEditableCategory,
-    editableDiscription,
-    setEditableDiscription,
-    editableMoney,
-    setEditableMoney,
-  };
-};
-
-export default useEditTransaction;
+// export default useEditTransaction;
