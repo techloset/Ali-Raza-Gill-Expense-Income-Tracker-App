@@ -212,99 +212,6 @@
 
 // export default TransactionDetail;
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   image: {
-//     height: 116,
-//     width: 116,
-//   },
-//   UpperContainer: {
-//     backgroundColor: '#FD3C4A',
-//     padding: 16,
-//     flex: 2,
-//     borderBottomEndRadius: 16,
-//     borderBottomStartRadius: 16,
-//     position: 'relative',
-//   },
-//   UpperContainerText: {
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   uppercontainerCashText: {
-//     fontSize: 48,
-//     fontWeight: '700',
-//     color: 'white',
-//   },
-//   uppercontainerHeadingText: {
-//     fontSize: 16,
-//     fontWeight: '500',
-//     color: 'white',
-//     marginVertical: 8,
-//   },
-//   upperContainerDateText: {
-//     fontSize: 13,
-//     fontWeight: '500',
-//     color: 'white',
-//   },
-//   lowerContainer: {
-//     flex: 4,
-//     padding: 16,
-//     position: 'relative',
-//   },
-//   CategoryContainer: {
-//     borderWidth: 1,
-//     borderColor: '#91919F',
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     alignContent: 'center',
-//     paddingHorizontal: 12,
-//     paddingVertical: 16,
-//     backgroundColor: 'white',
-//     marginHorizontal: 16,
-//     width: '100%',
-//     alignSelf: 'center',
-//     borderRadius: 16,
-//     position: 'absolute',
-//     top: 270,
-//   },
-//   preview: {
-//     width: '100%',
-//     height: 116,
-//     borderRadius: 16,
-//     backgroundColor: '#7F3DFF',
-//     alignSelf: 'center',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   lowerContainerHeading: {
-//     fontSize: 16,
-//     fontWeight: '600',
-//     marginVertical: 8,
-//     color: '#91919F',
-//   },
-//   modalContainer: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-//   },
-//   modalContent: {
-//     backgroundColor: 'white',
-//     padding: 20,
-//     borderRadius: 10,
-//     width: '80%',
-//     maxHeight: '80%',
-//   },
-//   editButton: {
-//     position: 'absolute',
-//     bottom: 16,
-//     width: '100%',
-//     marginHorizontal: 16,
-//   },
-// });
-
 import React, {useEffect} from 'react';
 import {
   View,
@@ -319,6 +226,8 @@ import {TransactionInterface} from '../../types/types';
 import Button from '../../components/Button';
 import {useRoute} from '@react-navigation/native';
 import CustomHeader from '../../components/CustomHeader';
+
+import {TouchableOpacity} from 'react-native-gesture-handler';
 // import customImg from "../../assets/images/HomeScreenImage"
 
 interface EditTransactionProps {
@@ -338,7 +247,8 @@ const EditTransaction: React.FC<EditTransactionProps> = () => {
   const route = useRoute();
   const {documentId, category, discription, amount, time, imageUrl, transType} =
     route.params as TransactionInterface;
-  console.log('route.params', route.params);
+
+  // console.log('route.params', route.params);
   const {
     handleEdit,
     editableCategory,
@@ -347,6 +257,7 @@ const EditTransaction: React.FC<EditTransactionProps> = () => {
     setEditableDiscription,
     editableMoney,
     setEditableMoney,
+    handleDelete,
   } = useEditTransaction(documentId, category, discription, amount);
 
   useEffect(() => {
@@ -371,12 +282,19 @@ const EditTransaction: React.FC<EditTransactionProps> = () => {
               backgroundColor: transType === 'Expense' ? '#FD3C4A' : '#00A86B',
             }}
           />
+          <TouchableOpacity onPress={handleDelete}>
+            <Image
+              source={require('../../assets/images/TransactionImages/DeleteIcon.png')}
+              style={styles.DeleteIcon}
+            />
+          </TouchableOpacity>
           <View style={styles.UpperContainerText}>
             <TextInput
               onChangeText={setEditableMoney as any}
               editable={true}
               style={styles.uppercontainerCashText}
               value={editableMoney as any}
+              keyboardType="numeric"
             />
             <TextInput
               style={styles.uppercontainerHeadingText}
@@ -414,7 +332,6 @@ const EditTransaction: React.FC<EditTransactionProps> = () => {
           />
           <Text style={styles.lowerContainerHeading}>Attachment</Text>
           <View style={styles.preview}>
-            {/* <Image style={styles.image} source={{image: imageUrl}} /> */}
             {imageUrl && (
               <Image style={styles.image} source={{uri: imageUrl}} />
             )}
@@ -524,10 +441,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-SemiBold',
     marginHorizontal: 8,
     flexWrap: 'wrap',
-    // flexDirection: 'column',
   },
   editButton: {
     marginTop: 12,
     width: '100%',
+  },
+  DeleteIcon: {
+    position: 'absolute',
+    top: -45,
+    left: 290,
+    height: 32,
+    width: 32,
   },
 });

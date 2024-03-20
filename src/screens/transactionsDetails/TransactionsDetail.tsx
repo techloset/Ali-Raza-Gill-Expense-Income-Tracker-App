@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import useTransactionsDetail from './useTransactionsDetail';
 import moment from 'moment';
@@ -6,12 +6,16 @@ import ShoppingCard from '../../components/ShoppingCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import {AuthRoutes} from '../../navigation/stackNavigation/StackNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useNavigation} from '@react-navigation/native';
-import Shopping from '../../assets/images/HomeScreenImages/Shopping.png';
-import Subscription from '../../assets/images/HomeScreenImages/Subscription.png';
-import Food from '../../assets/images/HomeScreenImages/Food.png';
-import Salary from '../../assets/images/HomeScreenImages/Salary.png';
-import Transpotation from '../../assets/images/HomeScreenImages/Transpotation.png';
+import {
+  Shopping,
+  Subscription,
+  Food,
+  Salary,
+  Transpotation,
+  Arrow_Down_2,
+  ButtonIcon,
+  arrow_right,
+} from '../../assets/constants/Constants';
 
 interface Props {
   navigation: StackNavigationProp<AuthRoutes>;
@@ -46,17 +50,11 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <TouchableOpacity style={styles.filterButton}>
-            <Image
-              source={require('../../assets/images/TransactionImages/arrow-down-2.png')}
-              style={styles.filterImage}
-            />
+            <Image source={Arrow_Down_2} style={styles.filterImage} />
             <Text style={styles.filterButtonText}>Month</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.burgerIcon}>
-            <Image
-              source={require('../../assets/images/TransactionImages/ButtonIcon.png')}
-              style={styles.filterImage2}
-            />
+            <Image source={ButtonIcon} style={styles.filterImage2} />
           </TouchableOpacity>
         </View>
         <TouchableOpacity
@@ -67,10 +65,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
           <Text style={styles.financialContainerText}>
             See your financial report
           </Text>
-          <Image
-            source={require('../../assets/images/TransactionImages/arrow-right.png')}
-            style={styles.alertContainerImage}
-          />
+          <Image source={arrow_right} style={styles.alertContainerImage} />
         </TouchableOpacity>
         <View>
           <Text style={styles.headingText}>Today</Text>
@@ -92,11 +87,8 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 cat => cat.name === item.category,
               );
 
-              const img = categoryObj
-                ? categoryObj.cardimage
-                : require('../../assets/images/HomeScreenImages/Salary.png');
-              // console.log('Document ID=>', item.docId);
-              // console.log('Item ID =>', item.itemId);
+              const img = categoryObj ? categoryObj.cardimage : {image: Salary};
+
               return (
                 <ShoppingCard
                   key={index.toString()}
@@ -123,7 +115,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
             {yesterdaysTransactions.map((item: any, index: number) => (
               <ShoppingCard
                 key={index.toString()}
-                img={require('../../assets/images/HomeScreenImages/Shopping.png')}
+                img={Shopping}
                 category={item?.category}
                 discription={item?.discription.slice(0, 10)}
                 amount={item?.amount}
@@ -149,7 +141,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
             {previousTransactions.map((item: any, index: number) => (
               <ShoppingCard
                 key={index.toString()}
-                img={require('../../assets/images/HomeScreenImages/Shopping.png')}
+                img={Shopping}
                 category={item.category}
                 discription={item.discription.slice(0, 10)}
                 amount={item.amount}

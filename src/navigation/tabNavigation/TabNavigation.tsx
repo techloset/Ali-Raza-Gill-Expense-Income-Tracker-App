@@ -1,35 +1,14 @@
-import {ImageSourcePropType} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../../screens/home/Home';
 import AddExpense from '../../screens/expenses/AddExpense';
 import {Image} from 'react-native';
-import UpdateProfile from '../../screens/profile/updateProfile/UpdateProfile';
-import ResetPassword from '../../screens/profile/resetPassword/ResetPassword';
 import ProfileHome from '../../screens/profile/profile/Profile';
 import TransactionsDetails from '../../screens/transactionsDetails/TransactionsDetail';
 import FinancialReports from '../../screens/financialReports/FinancialReports';
-import EditTransaction from '../../screens/editTransaction/EditTransaction';
 
 const Tab = createBottomTabNavigator();
-
-interface TabBarIconProps {
-  focused: boolean;
-  image: ImageSourcePropType;
-  onPress: () => void;
-}
-
-const TabBarIcon: React.FC<TabBarIconProps> = ({image, onPress}) => (
-  <Image
-    source={image}
-    style={{
-      width: 60,
-      height: 60,
-      marginBottom: 20,
-    }}
-    onProgress={(onPress = () => {})}
-  />
-);
 
 export default function TabNavigation() {
   return (
@@ -39,16 +18,23 @@ export default function TabNavigation() {
         component={Home}
         options={{
           tabBarIcon: ({focused}) => (
-            <Image
-              source={
-                focused
-                  ? require('../../assets/images/TabIcons/HomeFocused.png')
-                  : require('../../assets/images/TabIcons/Home.png')
-              }
-              style={{width: 25, height: 25}}
-            />
+            <>
+              <Image
+                source={
+                  focused
+                    ? require('../../assets/images/TabIcons/HomeFocused.png')
+                    : require('../../assets/images/TabIcons/Home.png')
+                }
+                style={{width: 32, height: 32}}
+              />
+              <Text
+                style={[styles.text, {color: focused ? '#7F3DFF' : 'gray'}]}>
+                Home
+              </Text>
+            </>
           ),
           headerShown: false,
+          tabBarShowLabel: false,
         }}
       />
       <Tab.Screen
@@ -56,20 +42,27 @@ export default function TabNavigation() {
         component={TransactionsDetails}
         options={{
           tabBarIcon: ({focused}) => (
-            <Image
-              source={
-                focused
-                  ? require('../../assets/images/TabIcons/TransactionFocused.png')
-                  : require('../../assets/images/TabIcons/Transaction.png')
-              }
-              style={{width: 25, height: 25}}
-            />
+            <>
+              <Image
+                source={
+                  focused
+                    ? require('../../assets/images/TabIcons/TransactionFocused.png')
+                    : require('../../assets/images/TabIcons/Transaction.png')
+                }
+                style={{width: 32, height: 32}}
+              />
+              <Text
+                style={[styles.text, {color: focused ? '#7F3DFF' : 'gray'}]}>
+                Transaction
+              </Text>
+            </>
           ),
           headerShown: false,
+          tabBarShowLabel: false,
         }}
       />
       <Tab.Screen
-        name="."
+        name="AddExpense"
         component={AddExpense}
         options={{
           tabBarIcon: ({focused}) => (
@@ -79,10 +72,11 @@ export default function TabNavigation() {
                   ? require('../../assets/images/TabIcons/Add.png')
                   : require('../../assets/images/TabIcons/Add.png')
               }
-              style={{width: 25, height: 25}}
+              style={{width: 57, height: 56, marginBottom: 48}}
             />
           ),
           headerShown: false,
+          tabBarShowLabel: false,
         }}
       />
 
@@ -91,35 +85,58 @@ export default function TabNavigation() {
         component={FinancialReports}
         options={{
           tabBarIcon: ({focused}) => (
-            <Image
-              source={
-                focused
-                  ? require('../../assets/images/TabIcons/Budget.png')
-                  : require('../../assets/images/TabIcons/Budget.png')
-              }
-              style={{width: 25, height: 25}}
-            />
+            <>
+              <Image
+                source={
+                  focused
+                    ? require('../../assets/images/TabIcons/BudgetFocused.png')
+                    : require('../../assets/images/TabIcons/Budget.png')
+                }
+                style={{width: 32, height: 32}}
+              />
+              <Text
+                style={[styles.text, {color: focused ? '#7F3DFF' : 'gray'}]}>
+                Budget
+              </Text>
+            </>
           ),
           headerShown: false,
+          tabBarShowLabel: false,
         }}
       />
       <Tab.Screen
         name="Profile"
         component={ProfileHome}
         options={{
-          tabBarIcon: ({focused}) => (
-            <Image
-              source={
-                focused
-                  ? require('../../assets/images/TabIcons/ProfileFocused.png')
-                  : require('../../assets/images/TabIcons/Profile.png')
-              }
-              style={{width: 25, height: 25}}
-            />
-          ),
+          tabBarIcon: ({focused}) => {
+            const imageSource = require('../../assets/images/TabIcons/Profile.png');
+            return (
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Image
+                  source={imageSource}
+                  tintColor={focused ? '#7F3DFF' : 'gray'}
+                  style={{width: 32, height: 32}}
+                />
+                <Text
+                  style={[styles.text, {color: focused ? '#7F3DFF' : 'grey'}]}>
+                  Profile
+                </Text>
+              </View>
+            );
+          },
           headerShown: false,
+          tabBarShowLabel: false,
         }}
       />
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  text: {
+    textAlign: 'center',
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 10,
+    fontWeight: '500',
+  },
+});

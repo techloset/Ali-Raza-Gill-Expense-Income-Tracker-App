@@ -1,24 +1,26 @@
-import {
-  Text,
-  View,
-  Image,
-  BackHandler,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import React, {useState} from 'react';
+import {Text, View, Image, TouchableOpacity, ScrollView} from 'react-native';
+import React from 'react';
 import useHome from './useHome';
 import ExpenseCard from '../../components/ExpenseCard';
 import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './HomeStyle';
 import ShoppingCard from '../../components/ShoppingCard';
 import moment from 'moment';
-import Shopping from '../../assets/images/HomeScreenImages/Shopping.png';
-import Subscription from '../../assets/images/HomeScreenImages/Subscription.png';
-import Food from '../../assets/images/HomeScreenImages/Food.png';
-import Salary from '../../assets/images/HomeScreenImages/Salary.png';
-import Transpotation from '../../assets/images/HomeScreenImages/Transpotation.png';
+
 import useProfile from '../profile/profile/useProfile';
+import {
+  Arrow_Down_2,
+  Expense,
+  Graph,
+  Income,
+  notification,
+  Salary,
+  Shopping,
+  Subscription,
+  Transpotation,
+  Food,
+  Avatar,
+} from '../../assets/constants/Constants';
 interface Category {
   id: number;
   name: string;
@@ -59,23 +61,18 @@ export default function Home({navigation}: any) {
                       source={{uri: userImageURL}}
                     />
                   ) : (
-                    <Image
-                      style={styles.ProfileImage}
-                      source={require('../../assets/images/Profile//AvatarProfile.png')}
-                    />
+                    <Image style={styles.ProfileImage} source={Avatar} />
                   )}
                 </View>
                 <View style={styles.TopNavigation2}>
                   <Image
-                    source={require('../../assets/images/HomeScreenImages/arrow-down-2.png')}
+                    source={Arrow_Down_2}
                     style={styles.TopNavigation2Image}
                   />
                   <Text style={styles.TopNavigation2Text}>October</Text>
                 </View>
                 <View style={styles.TopNavigation3}>
-                  <Image
-                    source={require('../../assets/images/HomeScreenImages/notifiaction.png')}
-                  />
+                  <Image source={notification} />
                 </View>
               </View>
             </View>
@@ -91,14 +88,14 @@ export default function Home({navigation}: any) {
               <ExpenseCard
                 name="Income"
                 amount={totalIncome}
-                imag={require('../../assets/images/HomeScreenImages/income.png')}
+                imag={Income}
                 onPress={() => {}}
                 style={{backgroundColor: '#00A86B', flexWrap: 'wrap'}}
               />
               <ExpenseCard
                 name="Expense"
                 amount={totalExpense}
-                imag={require('../../assets/images/HomeScreenImages/Expnese.png')}
+                imag={Expense}
                 onPress={() => {}}
                 style={{backgroundColor: '#FD3C4A'}}
               />
@@ -115,9 +112,7 @@ export default function Home({navigation}: any) {
         </View>
         <View>
           <View style={styles.graphMain}>
-            <Image
-              source={require('../../assets/images/HomeScreenImages/Graph.png')}
-            />
+            <Image source={Graph} />
           </View>
         </View>
         <View>
@@ -162,9 +157,7 @@ export default function Home({navigation}: any) {
             cat => cat.name === item.category,
           );
 
-          const img = categoryObj
-            ? categoryObj.image
-            : require('../../assets/images/HomeScreenImages/Salary.png');
+          const img = categoryObj ? categoryObj.image : {image: Salary};
 
           return (
             <ShoppingCard

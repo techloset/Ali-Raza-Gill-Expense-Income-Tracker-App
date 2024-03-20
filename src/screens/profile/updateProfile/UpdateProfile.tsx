@@ -103,7 +103,6 @@ const UpdateProfile: React.FC = () => {
       <View style={styles.main}>
         <View style={styles.container}>
           <CustomHeader title="Update Profile" style={{}} />
-
           <View style={styles.profileView}>
             <TouchableOpacity onPress={handleSelectImage}>
               <View style={styles.imageContainer}>

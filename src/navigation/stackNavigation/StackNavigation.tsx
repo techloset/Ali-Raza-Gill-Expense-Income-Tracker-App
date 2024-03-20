@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import SignUp from '../../screens/auth/signUp/SignUp';
@@ -36,11 +35,9 @@ const Stack = createNativeStackNavigator<AuthRoutes>();
 const Tab = createBottomTabNavigator<AuthRoutes>();
 
 const StackNav = () => {
-  // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
-  // Handle user state changes
   function onAuthStateChanged(user: any) {
     setUser(user);
     if (initializing) setInitializing(false);
@@ -48,7 +45,7 @@ const StackNav = () => {
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    return subscriber;
   }, []);
   if (initializing) return null;
 
