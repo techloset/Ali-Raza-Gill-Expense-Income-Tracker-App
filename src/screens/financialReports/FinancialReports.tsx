@@ -10,6 +10,12 @@ import {
 import CustomHeader from '../../components/CustomHeader';
 import Category from '../../components/Category';
 import useFinancialReports from './useFinancialReports';
+import {
+  FoodLineGraph,
+  ShoppigLineGraph,
+  SubscriptionLineGraph,
+  Passive_Income,
+} from '../../assets/constants/Constants';
 
 const FinancialReports = () => {
   const {
@@ -48,7 +54,7 @@ const FinancialReports = () => {
         <Category
           category="Shopping"
           amount={categoryExpenseTotals.Shopping}
-          image={require('../../assets/images/Report_images/ShoppiingLineGraph.png')}
+          image={ShoppigLineGraph}
           style={styles.category1}
           styleamount={styles.amountColor1}
           transactionType="Expense"
@@ -56,7 +62,7 @@ const FinancialReports = () => {
         <Category
           category="Subscription"
           amount={categoryExpenseTotals.Subscription}
-          image={require('../../assets/images/Report_images/SubscriptionLineGraph.png')}
+          image={SubscriptionLineGraph}
           style={styles.category2}
           styleamount={styles.amountColor1}
           transactionType="Expense"
@@ -64,7 +70,7 @@ const FinancialReports = () => {
         <Category
           category="Food"
           amount={categoryExpenseTotals.Food}
-          image={require('../../assets/images/Report_images/FoodLineGraph.png')}
+          image={FoodLineGraph}
           style={styles.category3}
           styleamount={styles.amountColor1}
           transactionType="Expense"
@@ -72,7 +78,7 @@ const FinancialReports = () => {
         <Category
           category="Transportation"
           amount={categoryExpenseTotals.Transportation}
-          image={require('../../assets/images/Report_images/PassiveIncome.png')}
+          image={Passive_Income}
           style={styles.category4}
           styleamount={styles.amountColor1}
           transactionType="Expense"

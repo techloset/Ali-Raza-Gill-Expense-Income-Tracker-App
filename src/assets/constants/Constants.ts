@@ -11,6 +11,20 @@ import Transpotation from '../../assets/images/HomeScreenImages/Transpotation.pn
 import Avatar from '../../assets/images/Profile/AvatarProfile.png';
 import ButtonIcon from '../../assets/images/TransactionImages/ButtonIcon.png';
 import arrow_right from '../../assets/images/TransactionImages/ButtonIcon.png';
+import Vector from '../../assets/images/InputPopup/Vector.png';
+import Camera from '../../assets/images/InputPopup//camera.png';
+import Gallery from '../../assets/images/InputPopup/gallery.png';
+import File from '../../assets/images/InputPopup/document.png';
+import close from '../../assets/images/InputPopup/close.png';
+import ShoppigLineGraph from '../../assets/images/Report_images/ShoppiingLineGraph.png';
+import SalaryLineGraph from '../../assets/images/Report_images/SalaryLineGraph.png';
+import FoodLineGraph from '../../assets/images/Report_images/FoodLineGraph.png';
+import Graph_Expense from '../../assets/images/Report_images/Graph-Expense.png';
+import Graph_Income from '../../assets/images/Report_images/Graph-Income.png';
+import Passive_Income from '../../assets/images/Report_images/PassiveIncome.png';
+import SubscriptionLineGraph from '../../assets/images/Report_images/SubscriptionLineGraph.png';
+import GraphIcon from '../../assets/images/Report_images/graphicon.png';
+import Arrow_Down from '../../assets/images/Report_images/arrow-down.png';
 
 export {
   Arrow_Down_2,
@@ -26,4 +40,18 @@ export {
   Avatar,
   ButtonIcon,
   arrow_right,
+  Vector,
+  Camera,
+  Gallery,
+  File,
+  close,
+  ShoppigLineGraph,
+  SalaryLineGraph,
+  Graph_Expense,
+  Graph_Income,
+  Passive_Income,
+  SubscriptionLineGraph,
+  GraphIcon,
+  Arrow_Down,
+  FoodLineGraph,
 };

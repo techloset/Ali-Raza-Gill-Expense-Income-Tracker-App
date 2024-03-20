@@ -17,6 +17,13 @@ import React from 'react';
 import Button from '../../components/Button';
 import {ActivityIndicator} from 'react-native';
 import CustomDialogBox from '../../components/CustomDialogBox';
+import {
+  Camera,
+  File,
+  Gallery,
+  Vector,
+  close,
+} from '../../assets/constants/Constants';
 export default function AddExpense() {
   const {
     toggleFileModal,
@@ -26,14 +33,11 @@ export default function AddExpense() {
     modalVisible,
     setModalVisible,
     fileModalVisible,
-    setFileModalVisible,
     addExpens,
     category,
-    setCategory,
     discription,
     setDiscription,
     amount,
-    setAmount,
     image,
     setImage,
     transType,
@@ -42,7 +46,6 @@ export default function AddExpense() {
     handleImageThroughCamera,
     handleImageThroughGallery,
     loading,
-    showAlert,
     setIsDialogVisible,
     isDialogVisible,
   } = useAddExpense();
@@ -136,9 +139,7 @@ export default function AddExpense() {
                 <TouchableOpacity
                   style={styles.fileInput}
                   onPress={toggleFileModal}>
-                  <Image
-                    source={require('../../assets/images/InputPopup/Vector.png')}
-                  />
+                  <Image source={Vector} />
                   <Text style={{fontFamily: 'Inter-Medium'}}>
                     Add Attachment
                   </Text>
@@ -156,25 +157,19 @@ export default function AddExpense() {
                               <TouchableOpacity
                                 onPress={handleImageThroughCamera}
                                 style={styles.buttonContainer}>
-                                <Image
-                                  source={require('../../assets/images/InputPopup/camera.png')}
-                                />
+                                <Image source={Camera} />
                                 <Text style={styles.Text}>Camera</Text>
                               </TouchableOpacity>
                               <TouchableOpacity
                                 style={styles.buttonContainer}
                                 onPress={handleImageThroughGallery}>
-                                <Image
-                                  source={require('../../assets/images/InputPopup/gallery.png')}
-                                />
+                                <Image source={Gallery} />
                                 <Text style={styles.Text}>Gallery</Text>
                               </TouchableOpacity>
                               <TouchableOpacity
                                 style={styles.buttonContainer}
                                 onPress={handleImageThroughGallery}>
-                                <Image
-                                  source={require('../../assets/images/InputPopup/document.png')}
-                                />
+                                <Image source={File} />
                                 <Text style={styles.Text}>File</Text>
                               </TouchableOpacity>
                             </View>
@@ -192,9 +187,7 @@ export default function AddExpense() {
                       <TouchableOpacity
                         style={styles.closeButton}
                         onPress={() => setImage(null)}>
-                        <Image
-                          source={require('../../assets/images/InputPopup/close.png')}
-                        />
+                        <Image source={close} />
                       </TouchableOpacity>
                       <Image
                         source={{uri: image}}
