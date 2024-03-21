@@ -7,36 +7,30 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import CustomHeader from '../../components/CustomHeader';
-import Category from '../../components/Category';
-import useFinancialReports from './useFinancialReports';
+
 import {
   FoodLineGraph,
   ShoppigLineGraph,
   SubscriptionLineGraph,
   Passive_Income,
+  SalaryLineGraph,
+  Arrow_Down_2,
+  Graph_Icon,
+  Graph_Expense,
+  Graph_Income,
+  Arrow_Down,
+  Category_Button,
+  CustomHeader,
 } from '../../assets/constants/Constants';
+import useFinancialReports from './useFinancialReports';
+import Category from '../../components/Category';
 
 const FinancialReports = () => {
   const {
-    activeButton,
-    setActiveButton,
-    handlePress,
     totalExpense,
     totalIncome,
-    accountBalance,
-    expenses,
-    incomes,
     isExpenseSelected,
     setIsExpenseSelected,
-    isLoading,
-    setIsLoading,
-    financialReports,
-    setFinancialReports,
-    setExpenses,
-    setIncomes,
-    setTotalExpense,
-    setTotalIncome,
     categoryIncomeTotals,
     categoryExpenseTotals,
     PassiveIncome,
@@ -86,7 +80,7 @@ const FinancialReports = () => {
         <Category
           category="Salary"
           amount={categoryExpenseTotals.Salary}
-          image={require('../../assets/images/Report_images/SalaryLineGraph.png')}
+          image={SalaryLineGraph}
           style={styles.category5}
           styleamount={styles.amountColor1}
           transactionType="Expense"
@@ -99,7 +93,7 @@ const FinancialReports = () => {
         <Category
           category="Salary"
           amount={categoryIncomeTotals.Salary || 0}
-          image={require('../../assets/images/Report_images/SalaryLineGraph.png')}
+          image={SalaryLineGraph}
           style={styles.Incomecategory}
           styleamount={styles.IncomeAmountColor}
           transactionType="Income"
@@ -107,7 +101,7 @@ const FinancialReports = () => {
         <Category
           category="Passive Income"
           amount={PassiveIncome || 0}
-          image={require('../../assets/images/Report_images/PassiveIncome.png')}
+          image={Passive_Income}
           style={styles.IncomeCategory2}
           styleamount={styles.IncomeAmountColor}
           transactionType="Income"
@@ -126,30 +120,18 @@ const FinancialReports = () => {
       <ScrollView>
         <View style={styles.headerContainer}>
           <TouchableOpacity style={styles.filterButton}>
-            <Image
-              source={require('../../assets/images/Report_images/arrow-down.png')}
-              style={styles.filterImage}
-            />
+            <Image source={Arrow_Down_2} style={styles.filterImage} />
             <Text style={styles.filterButtonText}>Month</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.burgerIcon}>
-            <Image
-              source={require('../../assets/images/Report_images/graphicon.png')}
-              style={styles.filterImage2}
-            />
+            <Image source={Graph_Icon} style={styles.filterImage2} />
           </TouchableOpacity>
         </View>
         <View style={styles.financialContainer}>
           {isExpenseSelected ? (
-            <Image
-              source={require('../../assets/images/Report_images/Graph-Expense.png')}
-              style={styles.financialImage}
-            />
+            <Image source={Graph_Expense} style={styles.financialImage} />
           ) : (
-            <Image
-              source={require('../../assets/images/Report_images/Graph-Income.png')}
-              style={styles.financialImage}
-            />
+            <Image source={Graph_Income} style={styles.financialImage} />
           )}
           <Text style={styles.financialText}>{financialText}</Text>
         </View>
@@ -196,17 +178,11 @@ const FinancialReports = () => {
         <View style={styles.bottomContent}>
           <View style={styles.bottomContainer}>
             <TouchableOpacity style={styles.bottomContentButton}>
-              <Image
-                source={require('../../assets/images/Report_images/arrow-down.png')}
-                style={styles.bottomImage}
-              />
+              <Image source={Arrow_Down} style={styles.bottomImage} />
               <Text style={styles.bottomButtonText}>Category</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttomIcon}>
-              <Image
-                source={require('../../assets/images/Report_images/Button-Icon.png')}
-                style={styles.categorybtn}
-              />
+              <Image source={Category_Button} style={styles.categorybtn} />
             </TouchableOpacity>
           </View>
         </View>

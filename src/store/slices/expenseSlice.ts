@@ -24,7 +24,6 @@ const submit = async () => {
       .collection('Income')
       .onSnapshot(snapshot => {
         const incomeData = snapshot.docs.map(doc => doc.data());
-        // setIncome([...incomeData]);
       });
 
     firestore()
@@ -33,7 +32,6 @@ const submit = async () => {
       .collection('Expense')
       .onSnapshot(snapshot => {
         const expenseData = snapshot.docs.map(doc => doc.data());
-        // setExpence([...expenseData]);
       });
   } catch (error) {
     console.error('Error in adding data:', error);

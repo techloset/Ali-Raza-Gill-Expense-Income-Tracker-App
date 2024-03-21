@@ -5,9 +5,9 @@ import auth, {firebase} from '@react-native-firebase/auth';
 interface Reset {
   currentPass: string;
   newPass: string;
-  setNewPass: string | ((text: string) => void);
+  setNewPass: (text: string) => void;
   confirmNewPass: string;
-  setConfirmNewPass: string | ((text: string) => void);
+  setConfirmNewPass: (text: string) => void;
   setCurrentPass: (pass: string) => void;
   handleResetPassword: () => void;
 }
@@ -29,7 +29,7 @@ const useResetPassword = (): Reset => {
     }
 
     const emailCred = firebase.auth.EmailAuthProvider.credential(
-      auth().currentUser?.email || '',
+      auth().currentUser?.email || 'no email address',
       currentPass,
     );
 

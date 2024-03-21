@@ -8,6 +8,13 @@ import {
 } from 'react-native';
 import React from 'react';
 import useProfile from './useProfile';
+import {
+  Avatar,
+  EditProfile,
+  Logout,
+  ResetPassword,
+  Settings,
+} from '../../../assets/constants/Constants';
 
 interface ProfileHomeProps {
   navigation: any;
@@ -24,10 +31,7 @@ const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
             {userImageURL ? (
               <Image style={styles.ProfileImage} source={{uri: userImageURL}} />
             ) : (
-              <Image
-                style={styles.ProfileImage}
-                source={require('../../../assets/images/Profile/AvatarProfile.png')}
-              />
+              <Image style={styles.ProfileImage} source={Avatar} />
             )}
           </View>
           <View style={styles.ProfileText}>
@@ -37,17 +41,14 @@ const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
         </View>
 
         <TouchableOpacity onPress={() => navigation.navigate('UpdateProfile')}>
-          <Image source={require('../../../assets/images/Profile/Edit.png')} />
+          <Image source={EditProfile} />
         </TouchableOpacity>
       </View>
       <View style={styles.cardContainer}>
         <View style={styles.card}>
           <TouchableOpacity style={styles.actionContainer}>
             <View style={styles.actionImgContainer}>
-              <Image
-                style={styles.actionImage}
-                source={require('../../../assets/images/Profile/Settings.png')}
-              />
+              <Image style={styles.actionImage} source={Settings} />
             </View>
             <View>
               <Text style={styles.actionText}>Setting</Text>
@@ -57,10 +58,7 @@ const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
             onPress={() => navigation.navigate('ResetPassword')}
             style={styles.actionContainer}>
             <View style={styles.actionImgContainer}>
-              <Image
-                style={styles.actionImage}
-                source={require('../../../assets/images/Profile/ResetPassword.png')}
-              />
+              <Image style={styles.actionImage} source={ResetPassword} />
             </View>
             <View>
               <Text style={styles.actionText}>Reset Password</Text>
@@ -71,10 +69,7 @@ const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
             onPress={handleLogout}
             style={styles.actionContainer}>
             <View style={styles.actionImgContainer}>
-              <Image
-                style={styles.actionImage}
-                source={require('../../../assets/images/Profile/LogOut.png')}
-              />
+              <Image style={styles.actionImage} source={Logout} />
             </View>
             <View>
               <Text style={styles.actionText}>Logout</Text>
