@@ -73,6 +73,7 @@ export const styles = StyleSheet.create({
   },
   MainContainer2: {
     backgroundColor: 'white',
+    paddingBottom: 30,
   },
   frequencyContainer: {
     width: '100%',

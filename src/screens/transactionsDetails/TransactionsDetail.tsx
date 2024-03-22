@@ -35,18 +35,10 @@ const categories: Category[] = [
 ];
 
 const TransactionsDetails: React.FC<Props> = ({navigation}) => {
-  const {
-    isLoading,
-    isError,
-    combinedTransactions,
-    todaysTransactions,
-    yesterdaysTransactions,
-    previousTransactions,
-    fetchTransactions,
-  } = useTransactionsDetail();
+  const {isLoading, isError, fetchTransactions} = useTransactionsDetail();
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.MainContainer}>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <TouchableOpacity style={styles.filterButton}>
@@ -68,7 +60,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
           <Image source={arrow_right} style={styles.alertContainerImage} />
         </TouchableOpacity>
         <View>
-          <Text style={styles.headingText}>Today</Text>
+          <Text style={styles.headingText}>All Transactions</Text>
         </View>
         {isLoading ? (
           <Text
@@ -111,58 +103,6 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                 No Today's transactions available
               </Text>
             )}
-            <Text style={styles.headingText}>Yesterday</Text>
-            {yesterdaysTransactions.map((item: any, index: number) => (
-              <ShoppingCard
-                key={index.toString()}
-                img={Shopping}
-                category={item?.category}
-                discription={item?.discription.slice(0, 10)}
-                amount={item?.amount}
-                time={
-                  item.addExpenseTime
-                    ? moment(item?.addExpenseTime).format('hh:mm A')
-                    : ''
-                }
-                onPress={() => {}}
-                style={{}}
-                wallet=""
-                imageUrl={item?.imageUrl || ''}
-                documentId={item.id}
-                transType={item.transType}
-              />
-            ))}
-            {yesterdaysTransactions.length === 0 && (
-              <Text style={styles.headingText1}>
-                No yesterday's transactions available
-              </Text>
-            )}
-            <Text style={styles.headingText}>Previous Transactions</Text>
-            {previousTransactions.map((item: any, index: number) => (
-              <ShoppingCard
-                key={index.toString()}
-                img={Shopping}
-                category={item.category}
-                discription={item.discription.slice(0, 10)}
-                amount={item.amount}
-                time={
-                  item.addExpenseTime
-                    ? moment(item.addExpenseTime).format('hh:mm A')
-                    : ''
-                }
-                onPress={() => {}}
-                style={{}}
-                wallet=""
-                imageUrl={item?.imageUrl}
-                documentId={item.id}
-                transType={item.transType}
-              />
-            ))}
-            {previousTransactions.length === 0 && (
-              <Text style={styles.headingText1}>
-                No previous transactions available
-              </Text>
-            )}
           </>
         )}
       </View>
@@ -173,9 +113,13 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
 export default TransactionsDetails;
 
 const styles = StyleSheet.create({
+  MainContainer: {
+    backgroundColor: 'white',
+  },
   container: {
     margin: 16,
     flex: 1,
+    paddingBottom: 20,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -242,6 +186,7 @@ const styles = StyleSheet.create({
     color: 'black',
     marginBottom: 10,
     fontFamily: 'Inter-SemiBold',
+    paddingLeft: 6,
   },
   headingText1: {
     fontSize: 12,

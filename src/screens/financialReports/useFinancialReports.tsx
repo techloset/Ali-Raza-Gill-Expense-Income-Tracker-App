@@ -76,7 +76,9 @@ const useFinancialReports = () => {
   }, [fetchTransactions]);
 
   let PassiveIncome = 0;
-  PassiveIncome = totalIncome - categoryIncomeTotals.Salary;
+  PassiveIncome = categoryIncomeTotals.Salary
+    ? totalIncome - categoryIncomeTotals.Salary
+    : totalIncome - 0;
 
   return {
     activeButton,

@@ -85,6 +85,7 @@ const FinancialReports = () => {
           styleamount={styles.amountColor1}
           transactionType="Expense"
         />
+        <View style={{width: 0.1, height: 40, backgroundColor: 'white'}}></View>
       </View>
     </>
   ) : (
@@ -338,7 +339,10 @@ const styles = StyleSheet.create({
   category5: {backgroundColor: '#00A86B'},
   amountColor1: {color: 'red'},
   BarGraphContainer: {
-    paddingVertical: 20,
+    paddingVertical: 0,
+    marginHorizontal: 20,
+
+    marginTop: 20,
   },
   Incomecategory: {backgroundColor: '#00A86B'},
   IncomeCategory2: {backgroundColor: 'black'},
