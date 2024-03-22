@@ -39,6 +39,8 @@ import Logout from '../../assets/images/Profile/LogOut.png';
 import ProfilePic from '../../assets/images/Profile/ProfilePic.png';
 import ResetPassword from '../../assets/images/Profile/ResetPassword.png';
 import Settings from '../../assets/images/Profile/Settings.png';
+//Login Screen Images
+import Eye from '../../assets/images/loginImages/EyeImage.png';
 
 export {
   CustomHeader,
@@ -77,4 +79,5 @@ export {
   ResetPassword,
   Settings,
   EditIcon,
+  Eye,
 };

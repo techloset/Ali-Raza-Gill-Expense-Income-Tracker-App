@@ -11,6 +11,7 @@ import {
   Image,
 } from 'react-native';
 import CustomHeader from '../../../components/CustomHeader';
+import {Eye} from '../../../assets/constants/Constants';
 
 const SignUp = () => {
   const {
@@ -20,12 +21,13 @@ const SignUp = () => {
     setEmail,
     password,
     setPassword,
-    passwordVisible,
+    isPasswordVisible,
     isChecked,
     handleCheckBoxToggle,
     handleGoogleSignup,
     handleSignUp,
     navigation,
+    togglePasswordVisibility,
   } = useSignUp();
 
   return (
@@ -52,14 +54,20 @@ const SignUp = () => {
               value={email}
               style={{}}
             />
-            <View>
+            <View style={styles.passwordContainer}>
               <InputField
                 placeholder="Password"
-                secureTextEntry={true}
+                secureTextEntry={!isPasswordVisible}
                 onChangeText={text => setPassword(text)}
                 value={password}
                 style={{}}
               />
+              <TouchableOpacity onPress={togglePasswordVisibility}>
+                <Image
+                  source={isPasswordVisible ? Eye : Eye}
+                  style={styles.EyeIcon}
+                />
+              </TouchableOpacity>
             </View>
 
             <View>
@@ -122,12 +130,29 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    marginHorizontal: 12,
+  },
+  passwordContainer: {
+    position: 'relative',
+  },
+  EyeIcon: {
+    position: 'absolute',
+    bottom: 12,
+    right: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    zIndex: 5,
+    width: 40,
+    height: 40,
+    borderRadius: 10,
   },
   CheckboxContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 10,
+    paddingHorizontal: 20,
   },
   CheckText: {
     color: 'black',

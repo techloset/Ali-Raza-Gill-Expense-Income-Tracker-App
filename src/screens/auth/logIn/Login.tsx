@@ -6,19 +6,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useLogin} from './useLogin';
 import {Image} from 'react-native';
+import {Eye} from '../../../assets/constants/Constants';
 
 const Login = () => {
   const {
     email,
     password,
     navigation,
-    passwordVisible,
     isChecked,
     handleCheckBoxToggle,
     handleGoogleSignup,
@@ -26,6 +26,8 @@ const Login = () => {
     secureTextEntry,
     handleLogEmail,
     handleLogPassword,
+    togglePasswordVisibility,
+    isPasswordVisible,
   } = useLogin();
 
   return (
@@ -44,14 +46,20 @@ const Login = () => {
                 onChangeText={handleLogEmail}
                 style={{}}
               />
-              <View>
+              <View style={styles.passwordContainer}>
                 <InputField
                   placeholder="Password"
-                  secureTextEntry={true}
+                  secureTextEntry={!isPasswordVisible}
                   value={password}
                   onChangeText={handleLogPassword}
                   style={{}}
                 />
+                <TouchableOpacity onPress={togglePasswordVisibility}>
+                  <Image
+                    source={isPasswordVisible ? Eye : Eye}
+                    style={styles.EyeIcon}
+                  />
+                </TouchableOpacity>
               </View>
               <View style={styles.loginbtn}>
                 <Button name="Log In" onPress={handleLogIn} />
@@ -145,6 +153,22 @@ const styles = StyleSheet.create({
     height: 18,
     width: 15,
     fontFamily: 'Inter-Bold',
+  },
+  passwordContainer: {
+    position: 'relative',
+    width: '100%',
+  },
+  EyeIcon: {
+    position: 'absolute',
+    bottom: 12,
+    right: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    zIndex: 5,
+    width: 40,
+    height: 40,
+    borderRadius: 10,
   },
   forgotContainer: {
     alignItems: 'flex-end',

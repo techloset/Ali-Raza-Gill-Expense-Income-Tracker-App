@@ -1,8 +1,37 @@
+After some time i will add this toaster in to my Project.
+
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useToast } from '@gorhom/toast';
+
+const MyComponent = () => {
+const toast = useToast();
+
+const showToast = () => {
+toast.show({
+type: 'success',
+text1: 'Hello',
+text2: 'This is a success toast!',
+position: 'bottom', // You can change the position here
+});
+};
+
+return (
+<View>
+<TouchableOpacity onPress={showToast}>
+<Text>Show Toast</Text>
+</TouchableOpacity>
+</View>
+);
+};
+
+export default MyComponent;
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+> **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
 ## Step 1: Start the Metro Server
 

@@ -1,19 +1,20 @@
 import {useState} from 'react';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 import {AuthRoutes} from '../../../navigation/stackNavigation/StackNavigation';
 import {useAppDispatch} from '../../../store/hooks';
 import {Login, googleSignUp} from '../../../store/slices/authSlice';
-
-const navigation = useNavigation<StackNavigationProp<AuthRoutes>>();
+import {ToastAndroid} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 export const useLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [passwordVisible, setPasswordVisible] = useState(true);
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isChecked, setChecked] = useState(false);
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<StackNavigationProp<AuthRoutes>>();
+
   const handleLogEmail = (text: string) => {
     setEmail(text);
   };
@@ -26,25 +27,51 @@ export const useLogin = () => {
     setChecked(!isChecked);
   };
 
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleLogIn = () => {
+    if (!email.trim() || !password.trim()) {
+      ToastAndroid.show('Email and password are required', ToastAndroid.SHORT);
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      ToastAndroid.show('Invalid email format', ToastAndroid.SHORT);
+      return;
+    }
+
+    if (password.trim().length < 6) {
+      ToastAndroid.show(
+        'Password must contain at least 6 characters',
+        ToastAndroid.SHORT,
+      );
+      return;
+    }
+
     try {
       dispatch(Login({email, password}));
     } catch (error) {
       console.log('error', error);
     }
   };
+
   const handleGoogleSignup = async () => {
     try {
       await dispatch(googleSignUp);
     } catch (error) {
-      console.log('SignUp error', error);
+      ToastAndroid.show('SignUp error', ToastAndroid.SHORT);
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!isPasswordVisible);
+  };
   return {
     email,
     password,
-    passwordVisible,
     isChecked,
     handleCheckBoxToggle,
     handleLogIn,
@@ -53,5 +80,8 @@ export const useLogin = () => {
     handleLogPassword,
     navigation,
     handleGoogleSignup,
+    setPasswordVisible,
+    togglePasswordVisibility,
+    isPasswordVisible,
   };
 };
