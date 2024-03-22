@@ -1,9 +1,11 @@
 import {
   Alert,
   Image,
+  Modal,
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import React from 'react';
@@ -21,7 +23,14 @@ interface ProfileHomeProps {
 }
 
 const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
-  const {handleLogout, userImageURL, name} = useProfile();
+  const {
+    handleLogout,
+    userImageURL,
+    name,
+    confirmLogout,
+    fileModalVisible,
+    cancelLogout,
+  } = useProfile();
 
   return (
     <View>
@@ -75,6 +84,38 @@ const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
               <Text style={styles.actionText}>Logout</Text>
             </View>
           </TouchableOpacity>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={fileModalVisible}>
+            <TouchableWithoutFeedback>
+              <View style={styles.fileModalContainer}>
+                <View style={styles.modalBackground} />
+                <View style={styles.attachmentPopup}>
+                  <View>
+                    <Text style={styles.title}>LogOut?</Text>
+                    <Text style={styles.text}>
+                      Are you sure do you wanna logout?
+                    </Text>
+
+                    <View style={styles.btnContainer}>
+                      <TouchableOpacity onPress={cancelLogout}>
+                        <View style={styles.content}>
+                          <Text style={styles.btnName}>No</Text>
+                        </View>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity onPress={confirmLogout}>
+                        <View style={styles.content1}>
+                          <Text style={styles.btnName}>Yes</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
         </View>
       </View>
     </View>
@@ -147,5 +188,79 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 17,
+  },
+
+  fileModalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  modalBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  attachmentPopup: {
+    backgroundColor: 'white',
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+    padding: 20,
+  },
+  container2: {
+    padding: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderTopEndRadius: 16,
+    borderTopStartRadius: 16,
+  },
+  btnContainer: {
+    flexDirection: 'row',
+    gap: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    textAlign: 'center',
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 22,
+    color: 'black',
+    marginBottom: 10,
+  },
+  text: {
+    textAlign: 'center',
+    fontFamily: 'Inter-SemiBold',
+    marginBottom: 30,
+  },
+
+  content: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    backgroundColor: 'lightgrey',
+    height: 56,
+    width: 140,
+    padding: 10,
+    borderRadius: 16,
+  },
+  content1: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    height: 56,
+    width: 140,
+    backgroundColor: '#7F3DFF',
+    padding: 10,
+    borderRadius: 16,
+  },
+  btnName: {
+    color: 'white',
+    fontSize: 18,
+    fontFamily: 'Inter-SemiBold',
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginTop: 5,
   },
 });
