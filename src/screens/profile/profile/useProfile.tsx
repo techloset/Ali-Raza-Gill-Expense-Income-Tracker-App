@@ -10,7 +10,7 @@ interface ProfileData {
   name: string;
   fileModalVisible: boolean;
   confirmLogout: () => void;
-  handleLogout: () => void;
+  showLogout: () => void;
   cancelLogout: () => void;
 }
 
@@ -46,7 +46,7 @@ export default function useProfile(): ProfileData {
     };
   }, []);
 
-  const handleLogout = () => {
+  const showLogout = () => {
     setFileModalVisible(true);
   };
 
@@ -62,7 +62,7 @@ export default function useProfile(): ProfileData {
   return {
     userImageURL,
     name,
-    handleLogout,
+    showLogout,
     fileModalVisible,
     confirmLogout,
     cancelLogout,

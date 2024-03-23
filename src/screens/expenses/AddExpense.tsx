@@ -52,18 +52,18 @@ export default function AddExpense() {
 
   return (
     <>
-      <CustomHeader
-        title={transType === 'Expense' ? 'Expense' : 'Income'}
-        style={[
-          styles.color,
-          {backgroundColor: transType === 'Expense' ? 'red' : 'green'},
-        ]}
-      />
       <ScrollView
         style={[
           styles.container,
           {backgroundColor: transType === 'Expense' ? 'red' : 'green'},
         ]}>
+        <CustomHeader
+          title={transType === 'Expense' ? 'Expense' : 'Income'}
+          style={[
+            styles.color,
+            {backgroundColor: transType === 'Expense' ? 'red' : 'green'},
+          ]}
+        />
         <TouchableWithoutFeedback onPress={handleOutsidePress}>
           <View style={[styles.container]}>
             <View style={styles.navigationContainer}></View>
@@ -238,6 +238,7 @@ const styles = StyleSheet.create({
   },
   color: {
     color: 'white',
+    marginHorizontal: 15,
   },
   displayContainer: {
     paddingTop: '10%',

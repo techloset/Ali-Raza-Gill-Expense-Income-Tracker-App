@@ -24,7 +24,7 @@ interface ProfileHomeProps {
 
 const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
   const {
-    handleLogout,
+    showLogout,
     userImageURL,
     name,
     confirmLogout,
@@ -74,9 +74,7 @@ const ProfileHome: React.FC<ProfileHomeProps> = ({navigation}) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={handleLogout}
-            style={styles.actionContainer}>
+          <TouchableOpacity onPress={showLogout} style={styles.actionContainer}>
             <View style={styles.actionImgContainer}>
               <Image style={styles.actionImage} source={Logout} />
             </View>

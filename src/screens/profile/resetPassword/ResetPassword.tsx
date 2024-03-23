@@ -17,7 +17,10 @@ const ResetPassword = () => {
   return (
     <ScrollView style={styles.MainContainer}>
       <View>
-        <CustomHeader title={'Reset Password'} style={{color: 'black'}} />
+        <CustomHeader
+          title={'Reset Password'}
+          style={{color: 'black', marginHorizontal: 15}}
+        />
         <View style={styles.container}>
           <View>
             <TextInput
