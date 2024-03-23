@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     fontFamily: 'Inter-SemiBold',
-    // color: 'white',
   },
 });
 

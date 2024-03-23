@@ -14,7 +14,6 @@ export default function App() {
     <>
       <Provider store={store}>
         <SafeAreaProvider>
-          {/* <StatusBar /> */}
           <GestureHandlerRootView style={{flex: 1}}>
             <Navigation />
           </GestureHandlerRootView>

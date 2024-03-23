@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Image, ImageSourcePropType} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 
 interface ExpenseCardProps {

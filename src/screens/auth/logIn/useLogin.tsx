@@ -53,9 +53,7 @@ export const useLogin = () => {
 
     try {
       dispatch(Login({email, password}));
-    } catch (error) {
-      console.log('error', error);
-    }
+    } catch (error) {}
   };
 
   const handleGoogleSignup = async () => {

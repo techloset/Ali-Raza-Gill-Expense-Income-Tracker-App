@@ -10,7 +10,7 @@ import {useAppDispatch} from '../../store/hooks';
 import {addExpense} from '../../store/slices/expenseSlice';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Alert} from 'react-native';
-import auth from '@react-native-firebase/auth';
+
 interface Category {
   id: number;
   name: string;
@@ -81,7 +81,6 @@ export function useAddExpense() {
       setImage(null);
       setIsDialogVisible(true);
     } catch (error) {
-      console.log('error', error);
       Alert.alert('Transaction not Successfully added');
     }
   };
@@ -136,9 +135,7 @@ export function useAddExpense() {
       setImage(downloadURL);
 
       setFileModalVisible(false);
-    } catch (error) {
-      console.log('Error selecting image:', error);
-    }
+    } catch (error) {}
   };
 
   const handleImageThroughCamera = async () => {
@@ -151,7 +148,6 @@ export function useAddExpense() {
       const uri = pickedImage.path;
 
       if (!uri) {
-        console.log('No image selected');
         return;
       }
 
@@ -167,16 +163,13 @@ export function useAddExpense() {
 
         setImage(downloadURL);
       } catch (error) {
-        console.error('Error uploading image:', error);
         Alert.alert('Error uploading photo!');
       } finally {
         setUploading(false);
       }
 
       setFileModalVisible(false);
-    } catch (error) {
-      console.log('Error taking picture:', error);
-    }
+    } catch (error) {}
   };
 
   return {

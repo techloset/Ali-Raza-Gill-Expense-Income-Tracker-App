@@ -22,8 +22,6 @@ const SignUp = () => {
     password,
     setPassword,
     isPasswordVisible,
-    isChecked,
-    handleCheckBoxToggle,
     handleGoogleSignup,
     handleSignUp,
     navigation,
@@ -71,9 +69,7 @@ const SignUp = () => {
             </View>
 
             <View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                {/* <Checkbox value={isChecked} onValueChange={handleCheckBoxToggle} /> */}
-              </View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}></View>
             </View>
 
             <View style={styles.CheckboxContainer}>
