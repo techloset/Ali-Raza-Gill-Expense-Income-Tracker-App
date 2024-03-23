@@ -158,8 +158,16 @@ export const styles = StyleSheet.create({
     marginRight: -55,
   },
   ProfileImage: {
-    height: '80%',
-    width: '55%',
+    height: '90%',
+    width: '60%',
     borderRadius: 40,
+    borderWidth: 2,
+    borderColor: '#7F3DFF',
+  },
+  ProfileImageCustom: {
+    height: '90%',
+    width: '60%',
+    borderRadius: 40,
+    borderColor: '#7F3DFF',
   },
 });

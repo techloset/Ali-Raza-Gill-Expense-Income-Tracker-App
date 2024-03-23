@@ -3,6 +3,7 @@ import {db} from '../../config/Firebase';
 import auth from '@react-native-firebase/auth';
 
 interface Transaction {
+  addExpneseTime(addExpneseTime: any): unknown;
   itemId: string;
   documentId: string;
   category: string;

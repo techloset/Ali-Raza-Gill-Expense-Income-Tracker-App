@@ -51,14 +51,15 @@ const styles = StyleSheet.create({
   },
   dialogContent: {
     backgroundColor: 'white',
-    padding: 20,
+    padding: 30,
     borderRadius: 10,
-    marginHorizontal: 'auto',
-    paddingHorizontal: 40,
+    alignItems: 'center',
+    paddingHorizontal: 30,
+    borderWidth: 1,
+    borderColor: '#f8f8f8',
   },
   image: {
     marginBottom: 10,
-    marginLeft: 100,
   },
   messageText: {
     fontSize: 18,

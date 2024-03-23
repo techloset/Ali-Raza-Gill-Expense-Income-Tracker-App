@@ -104,7 +104,9 @@ export type UserData = {
   email: string;
   uid: string;
   displayName: string;
+  name: string;
   photoUrl: string | null;
+  imageURL: string | null;
 };
 
 export interface User {

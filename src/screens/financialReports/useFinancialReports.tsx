@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {TransactionInterface} from '../../types/types';
 import {useDispatch} from 'react-redux';
 import {useAppSelector} from '../../store/hooks';

@@ -61,7 +61,7 @@ export default function Home({navigation}: any) {
                       source={{uri: userImageURL}}
                     />
                   ) : (
-                    <Image style={styles.ProfileImage} source={Avatar} />
+                    <Image style={styles.ProfileImageCustom} source={Avatar} />
                   )}
                 </View>
                 <View style={styles.TopNavigation2}>
@@ -156,7 +156,6 @@ export default function Home({navigation}: any) {
           const categoryObj = categories.find(
             cat => cat.name === item.category,
           );
-
           const img = categoryObj ? categoryObj.image : {image: Salary};
 
           return (

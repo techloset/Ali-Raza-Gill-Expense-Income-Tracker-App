@@ -41,7 +41,7 @@ const useEditTransaction = (
         amount: editableMoney,
         transType: '',
       };
-      dispatch(editTransaction({data: updatedTransactionData}));
+      dispatch(editTransaction({data: updatedTransactionData} as any) as any);
       setLoading(false);
       navigation.goBack();
     } catch (error) {
@@ -49,7 +49,7 @@ const useEditTransaction = (
     }
   };
   const handleDelete = () => {
-    dispatch(deleteTransaction(documentId));
+    dispatch(deleteTransaction(documentId as any) as any);
     navigation.goBack();
   };
   return {

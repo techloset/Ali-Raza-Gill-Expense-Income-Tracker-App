@@ -1,5 +1,4 @@
 package com.Expense_Income_Tracker
-
 import android.os.Bundle;
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

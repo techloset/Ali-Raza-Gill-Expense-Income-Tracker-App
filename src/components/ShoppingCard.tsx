@@ -1,8 +1,8 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native';
-import {RouteProp, useNavigation} from '@react-navigation/native';
-import {AuthRoutes} from '../navigation/stackNavigation/StackNavigation';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 interface ExpenseCardProps {
   img: any;
@@ -13,7 +13,7 @@ interface ExpenseCardProps {
   category: string;
   wallet: string;
   time: string;
-  style: object;
+  style?: object;
   transType: string;
   onPress: () => void;
 }
@@ -28,8 +28,24 @@ const ShoppingCard: React.FC<ExpenseCardProps> = ({
   time,
   transType,
 }) => {
-  const navigation = useNavigation();
-  const onPressHnadle = () => {
+  const navigation = useNavigation<
+    StackNavigationProp<
+      {
+        EditTransaction: {
+          documentId: string;
+          imageUrl: any;
+          amount: number;
+          discription: string;
+          category: string;
+          time: string;
+          transType: string;
+        };
+      },
+      'EditTransaction'
+    >
+  >();
+
+  const onPressHandle = () => {
     navigation.navigate('EditTransaction', {
       documentId,
       imageUrl,
@@ -42,27 +58,23 @@ const ShoppingCard: React.FC<ExpenseCardProps> = ({
   };
 
   return (
-    <TouchableOpacity onPress={onPressHnadle}>
-      <View style={styles.ShoppingContainer}>
-        <View style={styles.ShoppingMain}>
-          <View>
-            <View style={styles.imageMain}>
-              <Image source={img} style={styles.image} />
-            </View>
+    <TouchableOpacity onPress={onPressHandle}>
+      <View style={styles.shoppingContainer}>
+        <View style={styles.shoppingMain}>
+          <View style={styles.imageMain}>
+            <Image source={img} style={styles.image} />
           </View>
-
           <View style={styles.categoryContainer}>
             <Text style={styles.categoryContainerText}>{category}</Text>
             <Text style={styles.categoryContainerDesc}>{discription}</Text>
           </View>
         </View>
         <View style={styles.expenseContainer}>
-          {/* <Text style={{color: amount < 0 ? 'red' : 'green'}}>
-            {amount < 0 ? `- ${Math.abs(amount)}` : amount}
-          </Text> */}
           <Text
-            style={category == 'Expense' ? {color: 'red'} : {color: 'green'}}>
-            {amount}
+            style={{
+              color: transType.toLowerCase() === 'expense' ? 'red' : 'green',
+            }}>
+            ${amount}
           </Text>
           <Text style={styles.expenseContainerDate}>{time}</Text>
         </View>
@@ -72,9 +84,8 @@ const ShoppingCard: React.FC<ExpenseCardProps> = ({
 };
 
 const styles = StyleSheet.create({
-  ShoppingContainer: {
+  shoppingContainer: {
     flexDirection: 'row',
-    marginHorizontal: 0,
     justifyContent: 'space-between',
     backgroundColor: '#F6F6F6',
     paddingHorizontal: 15,
@@ -82,10 +93,9 @@ const styles = StyleSheet.create({
     height: 89,
     borderRadius: 20,
   },
-  ShoppingMain: {
+  shoppingMain: {
     flexDirection: 'row',
   },
-
   imageMain: {
     marginTop: 15,
   },
