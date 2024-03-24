@@ -26,17 +26,5 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-
-       <meta-data
-            android:name="com.google.android.gms.REACT_APP_GOOGLE_CLIENT_ID"
-            android:value="@string/google_signin_client_id" />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <!-- Firebase Authentication configuration -->
-        <meta-data
-            android:name="com.google.firebase.auth.FIREBASE_AUTH_API_ENABLED"
-            android:value="true" />
     </application>
 </manifest>
