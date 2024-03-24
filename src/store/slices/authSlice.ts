@@ -122,7 +122,6 @@ export const googleSignUp = async () => {
       .collection('user')
       .doc(auth()?.currentUser?.uid)
       .get();
-
     if (!userDoc.exists) {
       await firestore()
         .collection('user')
@@ -137,9 +136,7 @@ export const googleSignUp = async () => {
     } else {
       ToastAndroid.show('User signed in successfully!', ToastAndroid.SHORT);
     }
-  } catch (error) {
-    console.log('error', error);
-  }
+  } catch (error) {}
 };
 
 export const LogOut = createAsyncThunk<void, void>(
@@ -154,10 +151,6 @@ export const LogOut = createAsyncThunk<void, void>(
       ToastAndroid.show(
         'An error occurred while signing out. Please try again.',
         ToastAndroid.LONG,
-      );
-      console.log(
-        'An error occurred while signing out. Please try again.',
-        error,
       );
     }
   },
