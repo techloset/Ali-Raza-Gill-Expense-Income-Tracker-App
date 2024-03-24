@@ -86,7 +86,7 @@ const TransactionsDetails: React.FC<Props> = ({navigation}) => {
                   key={index.toString()}
                   img={img}
                   category={item?.category}
-                  discription={item?.discription?.slice(0, 20)}
+                  discription={item?.discription}
                   amount={item?.amount}
                   time={item?.time ? moment(item.time).format('hh:mm A') : ''}
                   imageUrl={item?.imageUrl}
@@ -114,10 +114,11 @@ export default TransactionsDetails;
 
 const styles = StyleSheet.create({
   MainContainer: {
+    paddingTop: 20,
+
     backgroundColor: 'white',
   },
   container: {
-    margin: 16,
     flex: 1,
     paddingBottom: 20,
   },
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginHorizontal: 16,
   },
   filterButton: {
     height: 40,
@@ -186,7 +188,7 @@ const styles = StyleSheet.create({
     color: 'black',
     marginBottom: 10,
     fontFamily: 'Inter-SemiBold',
-    paddingLeft: 6,
+    paddingLeft: 16,
   },
   headingText1: {
     fontSize: 12,

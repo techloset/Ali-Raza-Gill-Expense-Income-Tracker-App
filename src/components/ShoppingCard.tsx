@@ -116,6 +116,16 @@ const styles = StyleSheet.create({
   },
   categoryContainerDesc: {
     fontFamily: 'Inter-Medium',
+    flexDirection: 'column',
+    fontSize: 13,
+    color: 'grey',
+    marginTop: 5,
+    width: 160,
+
+    marginBottom: 5,
+    maxWidth: 250,
+    maxHeight: 50,
+    overflow: 'scroll',
   },
   expenseContainerAmount: {
     fontFamily: 'Inter-SemiBold',

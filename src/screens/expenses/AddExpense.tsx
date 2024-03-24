@@ -131,7 +131,7 @@ export default function AddExpense() {
                 </Modal>
                 <TextInput
                   style={styles.textInput}
-                  placeholder="Description"
+                  placeholder="Description between 1 to 10 words only"
                   value={discription}
                   onChangeText={text => setDiscription(text)}
                 />
@@ -212,6 +212,20 @@ export default function AddExpense() {
                       addExpens();
                     }}
                   />
+                  {loading && (
+                    <ActivityIndicator
+                      animating={loading}
+                      color="white"
+                      size="large"
+                      style={{
+                        position: 'absolute',
+                        top: 10,
+                        right: 70,
+                        bottom: 0,
+                        left: 0,
+                      }}
+                    />
+                  )}
                 </View>
               </View>
             </View>

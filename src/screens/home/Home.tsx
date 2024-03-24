@@ -164,7 +164,7 @@ export default function Home({navigation}: any) {
               key={index.toString()}
               img={img}
               category={item?.category}
-              discription={item?.discription?.slice(0, 20)}
+              discription={item?.discription}
               amount={item?.amount}
               time={item.time ? moment(item.time).format('hh:mm A') : ''}
               onPress={() => {}}

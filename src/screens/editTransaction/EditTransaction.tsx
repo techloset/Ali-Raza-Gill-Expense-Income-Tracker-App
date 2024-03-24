@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import useEditTransaction from './useEditTransaction';
 import {TransactionInterface} from '../../types/types';
@@ -46,6 +47,7 @@ const EditTransaction: React.FC<EditTransactionProps> = () => {
     editableMoney,
     setEditableMoney,
     handleDelete,
+    loading,
   } = useEditTransaction(documentId, category, discription, amount);
 
   useEffect(() => {
@@ -125,12 +127,21 @@ const EditTransaction: React.FC<EditTransactionProps> = () => {
             )}
           </View>
           <View style={styles.editButton}>
-            <Button
-              onPress={() => {
-                handleEdit();
-              }}
-              name="Edit"
-            />
+            <Button name="Edit" onPress={handleEdit} />
+            {loading && (
+              <ActivityIndicator
+                animating={loading}
+                color="white"
+                size="large"
+                style={{
+                  position: 'absolute',
+                  top: 10,
+                  right: 70,
+                  bottom: 0,
+                  left: 0,
+                }}
+              />
+            )}
           </View>
         </View>
       </View>
@@ -182,7 +193,7 @@ const styles = StyleSheet.create({
   lowerContainer: {
     marginTop: 16,
     paddingTop: 32,
-    flex: 4,
+
     padding: 16,
     position: 'relative',
   },
@@ -224,11 +235,17 @@ const styles = StyleSheet.create({
     color: '#91919F',
     fontFamily: 'Inter-Bold',
     marginHorizontal: 8,
+    width: '100%',
+    height: 'auto',
   },
   lowerContainerDescription: {
     fontFamily: 'Inter-SemiBold',
     marginHorizontal: 8,
-    flexWrap: 'wrap',
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    borderRadius: 16,
+    padding: 16,
+    width: '100%',
   },
   editButton: {
     marginTop: 12,
