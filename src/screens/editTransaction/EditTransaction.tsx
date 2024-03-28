@@ -14,6 +14,7 @@ import Button from '../../components/Button';
 import {useRoute} from '@react-navigation/native';
 import CustomHeader from '../../components/CustomHeader';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {CustomHeaderImgae} from '../../assets/constants/Constants';
 
 interface EditTransactionProps {
   transactionTypes: string[];
@@ -70,6 +71,7 @@ const EditTransaction: React.FC<EditTransactionProps> = () => {
             title="Detail Transaction"
             style={{
               backgroundColor: transType === 'Expense' ? '#FD3C4A' : '#00A86B',
+              color: 'white',
             }}
           />
           <TouchableOpacity onPress={handleDelete}>
@@ -118,6 +120,7 @@ const EditTransaction: React.FC<EditTransactionProps> = () => {
             editable={true}
             onChangeText={setEditableDiscription}
             value={editableDiscription}
+            selectionColor="black"
             style={styles.lowerContainerDescription}
           />
           <Text style={styles.lowerContainerHeading}>Attachment</Text>
@@ -215,6 +218,7 @@ const styles = StyleSheet.create({
   CategoryContainerText: {
     fontFamily: 'Inter-SemiBold',
     textAlign: 'center',
+    color: 'black',
   },
   CategoryContainerText1: {
     fontFamily: 'Inter-SemiBold',
@@ -246,6 +250,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     width: '100%',
+    color: 'black',
   },
   editButton: {
     marginTop: 12,

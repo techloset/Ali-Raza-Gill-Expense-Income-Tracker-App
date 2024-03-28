@@ -11,7 +11,7 @@ import {
   Image,
 } from 'react-native';
 import CustomHeader from '../../../components/CustomHeader';
-import {Eye} from '../../../assets/constants/Constants';
+import {CustomHeaderImgae, Eye} from '../../../assets/constants/Constants';
 
 const SignUp = () => {
   const {
@@ -30,7 +30,7 @@ const SignUp = () => {
 
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
-      <CustomHeader title="Sign Up" style={{}} />
+      <CustomHeader title="Sign Up" style={{color: 'black'}} />
       <KeyboardAvoidingView
         style={{
           flex: 1,
@@ -191,10 +191,13 @@ const styles = StyleSheet.create({
   },
   accountText1: {
     fontFamily: 'Inter-Medium',
+    color: 'black',
+    fontSize: 16,
   },
   accountTouchable: {
     color: '#7F3DFF',
     fontFamily: 'Inter-Medium',
+    fontSize: 16,
   },
   content: {
     flexDirection: 'row',

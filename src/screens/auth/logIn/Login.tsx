@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import InputField from '../../../components/InputField';
 import Button from '../../../components/Button';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -28,6 +28,9 @@ const Login = () => {
     handleLogPassword,
     togglePasswordVisibility,
     isPasswordVisible,
+    isFocused,
+    handleFocus,
+    handleBlur,
   } = useLogin();
 
   return (
@@ -135,6 +138,8 @@ const styles = StyleSheet.create({
   },
   accountText1: {
     fontFamily: 'Inter-Medium',
+    color: 'black',
+    fontSize: 16,
   },
   accountTouchable: {},
   loginbtn: {
@@ -144,6 +149,7 @@ const styles = StyleSheet.create({
     color: '#7F3DFF',
     fontFamily: 'Inter-Medium',
     marginStart: 5,
+    fontSize: 16,
   },
   orContainer: {
     alignItems: 'center',
@@ -152,7 +158,9 @@ const styles = StyleSheet.create({
   orText: {
     height: 18,
     width: 15,
+    fontSize: 14,
     fontFamily: 'Inter-Bold',
+    color: 'gray',
   },
   passwordContainer: {
     position: 'relative',

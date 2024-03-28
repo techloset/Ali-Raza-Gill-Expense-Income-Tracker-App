@@ -19,6 +19,7 @@ import {ActivityIndicator} from 'react-native';
 import CustomDialogBox from '../../components/CustomDialogBox';
 import {
   Camera,
+  CustomHeaderImgae,
   File,
   Gallery,
   Vector,
@@ -105,7 +106,9 @@ export default function AddExpense() {
                 <TouchableOpacity
                   style={styles.textInput}
                   onPress={() => setModalVisible(true)}>
-                  <Text>{category || 'Select Category'}</Text>
+                  <Text style={styles.SelectCategoryText}>
+                    {category || 'Select Category'}
+                  </Text>
                 </TouchableOpacity>
                 <Modal
                   animationType="slide"
@@ -132,6 +135,7 @@ export default function AddExpense() {
                 <TextInput
                   style={styles.textInput}
                   placeholder="Description between 1 to 10 words only"
+                  placeholderTextColor={'gray'}
                   value={discription}
                   onChangeText={text => setDiscription(text)}
                 />
@@ -140,7 +144,7 @@ export default function AddExpense() {
                   style={styles.fileInput}
                   onPress={toggleFileModal}>
                   <Image source={Vector} />
-                  <Text style={{fontFamily: 'Inter-Medium'}}>
+                  <Text style={{fontFamily: 'Inter-Medium', color: 'gray'}}>
                     Add Attachment
                   </Text>
 
@@ -294,6 +298,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     fontFamily: 'Inter-Medium',
+    color: 'black',
   },
   fileInput: {
     flexDirection: 'row',
@@ -313,6 +318,10 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  SelectCategoryText: {
+    fontFamily: 'Inter-Bold',
+    color: 'gray',
   },
   categoryItem: {
     padding: 30,
@@ -389,6 +398,7 @@ const styles = StyleSheet.create({
   },
   Text: {
     fontFamily: 'Inter-Medium',
+    color: '#7F3DFF',
   },
   container2: {
     padding: 15,

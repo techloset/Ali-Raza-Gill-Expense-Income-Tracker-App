@@ -118,6 +118,7 @@ export const googleSignUp = async () => {
     const {idToken} = await GoogleSignin.signIn();
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     await auth().signInWithCredential(googleCredential);
+
     const userDoc = await firestore()
       .collection('user')
       .doc(auth()?.currentUser?.uid)

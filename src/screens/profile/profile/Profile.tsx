@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
   usernameText: {
     fontSize: 14,
     fontFamily: 'Inter-Medium',
+    color: 'black',
   },
   nameText: {
     fontSize: 24,

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {CustomHeaderImgae} from '../assets/constants/Constants';
 
 interface CustomHeaderProps {
   title: string;
@@ -18,7 +19,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, style}) => {
     <View style={[styles.container, style]}>
       <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
         <Image
-          source={require('../assets/images/SignUpImages/arrowleft.png')}
+          source={CustomHeaderImgae}
           style={[styles.backIcon]}
           resizeMode="contain"
         />
@@ -31,19 +32,21 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, style}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
     height: 60,
+    paddingHorizontal: 10,
     backgroundColor: '#ffffff',
-    elevation: 0,
   },
   backButton: {
     paddingHorizontal: 10,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 10,
   },
   backIcon: {
-    width: 20,
+    width: 25,
     height: 60,
     tintColor: 'black',
   },

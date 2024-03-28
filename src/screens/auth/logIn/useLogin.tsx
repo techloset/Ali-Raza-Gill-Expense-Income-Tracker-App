@@ -12,6 +12,8 @@ export const useLogin = () => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isChecked, setChecked] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
   const dispatch = useAppDispatch();
   const navigation = useNavigation<StackNavigationProp<AuthRoutes>>();
 
@@ -67,6 +69,8 @@ export const useLogin = () => {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!isPasswordVisible);
   };
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => setIsFocused(false);
   return {
     email,
     password,
@@ -81,5 +85,8 @@ export const useLogin = () => {
     setPasswordVisible,
     togglePasswordVisibility,
     isPasswordVisible,
+    isFocused,
+    handleFocus,
+    handleBlur,
   };
 };

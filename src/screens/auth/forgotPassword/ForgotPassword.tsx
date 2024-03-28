@@ -11,6 +11,7 @@ import Button from '../../../components/Button';
 import CustomHeader from '../../../components/CustomHeader';
 import useForgotPassword from './useForgotPassword';
 import CustomDialogBox from '../../../components/CustomDialogBox';
+import {CustomHeaderImgae} from '../../../assets/constants/Constants';
 
 const ForgotPassword = ({navigation}: any) => {
   const {
@@ -25,7 +26,7 @@ const ForgotPassword = ({navigation}: any) => {
 
   return (
     <>
-      <CustomHeader title="Forgot Password" style={{}} />
+      <CustomHeader title="Forgot Password" style={{color: 'black'}} />
       <View style={styles.forgotMainContainer}>
         <KeyboardAvoidingView>
           <View style={styles.forgotContainer}>

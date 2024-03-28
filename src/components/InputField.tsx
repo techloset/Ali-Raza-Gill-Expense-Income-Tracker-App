@@ -6,6 +6,7 @@ interface InputFieldProps {
   placeholder: string;
   keyboardType?: KeyboardTypeOptions;
   onChangeText?: (text: string) => void;
+
   value: string;
   style: object;
 }
@@ -15,6 +16,7 @@ const InputField: React.FC<InputFieldProps> = ({
   secureTextEntry = false,
   keyboardType = 'default',
   onChangeText,
+
   value,
   style,
 }) => {
@@ -29,7 +31,7 @@ const InputField: React.FC<InputFieldProps> = ({
         style={[styles.input, style]}
         onChangeText={onChangeText}
         value={value}
-        selectionColor="white"
+        selectionColor="black"
       />
     </View>
   );

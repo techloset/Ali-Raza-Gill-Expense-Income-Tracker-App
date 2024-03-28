@@ -50,6 +50,7 @@ const UpdateProfile: React.FC = () => {
             <TextInput
               style={styles.textInput}
               placeholder="Email"
+              placeholderTextColor={'black'}
               value={email}
               editable={false}
               onChangeText={text => setEmail(text)}
@@ -58,6 +59,7 @@ const UpdateProfile: React.FC = () => {
             <TextInput
               style={styles.textInput}
               placeholder="Name"
+              placeholderTextColor={'black'}
               value={name}
               onChangeText={text => setName(text)}
             />

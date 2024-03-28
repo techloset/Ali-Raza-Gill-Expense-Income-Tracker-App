@@ -31,7 +31,9 @@ import Arrow_Down from '../../assets/images/Report_images/arrow-down.png';
 import Graph_Icon from '../../assets/images/Report_images/graphicon.png';
 import Category_Button from '../../assets/images/Report_images/Button-Icon.png';
 //Custom Herder
+
 import CustomHeader from '../../components/CustomHeader';
+import CustomHeaderImgae from '../../assets/images/SignUpImages/arrow-left.png';
 //Profile Screen Images
 import EditIcon from '../../assets/images/Profile/EditProfile.png';
 import EditProfile from '../../assets/images/Profile/Edit.png';
@@ -80,4 +82,5 @@ export {
   Settings,
   EditIcon,
   Eye,
+  CustomHeaderImgae,
 };

@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   expenseContainerDate: {
     fontFamily: 'Inter-Medium',
     fontSize: 13,
+    color: 'grey',
   },
 });
 
