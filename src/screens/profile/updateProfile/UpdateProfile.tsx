@@ -29,7 +29,7 @@ const UpdateProfile: React.FC = () => {
     <ScrollView style={{backgroundColor: 'white'}}>
       <View style={styles.main}>
         <View style={styles.container}>
-          <CustomHeader title="Update Profile" style={{}} />
+          <CustomHeader title="Update Profile" style={{marginLeft: -10}} />
           <View style={styles.profileView}>
             <TouchableOpacity onPress={handleSelectImage}>
               <View style={styles.imageContainer}>
@@ -61,6 +61,7 @@ const UpdateProfile: React.FC = () => {
               placeholder="Name"
               placeholderTextColor={'black'}
               value={name}
+              cursorColor={'black'}
               onChangeText={text => setName(text)}
             />
           </View>

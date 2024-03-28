@@ -12,7 +12,16 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: 'white',
+          height: 60,
+          position: 'absolute',
+          bottom: 0,
+          paddingTop: 10,
+        },
+      }}>
       <Tab.Screen
         name="Home"
         component={Home}
@@ -49,7 +58,7 @@ export default function TabNavigation() {
                     ? require('../../assets/images/TabIcons/TransactionFocused.png')
                     : require('../../assets/images/TabIcons/Transaction.png')
                 }
-                style={{width: 32, height: 32}}
+                style={{width: 42, height: 32}}
               />
               <Text
                 style={[styles.text, {color: focused ? '#7F3DFF' : 'gray'}]}>
@@ -72,7 +81,7 @@ export default function TabNavigation() {
                   ? require('../../assets/images/TabIcons/Add.png')
                   : require('../../assets/images/TabIcons/Add.png')
               }
-              style={{width: 57, height: 56, marginBottom: 48}}
+              style={{width: 57, height: 56, marginBottom: 68}}
             />
           ),
           headerShown: false,
@@ -115,7 +124,7 @@ export default function TabNavigation() {
                 <Image
                   source={imageSource}
                   tintColor={focused ? '#7F3DFF' : 'gray'}
-                  style={{width: 32, height: 32}}
+                  style={{width: 32, height: 38}}
                 />
                 <Text
                   style={[styles.text, {color: focused ? '#7F3DFF' : 'grey'}]}>
